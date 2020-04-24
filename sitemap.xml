@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zendwind.com/2020/03/28/dynamodb-migrate-s3/</loc>
+    <loc>http://zendwind.com/2020/03/28/en/dynamodb-migrate-s3/</loc>
     
     <lastmod>2020-04-24T02:52:23.441Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zendwind.com/2020/04/04/airflow-docker-install/</loc>
+    <loc>http://zendwind.com/2020/04/04/en/airflow-docker-install/</loc>
     
     <lastmod>2020-04-24T02:52:17.024Z</lastmod>
     
@@ -30,7 +30,7 @@
   </url>
   
   <url>
-    <loc>http://zendwind.com/2018/10/22/hbase-api/</loc>
+    <loc>http://zendwind.com/2018/10/22/en/hbase-api/</loc>
     
     <lastmod>2020-04-24T02:51:34.185Z</lastmod>
     
@@ -51,7 +51,7 @@
   </url>
   
   <url>
-    <loc>http://zendwind.com/2020/04/23/serverless-deploy-vuepress/</loc>
+    <loc>http://zendwind.com/2020/04/23/en/serverless-deploy-vuepress/</loc>
     
     <lastmod>2020-04-24T02:50:46.201Z</lastmod>
     
