@@ -2,65 +2,65 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zendwind.com/about/about.html</loc>
-    
-    <lastmod>2020-04-24T02:06:44.910Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2020/04/23/serverless-deploy-vuepress/</loc>
-    
-    <lastmod>2020-04-24T01:48:04.275Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zendwind.com/2020/03/28/dynamodb-migrate-s3/</loc>
     
-    <lastmod>2020-04-23T07:01:36.412Z</lastmod>
+    <lastmod>2020-04-24T02:52:23.441Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://zendwind.com/2020/04/04/airflow-docker-install/</loc>
     
-    <lastmod>2020-04-04T06:23:32.225Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2018/10/22/hbase-api/</loc>
-    
-    <lastmod>2018-10-23T15:30:46.633Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2017/11/11/phoenix-introduction/</loc>
-    
-    <lastmod>2018-05-16T15:09:39.072Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2017/10/11/hbase-read-write-exception-summary/</loc>
-    
-    <lastmod>2018-05-16T15:09:30.008Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2018/05/15/hadoop-small-file-storage/</loc>
-    
-    <lastmod>2018-05-16T15:09:20.444Z</lastmod>
+    <lastmod>2020-04-24T02:52:17.024Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://zendwind.com/2017/10/08/hadoop-ha-qjm/</loc>
     
-    <lastmod>2018-05-16T15:09:09.241Z</lastmod>
+    <lastmod>2020-04-24T02:51:53.482Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2018/05/15/hadoop-small-file-storage/</loc>
+    
+    <lastmod>2020-04-24T02:51:43.090Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2018/10/22/hbase-api/</loc>
+    
+    <lastmod>2020-04-24T02:51:34.185Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2017/10/11/hbase-read-write-exception-summary/</loc>
+    
+    <lastmod>2020-04-24T02:51:25.984Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2017/11/11/phoenix-introduction/</loc>
+    
+    <lastmod>2020-04-24T02:50:58.434Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2020/04/23/serverless-deploy-vuepress/</loc>
+    
+    <lastmod>2020-04-24T02:50:46.201Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/about/index.html</loc>
+    
+    <lastmod>2020-04-24T02:06:44.910Z</lastmod>
     
   </url>
   
@@ -68,13 +68,6 @@
     <loc>http://zendwind.com/2017/10/15/python-read-dump/</loc>
     
     <lastmod>2018-05-15T16:01:11.454Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2017/10/08/hdfs-multi-replicas-analysis/</loc>
-    
-    <lastmod>2018-05-15T15:51:08.986Z</lastmod>
     
   </url>
   
