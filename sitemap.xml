@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zendwind.com/other/announce.html</loc>
+    
+    <lastmod>2020-04-25T16:08:26.790Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zendwind.com/2020/03/28/en/dynamodb-migrate-s3/</loc>
     
     <lastmod>2020-04-25T14:32:07.272Z</lastmod>
