@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
 <head>
   <meta charset="utf-8">
   <title>关于我</title>
@@ -10,14 +10,14 @@
   
 
   <meta name="og:type" content="website">
-  <meta name="og:site_name" content="ZendWind's Blog and Project Site">
+  <meta name="og:site_name" content="ZendWind的博客">
   <meta name="og:image" content="http://zendwind.com/image/logo.png">
   <meta name="og:title" content="关于我">
   <meta name="og:url" content="http://zendwind.com/about/index.html">
   <meta name="og:description" content="本人目前在腾讯就职，主要从事云计算相关，致力于为用户提供最好的云上数据库解决方案，对MySQL、HBase、Redis及其它一些数据平台产品有所研究，热爱技术，热爱生活。本博客主要记录一些个人工作感悟。">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="ZendWind's Blog and Project Site">
+  <meta name="twitter:site" content="ZendWind的博客">
   <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
   <meta name="twitter:title" content="关于我">
   <meta name="twitter:creator" content="@JamlingLi">
@@ -71,7 +71,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-        <li><a href="/" class="main-nav">Home</a></li><li><a href="/p/" class="main-nav">Projects</a></li><li><a href="/categories/" class="main-nav">Category</a></li><li><a href="/archives/" class="main-nav">Archive</a></li><li><a href="/donate/" class="main-nav">Donate</a></li><li><a href="/about/" class="main-nav">About</a></li>
+        <li><a href="/" class="main-nav">首页</a></li><li><a href="/p/" class="main-nav">项目</a></li><li><a href="/categories/" class="main-nav">分类</a></li><li><a href="/archives/" class="main-nav">归档</a></li><li><a href="/donate/" class="main-nav">捐赠墙</a></li><li><a href="/about/" class="main-nav">关于</a></li>
         </ul>
         <!-- search input -->
         
@@ -80,7 +80,7 @@
 <form class="navbar-form navbar-left" role="search"
   action="//search.zendwind.com/cse/search">
   <div class="form-group search">
-    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="Search">
+    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="搜索">
     <input type="hidden" name="s" value="11812712506721118476">
     <input type="hidden" name="nsid" value="0">
     <!-- 
@@ -94,6 +94,15 @@
 </form>
 
         <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">语言 <span class="caret"></span></a>
+            <ul class="dropdown-menu animated fadeInDown faster">
+              <li><a href="/about/index.html">zh</a></li>
+              
+              <li><a href="/en/about/index.html">en</a></li>
+              
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -124,11 +133,11 @@
   <script src="/js/decrypt.min.js"></script>
   <footer class="article-footer">
     <time class="article-footer-updated" datetime="2020-04-24T02:06:44.910Z" itemprop="dateModified">
-    Last updated: 2020-04-24
+    最后更新：2020-04-24
     </time>
     <span itemprop="author publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
       <meta content="http://zendwind.com" itemprop="url">
-      <meta content="ZendWind's Blog and Project Site" itemprop="name">
+      <meta content="ZendWind的博客" itemprop="name">
       <meta content="/image/logo.png" itemprop="logo">
     </span>
     
@@ -142,12 +151,12 @@
 <!-- Button trigger modal -->
 <blockquote class="donate"><!--
   <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#DonateModal">
-    Donate
+    打赏
   </button>-->
   <p>
   <a href="#" role="button" data-toggle="modal" data-target="#DonateModal">
   <img src="/image/donate_button.png" alt="donate">
-  <span>Dear reader, if you feel this good, could you rewark me a `bread` as awark? Thank you very much~</span></a>
+  <span>各位看官，鄙人借网络这块宝地在此献丑，望有钱的捧个钱场（打赏任意金额），没钱的捧个人场（分享）</span></a>
   </p>
 </blockquote>
 <!-- Modal -->
@@ -156,7 +165,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class="modal-title" id="myModalLabel">Donate</span>
+        <span class="modal-title" id="myModalLabel">打赏</span>
       </div>
       <div class="modal-body"><!--
         <table>
@@ -187,7 +196,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
       </div>
     </div>
   </div>
@@ -219,7 +228,7 @@
       <div id="navbar-toc">
       <nav id="toc" class="hidden-print hidden-xs hidden-sm" data-spy="affix">
         <div class="toc-title"><a role="button" data-toggle="collapse" href="#toc-body" aria-expanded="true">
-          Table Of Contents
+          目录
         </a></div>
         <div id="toc-body" class="in">
         
@@ -266,9 +275,9 @@
   <!-- after footer, some 3rd script place here -->
     <script>
     var hljs_labels = {
-        left: "Code",
-        right: ":",
-        copy: "Copy to clipboard"
+        left: "代码",
+        right: "如下：",
+        copy: "复制"
     }
     </script>
     <script src="/js/hljs.js"></script>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<head>
+  <meta charset="utf-8">
+  <title>How to Deploy Vuepress with Serverless Framework</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="Serverless,vuepress,serverless,How to Deploy Vuepress with Serverless Framework">
+  <meta name="description" content="Serverless Framework is very popular all over the world, and has 30,000+ stars in Github. It is friendly for many cloud platforms, such as AWS, GCP, Azure, TencentCloud, AliCloud,etc.This post will present how to deploy vuepress (a simple static site generator) with Serverless Framework on TencentCloud.">
+   
+
+  <meta name="og:type" content="article">
+  <meta name="og:site_name" content="ZendWind's Blog and Project Site">
+  <meta name="og:image" content="http://zendwind.com/image/logo.png">
+  <meta name="og:title" content="How to Deploy Vuepress with Serverless Framework">
+  <meta name="og:url" content="http://zendwind.com/2020/04/23/en/serverless-deploy-vuepress/">
+  <meta name="og:description" content="Serverless Framework is very popular all over the world, and has 30,000+ stars in Github. It is friendly for many cloud platforms, such as AWS, GCP, Azure, TencentCloud, AliCloud,etc.This post will present how to deploy vuepress (a simple static site generator) with Serverless Framework on TencentCloud.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="ZendWind's Blog and Project Site">
+  <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
+  <meta name="twitter:title" content="How to Deploy Vuepress with Serverless Framework">
+  <meta name="twitter:creator" content="@JamlingLi">
+  <meta name="twitter:description" content="Serverless Framework is very popular all over the world, and has 30,000+ stars in Github. It is friendly for many cloud platforms, such as AWS, GCP, Azure, TencentCloud, AliCloud,etc.This post will present how to deploy vuepress (a simple static site generator) with Serverless Framework on TencentCloud.">
+
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zendwind.com/en/2020/04/23/en/serverless-deploy-vuepress/index.html">
+  <!-- Alternative links -->
+  <!-- CSS and JS-->
+  <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/sidr/2.2.1/jquery.sidr.min.js"></script>
+<script src="/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/lang_select.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.15.10/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css">
+<script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.css">
+<script src="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<link rel="stylesheet" href="/css/nova_font.css">
+<link rel="stylesheet" href="/css/bs/nova.css">
+
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="Zend Wind's Blog">
+  <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <!-- header -->
+  <header id="body-header">
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse_" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/en/" id="logo"><img src="/image/logo.png" height="50" alt="logo"></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+        <li><a href="/en/" class="main-nav">Home</a></li><li><a href="/en/p/" class="main-nav">Projects</a></li><li><a href="/en/categories/" class="main-nav">Category</a></li><li><a href="/en/archives/" class="main-nav">Archive</a></li><li><a href="/en/donate/" class="main-nav">Donate</a></li><li><a href="/en/about/" class="main-nav">About</a></li>
+        </ul>
+        <!-- search input -->
+        
+
+<!-- 百度站内搜索（已通过站点验证） -->
+<form class="navbar-form navbar-left" role="search"
+  action="//search.zendwind.com/cse/search">
+  <div class="form-group search">
+    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="Search">
+    <input type="hidden" name="s" value="11812712506721118476">
+    <input type="hidden" name="nsid" value="0">
+    <!-- 
+    <input name="tn" type="hidden" value="SE_zzsearchcode_shhzc78w">
+    <input name="cl" type="hidden" value="3">
+    <input name="ct" type="hidden" value="2097152">
+    <input name="si" type="hidden" value="ieclipse.cn">
+    <input name="ie" type="hidden" value="utf-8">
+    -->
+  </div>
+</form>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language <span class="caret"></span></a>
+            <ul class="dropdown-menu animated fadeInDown faster">
+              <li><a href="/2020/04/23/en/serverless-deploy-vuepress/">zh</a></li>
+              
+              <li><a href="/en/2020/04/23/en/serverless-deploy-vuepress/">en</a></li>
+              
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- main -->
+  
+<div class="container container-fluid">
+<div class="row">
+  <div class="col-sx-12 col-sm-8 col-md-9 col-lg-9">
+    
+<article class="article post" itemscope="itemscope" itemtype="http://schema.org/Article">
+  <header class="article-header">
+    <div class="page-path"><span class="post-category"><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>Path: <a class="category-item" href="/en/">Blog</a><a class="category-item" href="/en/categories/Serverless/">Serverless</a></span></div>
+    <div class="divider"></div>
+      <h1 class="article-title" itemprop="name headline"></h1>
+    <div class="post-header clearfix">
+      <span class="post-date"><span class="hidden-xs icon nova-calendar">Post at: </span>
+      <time datetime="2020-04-23T03:00:00.000Z" itemprop="datePublished"><time datetime="2020-04-23T03:00:00.000Z">2020-04-23</time></time>
+      </span>
+      
+      <span class="post-share">
+        <a href="#share" class="icon nova-share"><span class="hidden-xs">Share</span><span class="jiathis_counter_style"></span></a>
+        <a href="#comment" class="icon nova-bubbles"><span class="ds-thread-count" id="changyan_count_unit" data-thread-key="04e8c67e49b04e771f82cfc2dd619ccc"></span><span class="hidden-xs">Comment</span></a>
+        <!--<a href="#like" class="icon nova-heart2-full"><span class="count" id="changyan_parti_unit"></span><span class="hidden-xs">Like</span></a>-->
+        <a href="#" class="icon nova-eye"><span class="count lc-count"></span><span class="hidden-xs">Views</span></a>
+      </span>
+    </div>
+    <div class="divider"></div>
+    <meta content="2020-04-23T03:00:00.000Z" itemprop="datePublished">
+  </header>
+  <div class="article-content" itemprop="articleBody">
+  
+    <p>Serverless Framework is very popular all over the world, and has 30,000+ stars in Github. It is friendly for many cloud platforms, such as AWS, GCP, Azure, TencentCloud, AliCloud,etc.This post will present how to deploy vuepress (a simple static site generator) with Serverless Framework on TencentCloud.<br><a id="more"></a></p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><h2 id="NodeJS-and-NPM-Install"><a href="#NodeJS-and-NPM-Install" class="headerlink" title="NodeJS and NPM Install"></a>NodeJS and NPM Install</h2><p>The installation can refer to <a href="https://blog.teamtreehouse.com/install-node-js-npm-mac" target="_blank" rel="external">How to Install Node.js and NPM on a Mac</a>.</p>
+<h2 id="Serverless-Install"><a href="#Serverless-Install" class="headerlink" title="Serverless Install"></a>Serverless Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g serverless</div></pre></td></tr></table></figure>
+<h2 id="Vuepress-Install"><a href="#Vuepress-Install" class="headerlink" title="Vuepress Install"></a>Vuepress Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g vuepress</div></pre></td></tr></table></figure>
+<h2 id="COS-Bucket-Create"><a href="#COS-Bucket-Create" class="headerlink" title="COS Bucket Create"></a>COS Bucket Create</h2><ul>
+<li>Apply for TencentCloud account</li>
+<li>Check out the <a href="https://intl.cloud.tencent.com/document/product/436/11365" target="_blank" rel="external">COS documentation</a> page for an example of creating a COS bucket in relevant region.</li>
+</ul>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="Serverless-Framework"><a href="#Serverless-Framework" class="headerlink" title="Serverless Framework"></a>Serverless Framework</h2><p>The introduction about serverless can refer to <a href="https://serverless.com" target="_blank" rel="external">official website</a>.</p>
+<h2 id="Vuepress"><a href="#Vuepress" class="headerlink" title="Vuepress"></a>Vuepress</h2><p>Vuepress includes two parts: one is minimalistic static site generator, the other is theme. The detail informations can refer to <a href="https://vuepress.vuejs.org" target="_blank" rel="external">official website</a>.</p>
+<h1 id="Best-Practice"><a href="#Best-Practice" class="headerlink" title="Best Practice"></a>Best Practice</h1><h2 id="Operation-Steps"><a href="#Operation-Steps" class="headerlink" title="Operation Steps"></a>Operation Steps</h2><h3 id="Step1-Project-Preparation"><a href="#Step1-Project-Preparation" class="headerlink" title="Step1.Project Preparation"></a>Step1.Project Preparation</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir -p vuepress_blog/docs </div><div class="line"><span class="built_in">cd</span> vuepress_blog</div><div class="line">touch package.json</div><div class="line">touch docs/README.md</div><div class="line"><span class="built_in">echo</span> <span class="string">"Hello, My first Vuepress Blog"</span> &gt;&gt;README.md</div></pre></td></tr></table></figure>
+<p>The package.json is as below:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"docs:dev"</span>: <span class="string">"vuepress dev docs"</span>,</div><div class="line">    <span class="string">"docs:build"</span>: <span class="string">"vuepress build docs"</span>,</div><div class="line">    <span class="string">"docs:deploy"</span>: <span class="string">"cd docs/.vuepress &amp;&amp; sls"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>docs:dev</strong> : start a dev environment</li>
+<li><strong>docs:build</strong> : build a static site</li>
+<li><strong>docs:deploy</strong> : deploy the static site to cos with Serverless Framework</li>
+</ul>
+<p><strong>Note</strong>: With package.json, you can integrate your project with CI service easily. </p>
+<p>The final directory structure is as follows:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">|-- docs</div><div class="line">|   |--.vuepress</div><div class="line">|   |   |--dist</div><div class="line">|   |   |  |--index.html</div><div class="line">|   |   |  |--404.html</div><div class="line">|   |   |  |--assets</div><div class="line">|   |   |  |  |--css</div><div class="line">|   |   |  |  |--js</div><div class="line">|   |   |  |  |--img</div><div class="line">|   |--README.md</div><div class="line">|-- package.json</div></pre></td></tr></table></figure></p>
+<h3 id="Step2-Run-Dev-Mode"><a href="#Step2-Run-Dev-Mode" class="headerlink" title="Step2. Run Dev Mode"></a>Step2. Run Dev Mode</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run docs:dev  <span class="comment"># or vuepress dev docs/</span></div></pre></td></tr></table></figure>
+<p>This command will start a dev environment, and you can browse the static site with <code>localhost:8080</code> </p>
+<h3 id="Step3-Build-Static-Site"><a href="#Step3-Build-Static-Site" class="headerlink" title="Step3. Build Static Site"></a>Step3. Build Static Site</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run docs:build</div></pre></td></tr></table></figure>
+<p>This command will generate static files in <code>vuepress_blog/docs/.vuepress/dist</code>, such as:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">drwxr-xr-x  5 xxx  staff   160B Apr 23 11:29 assets</div><div class="line">-rw-r--r--  1 xxx  staff   1.2K Apr 23 11:29 404.html</div><div class="line">-rw-r--r--  1 xxx  staff   2.1K Apr 23 11:29 index.html</div></pre></td></tr></table></figure>
+<h3 id="Step4-Config-serverless-yml"><a href="#Step4-Config-serverless-yml" class="headerlink" title="Step4. Config serverless.yml"></a>Step4. Config serverless.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> vuepress_blog/docs/.vuepress</div><div class="line"></div><div class="line">touch serverless.yml</div></pre></td></tr></table></figure>
+<p>The serverless.yml is as below:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">name: myblog</div><div class="line">myblog:</div><div class="line">  component: <span class="string">"@serverless/tencent-website"</span></div><div class="line">  inputs:</div><div class="line">    code:</div><div class="line">      src: ./dist <span class="comment"># Upload static files</span></div><div class="line">      index: index.html</div><div class="line">      error: 404.html</div><div class="line">    region: ap-hongkong</div><div class="line">    bucketName: your cos bucket name</div></pre></td></tr></table></figure><br><strong>Note</strong>: The component <code>@serverless/tencent-website</code> is suitable for tencent cloud, you can see details in <a href="https://github.com/serverless-components/tencent-website" target="_blank" rel="external">github project</a></p>
+<h3 id="Step5-Serverless-Deploy"><a href="#Step5-Serverless-Deploy" class="headerlink" title="Step5. Serverless Deploy"></a>Step5. Serverless Deploy</h3><p>Config the <code>.env</code> file for authorization of TencentCloud<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> vuepress_blog/docs/.vuepress</div><div class="line">vim .env </div><div class="line"><span class="comment"># replace your secret_id and secret_key of tencent cloud</span></div><div class="line">TENCENT_APP_ID=xxx <span class="comment"># your account id </span></div><div class="line">TENCENT_SECRET_ID=xxx <span class="comment"># secret id</span></div><div class="line">TENCENT_SECRET_KEY=xxx <span class="comment"># secret key</span></div><div class="line">TENCENT_TOKEN=xxx <span class="comment"># access token</span></div></pre></td></tr></table></figure></p>
+<p>Then execute <code>sls</code> to deploy static site to COS:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run docs:deploy</div></pre></td></tr></table></figure></p>
+<p>Meanwhile, we can integrate this command in config.js as below:</p>
+<h3 id="Step6-Check-Deployment"><a href="#Step6-Check-Deployment" class="headerlink" title="Step6. Check Deployment"></a>Step6. Check Deployment</h3><p>Open the COS http url on browser to see the index.html.</p>
+<h2 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h2><p>If you want to build a documentation system, the Vuepress will be your choice. The detail description can refer to  <a href="https://snipcart.com/blog/vuepress-tutorial-vuejs-documentation" target="_blank" rel="external">In-Depth VuePress Tutorial: Vue-Powered Docs &amp; Blog</a>.</p>
+<h3 id="Add-a-config-file"><a href="#Add-a-config-file" class="headerlink" title="Add a config file"></a>Add a config file</h3><p>Add a <code>config.js</code> in <code>vuepress_blog/docs/.vuepress</code> directory, for example:<br><figure class="highlight js"><figcaption><span>config.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line"> title: <span class="string">'Welcome to TcaplusDB World'</span>,</div><div class="line"> description: <span class="string">'Just playing around'</span>,</div><div class="line"> themeConfig: &#123;</div><div class="line">       nav: [</div><div class="line">         &#123; <span class="attr">text</span>: <span class="string">'Home'</span>, <span class="attr">link</span>: <span class="string">'/'</span> &#125;,</div><div class="line">         &#123; <span class="attr">text</span>: <span class="string">'Blog'</span>, <span class="attr">link</span>: <span class="string">'/blog/'</span> &#125;,</div><div class="line">         &#123; <span class="attr">text</span>: <span class="string">'External'</span>, <span class="attr">link</span>: <span class="string">'https://cloud.tencent.com/product/tcaplusdb'</span> &#125;,</div><div class="line">       ],</div><div class="line">       sidebar: [</div><div class="line">               <span class="string">'/'</span>,</div><div class="line">               <span class="string">'/blog/'</span></div><div class="line">       ]</div><div class="line"></div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Add-Subdirectory"><a href="#Add-Subdirectory" class="headerlink" title="Add Subdirectory"></a>Add Subdirectory</h3><p>Create <code>blog</code> subdirectory in <code>vuepress_blog/docs</code>, then touch a README.md and first-post.md in blog directory.</p>
+<h3 id="Config-Vue-Support"><a href="#Config-Vue-Support" class="headerlink" title="Config Vue Support"></a>Config Vue Support</h3><p>Vuepress supports flexible vue component config. Take blog for example.<br><strong>First, add <code>component</code> directory in <code>vuepress_blog/docs/.vuepress</code></strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> vuepress_blog/docs/.vuepress</div><div class="line"></div><div class="line">mkdir component</div><div class="line"></div><div class="line"><span class="built_in">cd</span> component </div><div class="line"></div><div class="line">touch BlogIndex.vue</div></pre></td></tr></table></figure></p>
+<p>The BlogIndex.vue is as follows:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">&lt;div&gt;</div><div class="line">    &lt;div v-for=<span class="string">"post in posts"</span>&gt;</div><div class="line">        &lt;h2&gt;</div><div class="line">            &lt;router-link :to=<span class="string">"post.path"</span>&gt;&#123;&#123; post.frontmatter.title &#125;&#125;&lt;/router-link&gt;</div><div class="line">        &lt;/h2&gt;</div><div class="line"></div><div class="line">        &lt;p&gt;&#123;&#123; post.frontmatter.description &#125;&#125;&lt;/p&gt;</div><div class="line"></div><div class="line">        &lt;p&gt;&lt;router-link :to=<span class="string">"post.path"</span>&gt;Read more&lt;/router-link&gt;&lt;/p&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line"><span class="built_in">export</span> default &#123;</div><div class="line">    computed: &#123;</div><div class="line">        <span class="function"><span class="title">posts</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> this.<span class="variable">$site</span>.pages</div><div class="line">                .filter(x =&gt; x.path.startsWith(<span class="string">'/blog/'</span>) &amp;&amp; !x.frontmatter.blog_index)</div><div class="line">                .sort((a, b) =&gt; new Date(b.frontmatter.date) - new Date(a.frontmatter.date));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>Second, config README.md in blog directory</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">blog_index: <span class="literal">true</span></div><div class="line">---</div><div class="line"></div><div class="line"><span class="comment"># Blog</span></div><div class="line"></div><div class="line">Welcome to TcaplusDB blog</div><div class="line"></div><div class="line">&lt;BlogIndex /&gt;</div></pre></td></tr></table></figure></p>
+<p>The <code>blog_index</code> is used to make sure that the blog index isn’t listed in the posts. When filtering the posts in the posts computed property of the BlogIndex component.</p>
+<p>The final directory structure is as below:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── docs</div><div class="line">│   ├── .vuepress</div><div class="line">│   │   ├── .env</div><div class="line">│   │   ├── components</div><div class="line">│   │   │   └── BlogIndex.vue</div><div class="line">│   │   ├── config.js</div><div class="line">│   │   └── serverless.yml</div><div class="line">│   ├── README.md</div><div class="line">│   ├── blog</div><div class="line">│   │   ├── README.md</div><div class="line">│   │   └── first-post.md</div><div class="line">│   └── guide</div><div class="line">│       └── README.md</div><div class="line">├── package-lock.json</div><div class="line">└── package.json</div></pre></td></tr></table></figure></p>
+<p><strong>Third, rebuild and deploy static site</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm run docs:build</div><div class="line">npm run docs:deploy</div></pre></td></tr></table></figure></p>
+<p>The demo is shown as below picture:<br><img src="/2020/04/23/en/serverless-deploy-vuepress/vuepress-home.jpg" alt="vuepress-demo"></p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>This post introduces how to deploy a Vuepress static site with Serverless Framework to COS of TencentCloud. It is convient for users to have their simple documentation system quickly. </p>
+
+  
+  </div>
+
+  <script src="/js/decrypt.min.js"></script>
+  <footer class="article-footer">
+    <time class="article-footer-updated" datetime="2020-04-24T02:50:46.201Z" itemprop="dateModified">
+    Last updated: 2020-04-24
+    </time>
+    <span itemprop="author publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
+      <meta content="http://zendwind.com" itemprop="url">
+      <meta content="ZendWind's Blog and Project Site" itemprop="name">
+      <meta content="/image/logo.png" itemprop="logo">
+    </span>
+    
+<a id="share"></a>
+<div class="social-share"></div>
+<script>
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js'];
+</script>
+
+
+  </footer>
+</article>
+
+<div class="page-footer">
+  <nav><ul class="pager"><li class="next"><a href="/en/2020/04/04/en/airflow-docker-install/"><span aria-hidden="true">&rarr;</span><span class="hidden-xs">Next</span></a></li></ul></nav>
+  
+<!-- Button trigger modal -->
+<blockquote class="donate"><!--
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#DonateModal">
+    Donate
+  </button>-->
+  <p>
+  <a href="#" role="button" data-toggle="modal" data-target="#DonateModal">
+  <img src="/image/donate_button.png" alt="donate">
+  <span>Dear reader, if you feel this good, could you rewark me a `bread` as awark? Thank you very much~</span></a>
+  </p>
+</blockquote>
+<!-- Modal -->
+<div class="modal fade" id="DonateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="modal-title" id="myModalLabel">Donate</span>
+      </div>
+      <div class="modal-body"><!--
+        <table>
+        <thead>
+          <th class="text-center">支付宝</th>
+          <th class="text-center">微信支付</th>
+        </thead>
+        <tr>
+          <td><img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="img-rounded donate" width="200" height="200"></td>
+          <td><img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="img-rounded donate" width="200" height="200"></td>
+        </tr>
+        </table>-->
+        <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-6">
+          <div class="text-center">
+            <span style="display:block;">支付宝</span>
+            <img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="donate" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center">
+            <span style="display:block;">微信支付</span>
+            <img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="donate" />
+          </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <a id="comment"></a>
+
+<script src="//unpkg.com/valine/dist/Valine.min.js">
+</script>
+<!--PC和WAP自适应版-->
+<div id="vcomments" data-sid="04e8c67e49b04e771f82cfc2dd619ccc" ></div>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
+        appKey: 'QdFr23RGUj3JYo0I4Yi8wuV3',
+        path: '04e8c67e49b04e771f82cfc2dd619ccc',
+        recordIP: true
+    })
+</script>
+
+
+
+</div>
+
+
+    
+  </div> <!-- end main column  -->
+  <!-- aside -->
+  <div class="col-sx-12 col-sm-4 col-md-3 col-lg-3">
+    <aside>
+      <div id="navbar-toc">
+      <nav id="toc" class="hidden-print hidden-xs hidden-sm" data-spy="affix">
+        <div class="toc-title"><a role="button" data-toggle="collapse" href="#toc-body" aria-expanded="true">
+          Table Of Contents
+        </a></div>
+        <div id="toc-body" class="in">
+        <ul class="nav toc-ul"><li><a href="#Prerequisites">Prerequisites</a><ul class="nav toc-ul"><li><a href="#NodeJS-and-NPM-Install">NodeJS and NPM Install</a></li><li><a href="#Serverless-Install">Serverless Install</a></li><li><a href="#Vuepress-Install">Vuepress Install</a></li><li><a href="#COS-Bucket-Create">COS Bucket Create</a></li></ul></li><li><a href="#Introduction">Introduction</a><ul class="nav toc-ul"><li><a href="#Serverless-Framework">Serverless Framework</a></li><li><a href="#Vuepress">Vuepress</a></li></ul></li><li><a href="#Best-Practice">Best Practice</a><ul class="nav toc-ul"><li><a href="#Operation-Steps">Operation Steps</a><ul class="nav toc-ul"><li><a href="#Step1-Project-Preparation">Step1.Project Preparation</a></li><li><a href="#Step2-Run-Dev-Mode">Step2. Run Dev Mode</a></li><li><a href="#Step3-Build-Static-Site">Step3. Build Static Site</a></li><li><a href="#Step4-Config-serverless-yml">Step4. Config serverless.yml</a></li><li><a href="#Step5-Serverless-Deploy">Step5. Serverless Deploy</a></li><li><a href="#Step6-Check-Deployment">Step6. Check Deployment</a></li></ul></li><li><a href="#Extension">Extension</a><ul class="nav toc-ul"><li><a href="#Add-a-config-file">Add a config file</a></li><li><a href="#Add-Subdirectory">Add Subdirectory</a></li><li><a href="#Config-Vue-Support">Config Vue Support</a></li></ul></li></ul></li><li><a href="#Summary">Summary</a></li></ul>
+        </div>
+      </nav>
+</div>
+
+      
+    </aside>
+  </div> <!-- end aside column  -->
+</div> <!-- end row -->
+</div> <!-- end container -->
+
+  <!-- footer -->
+  <footer id="body-footer">
+  <div class="divider"></div>
+  <div>&nbsp;</div>
+  <div class="inner text-center">
+    <div id="footer-copyright">
+      &copy; 2020 <a href="http://zendwind.com" target="_blank">Wen Qiuliang</a> powered by <a href="http://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Jamling/hexo-theme-nova" target="_blank">Nova</a><br>
+      <!-- Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>. -->
+    </div>
+    <div>
+      <a href="http://www.beian.miit.gov.cn" target="_blank"></a>
+    </div>
+  </div>
+</footer>
+
+  <!-- fixed action bar -->
+  
+  <div class="fab hidden-print" style="bottom: 45px; right: 24px;">
+  <!--
+    <ul class="top-expand" id="top-expand">
+      <li><a class="fab-item large red" href="#top"><i class="icon nova-top"></i></a></li>
+      <li><a class="fab-item large yellow " href="//www.jiathis.com/share?uid=2064663" target="_blank"><i class="icon nova-share"></i></a></li>
+    </ul>
+    <a class="fab-item large red " onclick="$('#top-expand').toggle();">
+      <i class="icon nova-list-ul"></i>
+    </a>
+    -->
+    <a class="fab-item large red " href="#top">
+      <i class="icon nova-top"></i>
+    </a>
+  </div>
+
+  <!-- after footer, some 3rd script place here -->
+    <script>
+    var hljs_labels = {
+        left: "Code",
+        right: ":",
+        copy: "Copy to clipboard"
+    }
+    </script>
+    <script src="/js/hljs.js"></script>
+    <script src="/js/script.js"></script>
+    
+    <!-- 安装自动推送JS代码的网页，在页面被访问时，页面URL将立即被推送给百度 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+    <!-- 新建的搜索框代码，建立使用你自己的代码替换-->
+<script>
+(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=11812712506721118476' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();
+</script>
+
+    
+
+<!-- LeanClound官方Javascript SDK -->
+<script>
+  var page_layout = 'false'
+  var lc_debug = false;
+  if(typeof AV === 'undefined') {
+    $.getScript('//cdn1.lncld.net/static/js/av-min-1.2.1.js',function() {
+      lc_debug && console.log('init AV after av.js loaded');
+        AV.init({
+          appId : 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
+          appKey : 'QdFr23RGUj3JYo0I4Yi8wuV3'
+        });
+        if (page_layout === 'true') {
+          lc_index_views('.card-action', {
+            style : 'hidden-xs',
+            p : {
+              views : '.nova-eye .count'
+            }
+          })
+        }
+        lc_page_views();
+    });
+  }
+
+  var lc_config = {
+    pageId : '04e8c67e49b04e771f82cfc2dd619ccc',
+    url : 'en/2020/04/23/en/serverless-deploy-vuepress/' || 'http://zendwind.com/2020/04/23/en/serverless-deploy-vuepress/',
+    title : 'How to Deploy Vuepress with Serverless Framework'
+  };
+  lc_debug && console.log('lcconfig', lc_config);
+
+  var lc_table = 'Counter' || 'Counter';
+
+  function lc_page_views() {
+    var query = new AV.Query(lc_table);
+    query.select(['-ACL']);
+    query.equalTo('pageId', lc_config.pageId);
+    query.first({
+      success: function(results) {
+        // results is an array of AV.Object.
+        if (typeof results === 'undefined') {
+          insert(results);
+          return;
+        }
+        update(results);
+        show(results);
+      },
+      error: function(error) {
+        // error is an instance of AV.Error.
+        console.log(error);
+      }
+    });
+
+    function insert(data) {
+      if (!data) {
+        lc_debug && console.log('data is null new object');
+        var M = AV.Object.extend(lc_table);
+        data = new M();
+        data.set('views', 1);
+      }
+      for ( var key in lc_config) {
+        data.set(key, lc_config[key]);
+      }
+      data.save().then(function(data) {
+        lc_debug && console.log('created objectId is ' + data.id);
+      }, function(error) {
+        lc_debug && console.log("create object failed", error);
+      });
+    }
+
+    function update(data) {
+      for ( var key in lc_config) {
+        if (key !== 'pageId')
+        data.set(key, lc_config[key]);
+      }
+      lc_debug && console.log("after change,data", data);
+      data.increment('views', 1);
+      data.save().then(function(data) {
+        lc_debug && console.log("update to " + data.get('views'));
+      }, function(error) {
+        lc_debug && console.log("update object failed", error);
+      });
+    }
+
+    function show(data) {
+      $(".lc-count").html(data.get('views'));
+    }
+    function show_count(count) {
+      $(".lc-count").html(count);
+    }
+  };
+
+  function lc_index_views() {
+    // load views count from leanclound
+    // make sure you are created Counter table on leanclound
+    function lc_load_views(selector, options) {
+      var o = options || {};
+      var tkeys = [];
+      $(selector).each(function(i) {
+        var tkey = $(this).data('tkey');
+        tkeys.push(tkey);
+      });
+
+      var query = new AV.Query(lc_table);
+      query.select([ '-ACL', '-createdAt', '-updatedAt', '-url' ]);
+      query.containedIn('pageId', tkeys);
+      query.find().then(function(results) {
+        $(selector).each(function(i) {
+          var tkey = $(this).data('tkey');
+          for (var i = 0; i < results.length; i++) {
+            var t = results[i];
+            if (t.get('pageId') === tkey) {
+              var c = t.get('views') + '';
+              $(this).find(o.p.views).html(c);
+            }
+          }
+        });
+      }, function(error) {
+      });
+    }
+
+    lc_load_views('.card-action', {
+      style : 'hidden-xs',
+      p : {
+        views : '.nova-eye .count'
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

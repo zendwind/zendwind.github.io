@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
 <head>
   <meta charset="utf-8">
-  <title>Archives－2017－10|ZendWind's Blog and Project Site</title>
+  <title>归档－2017－10|ZendWind的博客</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
-  <meta name="description" content="ZendWind's Open Project">
+  <meta name="description" content="ZendWind's 技术文章博客.">
   
 
   <meta name="og:type" content="website">
-  <meta name="og:site_name" content="ZendWind's Blog and Project Site">
+  <meta name="og:site_name" content="ZendWind的博客">
   <meta name="og:image" content="http://zendwind.com/image/logo.png">
-  <meta name="og:title" content="Archives－2017－10">
+  <meta name="og:title" content="归档－2017－10">
   <meta name="og:url" content="http://zendwind.com/archives/2017/10/index.html">
-  <meta name="og:description" content="ZendWind's Open Project">
+  <meta name="og:description" content="ZendWind's 技术文章博客.">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="ZendWind's Blog and Project Site">
+  <meta name="twitter:site" content="ZendWind的博客">
   <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
-  <meta name="twitter:title" content="Archives－2017－10">
+  <meta name="twitter:title" content="归档－2017－10">
   <meta name="twitter:creator" content="@JamlingLi">
-  <meta name="twitter:description" content="ZendWind's Open Project">
+  <meta name="twitter:description" content="ZendWind's 技术文章博客.">
 
   <!-- Canonical links -->
   <link rel="canonical" href="http://zendwind.com/archives/2017/10/index.html">
@@ -71,7 +71,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-        <li><a href="/" class="main-nav">Home</a></li><li><a href="/p/" class="main-nav">Projects</a></li><li><a href="/categories/" class="main-nav">Category</a></li><li><a href="/archives/" class="main-nav">Archive</a></li><li><a href="/donate/" class="main-nav">Donate</a></li><li><a href="/about/" class="main-nav">About</a></li>
+        <li><a href="/" class="main-nav">首页</a></li><li><a href="/p/" class="main-nav">项目</a></li><li><a href="/categories/" class="main-nav">分类</a></li><li><a href="/archives/" class="main-nav">归档</a></li><li><a href="/donate/" class="main-nav">捐赠墙</a></li><li><a href="/about/" class="main-nav">关于</a></li>
         </ul>
         <!-- search input -->
         
@@ -80,7 +80,7 @@
 <form class="navbar-form navbar-left" role="search"
   action="//search.zendwind.com/cse/search">
   <div class="form-group search">
-    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="Search">
+    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="搜索">
     <input type="hidden" name="s" value="11812712506721118476">
     <input type="hidden" name="nsid" value="0">
     <!-- 
@@ -94,6 +94,15 @@
 </form>
 
         <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">语言 <span class="caret"></span></a>
+            <ul class="dropdown-menu animated fadeInDown faster">
+              <li><a href="/archives/2017/10/index.html">zh</a></li>
+              
+              <li><a href="/en/archives/2017/10/index.html">en</a></li>
+              
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -140,7 +149,7 @@
 
     <div class="panel panel-primary animated slideInUp faster">
       <div class="panel-heading">
-        <h3 class="panel-title">Announce</h3>
+        <h3 class="panel-title">公告</h3>
       </div>
       <div class="panel-body" id="widget_announce">
         本站评论系统已由友言切换为多说，原有的友言评论数据在友言云端数据迁移完毕之后再导入，在此期间，原先的评论暂不可见，请见谅！
@@ -160,7 +169,7 @@
           }
         },
         error: function (xhr, msg, e) {
-          ds_top_dom.html('<div class="text-center">Load failed</div>');
+          ds_top_dom.html('<div class="text-center">加载失败</div>');
         }
       });
     }
@@ -170,7 +179,7 @@
 
     <div class="panel panel-primary animated slideInUp faster">
       <div class="panel-heading">
-        <h3 class="panel-title">About</h3>
+        <h3 class="panel-title">关于</h3>
       </div>
       <div class="panel-body text-center">
         <div></div>
@@ -188,7 +197,7 @@
 
     <div class="panel panel-primary hidden-xs animated slideInUp faster" id="category">
       <div class="panel-heading">
-        <h3 class="panel-title">Category</h3>
+        <h3 class="panel-title">分类</h3>
       </div>
       
       <!-- use category tree -->
@@ -198,7 +207,7 @@
 
     <div class="panel panel-primary animated slideInUp faster">
       <div class="panel-heading">
-        <h3 class="panel-title">Tags</h3>
+        <h3 class="panel-title">标签</h3>
       </div>
       
       <div class="panel-body">
@@ -208,7 +217,7 @@
 
     <div class="panel panel-primary animated slideInUp faster">
       <div class="panel-heading">
-        <h3 class="panel-title">Links</h3>
+        <h3 class="panel-title">友情链接</h3>
       </div>
       <div class="list-group" id="widget-links">
       <a class="list-group-item has-icon" href="http://zendwind.com" title="ZendWind's Blog" target="_blank"><img src="/image/logo.png" alt="ZendWind's Blog">ZendWind's Blog</a><a class="list-group-item has-icon" href="http://www.cnblogs.com/ballwql" title="Cnblogs" target="_blank"><img src="/image/logo.png" alt="Cnblogs">Cnblogs</a>
@@ -255,9 +264,9 @@
   <!-- after footer, some 3rd script place here -->
     <script>
     var hljs_labels = {
-        left: "Code",
-        right: ":",
-        copy: "Copy to clipboard"
+        left: "代码",
+        right: "如下：",
+        copy: "复制"
     }
     </script>
     <script src="/js/hljs.js"></script>
@@ -312,7 +321,7 @@
   var lc_config = {
     pageId : 'f00b42dd919d2c4c18384449c7341871',
     url : 'archives/2017/10/index.html' || '',
-    title : 'Archives－2017－10'
+    title : '归档－2017－10'
   };
   lc_debug && console.log('lcconfig', lc_config);
 
