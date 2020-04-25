@@ -1,4 +1,132 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>【原】Hadoop小文件存储方案 | Zend Wind's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="stylesheet" type="text/css" href="/css/copyright.css?v=0.0.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">【原】Hadoop小文件存储方案</h1><a id="logo" href="/.">Zend Wind's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">【原】Hadoop小文件存储方案</h1><div class="post-meta">May 15, 2018<span> | </span><span class="category"><a href="/categories/hadoop/">hadoop</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS总体架构"><span class="toc-number">1.</span> <span class="toc-text">HDFS总体架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS写流程"><span class="toc-number">2.</span> <span class="toc-text">HDFS写流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS读流程"><span class="toc-number">3.</span> <span class="toc-text">HDFS读流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS块信息介绍"><span class="toc-number">4.</span> <span class="toc-text">HDFS块信息介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS块设计原则"><span class="toc-number">4.1.</span> <span class="toc-text">HDFS块设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS块存储原则"><span class="toc-number">4.2.</span> <span class="toc-text">HDFS块存储原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS块元数据信息"><span class="toc-number">4.3.</span> <span class="toc-text">HDFS块元数据信息</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS小文件存储方案"><span class="toc-number">5.</span> <span class="toc-text">HDFS小文件存储方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HAR存储方案"><span class="toc-number">5.1.</span> <span class="toc-text">HAR存储方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SequenceFile存储方案"><span class="toc-number">5.2.</span> <span class="toc-text">SequenceFile存储方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Record组织模式"><span class="toc-number">5.2.1.</span> <span class="toc-text">Record组织模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Block组织模式"><span class="toc-number">5.2.2.</span> <span class="toc-text">Block组织模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SequenceFile示例"><span class="toc-number">5.2.3.</span> <span class="toc-text">SequenceFile示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SequenceFile优缺点"><span class="toc-number">5.2.4.</span> <span class="toc-text">SequenceFile优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优点"><span class="toc-number">5.2.4.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点"><span class="toc-number">5.2.4.2.</span> <span class="toc-text">缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CombinedFile存储方案"><span class="toc-number">5.3.</span> <span class="toc-text">CombinedFile存储方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它小文件存储方案"><span class="toc-number">6.</span> <span class="toc-text">其它小文件存储方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于HBase的小文件存储方案"><span class="toc-number">6.1.</span> <span class="toc-text">基于HBase的小文件存储方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于打包构建索引方案"><span class="toc-number">6.2.</span> <span class="toc-text">基于打包构建索引方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其它方案对比"><span class="toc-number">6.3.</span> <span class="toc-text">其它方案对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结-1"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附件"><span class="toc-number">9.</span> <span class="toc-text">附件</span></a></li></ol></div></div><div class="post-content"><p>近来，业务部门因历史原因，希望对现存的图片、对账等历史文件进行改造，由原先的单机存储改成分布式存储便于管理和维护，目前组内也在大力推广HDFS在部门的应用 ，所以在此背景下，调研了目前关于HDFS的文件存储方案，本文会着重从小文件需求入手，分析目前各种现有小文件存储的状况及各自使用的场景。<br><a id="more"></a></p>
+<!DOCTYPE html>
+<html lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<head>
+  <meta charset="utf-8">
+  <title>【原】Hadoop小文件存储方案</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="hadoop,【原】Hadoop小文件存储方案">
+  <meta name="description" content="近来，业务部门因历史原因，希望对现存的图片、对账等历史文件进行改造，由原先的单机存储改成分布式存储便于管理和维护，目前组内也在大力推广HDFS在部门的应用 ，所以在此背景下，调研了目前关于HDFS的文件存储方案，本文会着重从小文件需求入手，分析目前各种现有小文件存储的状况及各自使用的场景。">
+   
+
+  <meta name="og:type" content="article">
+  <meta name="og:site_name" content="Jamling's Blog and Project Site">
+  <meta name="og:image" content="http://zendwind.com/image/logo.png">
+  <meta name="og:title" content="【原】Hadoop小文件存储方案">
+  <meta name="og:url" content="http://zendwind.com/2018/05/15/hadoop-small-file-storage/">
+  <meta name="og:description" content="近来，业务部门因历史原因，希望对现存的图片、对账等历史文件进行改造，由原先的单机存储改成分布式存储便于管理和维护，目前组内也在大力推广HDFS在部门的应用 ，所以在此背景下，调研了目前关于HDFS的文件存储方案，本文会着重从小文件需求入手，分析目前各种现有小文件存储的状况及各自使用的场景。">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="Jamling's Blog and Project Site">
+  <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
+  <meta name="twitter:title" content="【原】Hadoop小文件存储方案">
+  <meta name="twitter:creator" content="@JamlingLi">
+  <meta name="twitter:description" content="近来，业务部门因历史原因，希望对现存的图片、对账等历史文件进行改造，由原先的单机存储改成分布式存储便于管理和维护，目前组内也在大力推广HDFS在部门的应用 ，所以在此背景下，调研了目前关于HDFS的文件存储方案，本文会着重从小文件需求入手，分析目前各种现有小文件存储的状况及各自使用的场景。">
+
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zendwind.com/2018/05/15/hadoop-small-file-storage/index.html">
+  <!-- Alternative links -->
+  <!-- CSS and JS-->
+  <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/sidr/2.2.1/jquery.sidr.min.js"></script>
+<script src="/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.15.10/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css">
+<script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.css">
+<script src="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<link rel="stylesheet" href="/css/nova_font.css">
+<link rel="stylesheet" href="/css/bs/nova.css">
+
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="Zend Wind's Blog">
+  <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <!-- header -->
+  <header id="body-header">
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse_" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/" id="logo"><img src="/image/logo.png" height="50" alt="logo"></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+        <li><a href="/" class="main-nav">Home</a></li><li><a href="/p/" class="main-nav">Projects</a></li><li><a href="/categories/" class="main-nav">Category</a></li><li><a href="/archives/" class="main-nav">Archive</a></li><li><a href="/donate/" class="main-nav">Donate</a></li><li><a href="/about/" class="main-nav">About</a></li>
+        </ul>
+        <!-- search input -->
+        
+
+<!-- 百度站内搜索（已通过站点验证） -->
+<form class="navbar-form navbar-left" role="search"
+  action="//search.ieclipse.cn/cse/search">
+  <div class="form-group search">
+    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="Search">
+    <input type="hidden" name="s" value="11812712506721118476">
+    <input type="hidden" name="nsid" value="0">
+    <!-- 
+    <input name="tn" type="hidden" value="SE_zzsearchcode_shhzc78w">
+    <input name="cl" type="hidden" value="3">
+    <input name="ct" type="hidden" value="2097152">
+    <input name="si" type="hidden" value="ieclipse.cn">
+    <input name="ie" type="hidden" value="utf-8">
+    -->
+  </div>
+</form>
+
+        <ul class="nav navbar-nav navbar-right">
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- main -->
+  
+<div class="container container-fluid">
+<div class="row">
+  <div class="col-sx-12 col-sm-8 col-md-9 col-lg-9">
+    
+<article class="article post" itemscope="itemscope" itemtype="http://schema.org/Article">
+  <header class="article-header">
+    <div class="page-path"><span class="post-category"><span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>Path: <a class="category-item" href="/">Blog</a><a class="category-item" href="/categories/hadoop/">hadoop</a></span></div>
+    <div class="divider"></div>
+      <h1 class="article-title" itemprop="name headline"></h1>
+    <div class="post-header clearfix">
+      <span class="post-date"><span class="hidden-xs icon nova-calendar">Post at: </span>
+      <time datetime="2018-05-15T15:30:00.000Z" itemprop="datePublished"><time datetime="2018-05-15T15:30:00.000Z">2018-05-15</time></time>
+      </span>
+      
+      <span class="post-share">
+        <a href="#share" class="icon nova-share"><span class="hidden-xs">Share</span><span class="jiathis_counter_style"></span></a>
+        <a href="#comment" class="icon nova-bubbles"><span class="ds-thread-count" id="changyan_count_unit" data-thread-key="232e5df4cf0e6e325ab564fb945fb0c0"></span><span class="hidden-xs">Comment</span></a>
+        <!--<a href="#like" class="icon nova-heart2-full"><span class="count" id="changyan_parti_unit"></span><span class="hidden-xs">Like</span></a>-->
+        <a href="#" class="icon nova-eye"><span class="count lc-count"></span><span class="hidden-xs">Views</span></a>
+      </span>
+    </div>
+    <div class="divider"></div>
+    <meta content="2018-05-15T15:30:00.000Z" itemprop="datePublished">
+  </header>
+  <div class="article-content" itemprop="articleBody">
+  
+    <p>近来，业务部门因历史原因，希望对现存的图片、对账等历史文件进行改造，由原先的单机存储改成分布式存储便于管理和维护，目前组内也在大力推广HDFS在部门的应用 ，所以在此背景下，调研了目前关于HDFS的文件存储方案，本文会着重从小文件需求入手，分析目前各种现有小文件存储的状况及各自使用的场景。<br><a id="more"></a></p>
 <h1 id="HDFS总体架构"><a href="#HDFS总体架构" class="headerlink" title="HDFS总体架构"></a>HDFS总体架构</h1><p>在介绍文件存储方案之前，我觉得有必要先介绍下关于HDFS存储架构方面的一些知识，在对架构有初步了解后，才会明白为什么要单独针对小文件展开介绍，小文件存储和其它文件存储区别在什么地方。</p>
 <p>这里我只是就Hadoop生态中的存储层展开介绍，对于其它部分本文暂未描述。众所周知，HDFS是目前非常流行的分布式文件存储系统，其逻辑架构如下图所示：<br><img src="/2018/05/15/hadoop-small-file-storage/hadoop_1x_structure.jpg" alt="HDFS架构"></p>
 <p>HDFS也是典型的Master/Slave结构，其中，Master相当于Namenode，Slave相当于Datanode。</p>
@@ -210,16 +338,325 @@ major_compact_mob &#39;t1&#39;,&#39;cf1&#39;</code></p>
 <h1 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h1><p>本文介绍了关于HDFS小文件存储的方案，不同方案各具特点，在使用时要根据实际业务场景进行设计，对于既要存储大文件又要存储小文件的场景，我建议在上层作一个逻辑处理层，在存储时先判断是大文件还是小文件，再决定是否用打包压缩还是直接上传至HDFS，可借鉴TFS方案。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="hadoop-small-file-storage/hadoop_1x_structure.jpg">1</a> <a href="http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html" target="_blank" rel="external">http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html</a></p>
 <h1 id="附件"><a href="#附件" class="headerlink" title="附件"></a>附件</h1><p>关于文章中用的MR转换程序如下所示：<br><a href="https://github.com/ballwql/common-tool/tree/master/java" target="_blank" rel="external">https://github.com/ballwql/common-tool/tree/master/java</a></p>
-</div><div class="article-footer-copyright">@2020 All rights reserved.   </div><iframe src="/donate/?AliPayQR=null&amp;WeChatQR=/img/WeChatQR.png&amp;GitHub=null&amp;BTCQR=null&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><div class="tags"><a href="/tags/hadoop/">hadoop</a></div><div class="post-nav"><a href="/2018/10/22/en/hbase-api/" class="pre">An Introduction to HBase Native API</a><a href="/2017/11/11/phoenix-introduction/" class="next">【原】浅谈Phoenix在HBase中的应用</a></div><div id="container"></div><link rel="stylesheet" href="/css/default.css?v=0.0.0"><script src="/js/gitment.browser.js?v=0.0.0"></script><script>var gitment = new Gitment({
-  owner: 'zendwind## Your GitHub ID, e.g. username',
-  repo: 'zendwind.github.io## The repository to store your comments, make sure you're the repo's owner, e.g. imsun.github.io',
-  oauth: {
-    client_id: 'e1067ce8b7aaa1a88a45## GitHub client ID, e.g. 75752dafe7907a897619',
-    client_secret: '5f4e1d8d82c95a8610d5d19d51e97b7926fd5e71## GitHub client secret, e.g. ec2fb9054972c891289640354993b662f4cccc50',
-  },
-})
-gitment.render('container')
-</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://zendwind.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HBase/">HBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Serverless/">Serverless</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TencentCloud/">TencentCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hadoop/">hadoop</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/Airflow/" style="font-size: 15px;">Airflow</a> <a href="/tags/DynamoDB-COS/" style="font-size: 15px;">DynamoDB,COS</a> <a href="/tags/vuepress-serverless/" style="font-size: 15px;">vuepress,serverless</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/23/en/serverless-deploy-vuepress/">How to Deploy Vuepress with Serverless Framework</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/en/airflow-docker-install/">How to Deploy Airflow with Docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/28/en/dynamodb-migrate-s3/">How to Migrate DynamoDB to Anonther Platform</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/22/en/hbase-api/">An Introduction to HBase Native API</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/15/hadoop-small-file-storage/">【原】Hadoop小文件存储方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/phoenix-introduction/">【原】浅谈Phoenix在HBase中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/15/python-read-dump/">【原】Python解析mysqldump文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/11/hbase-read-write-exception-summary/">【原】HBase读写异常问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/08/hadoop-ha-qjm/">【原】Hadoop HA机制学习</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.cnblogs.com/ballwql" title="cnblogs" target="_blank">cnblogs</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<span>Total PV:<span id="busuanzi_value_site_pv"></span></span>
-<span>Total UV:<span id="busuanzi_value_site_uv"></span></span>
-<br>Copyright © 2020 <a href="/." rel="nofollow">Zend Wind's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+  
+  </div>
+
+  <script src="/js/decrypt.min.js"></script>
+  <footer class="article-footer">
+    <time class="article-footer-updated" datetime="2020-04-24T02:51:43.090Z" itemprop="dateModified">
+    Last updated: 2020-04-24
+    </time>
+    <span itemprop="author publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
+      <meta content="http://zendwind.com" itemprop="url">
+      <meta content="Jamling's Blog and Project Site" itemprop="name">
+      <meta content="/image/logo.png" itemprop="logo">
+    </span>
+    
+<a id="share"></a>
+<div class="social-share"></div>
+<script>
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js'];
+</script>
+
+
+  </footer>
+</article>
+
+<div class="page-footer">
+  <nav><ul class="pager"><li class="previous"><a href="/2018/10/22/en/hbase-api/"><span aria-hidden="true">&larr;</span><span class="hidden-xs">Prev</span></a></li><li class="next"><a href="/2017/11/11/phoenix-introduction/"><span aria-hidden="true">&rarr;</span><span class="hidden-xs">Next</span></a></li></ul></nav>
+  
+<!-- Button trigger modal -->
+<blockquote class="donate"><!--
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#DonateModal">
+    Donate
+  </button>-->
+  <p>
+  <a href="#" role="button" data-toggle="modal" data-target="#DonateModal">
+  <img src="/image/donate_button.png" alt="donate">
+  <span>Dear reader, if you feel this good, could you rewark me a `bread` as awark? Thank you very much~</span></a>
+  </p>
+</blockquote>
+<!-- Modal -->
+<div class="modal fade" id="DonateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="modal-title" id="myModalLabel">Donate</span>
+      </div>
+      <div class="modal-body"><!--
+        <table>
+        <thead>
+          <th class="text-center">支付宝</th>
+          <th class="text-center">微信支付</th>
+        </thead>
+        <tr>
+          <td><img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="img-rounded donate" width="200" height="200"></td>
+          <td><img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="img-rounded donate" width="200" height="200"></td>
+        </tr>
+        </table>-->
+        <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-6">
+          <div class="text-center">
+            <span style="display:block;">支付宝</span>
+            <img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="donate" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center">
+            <span style="display:block;">微信支付</span>
+            <img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="donate" />
+          </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <a id="comment"></a>
+
+<script src="//unpkg.com/valine/dist/Valine.min.js">
+</script>
+<!--PC和WAP自适应版-->
+<div id="vcomments" data-sid="232e5df4cf0e6e325ab564fb945fb0c0" ></div>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'rYUER9KxmGUXSpfEtu7wCFMo-gzGzoHsz',
+        appKey: 'k7hzTkcS0blxgry4VT9rJjYj',
+        path: '232e5df4cf0e6e325ab564fb945fb0c0',
+        recordIP: true
+    })
+</script>
+
+
+
+</div>
+
+
+    
+  </div> <!-- end main column  -->
+  <!-- aside -->
+  <div class="col-sx-12 col-sm-4 col-md-3 col-lg-3">
+    <aside>
+      <div id="navbar-toc">
+      <nav id="toc" class="hidden-print hidden-xs hidden-sm" data-spy="affix">
+        <div class="toc-title"><a role="button" data-toggle="collapse" href="#toc-body" aria-expanded="true">
+          Table Of Contents
+        </a></div>
+        <div id="toc-body" class="in">
+        <ul class="nav toc-ul"><li><a href="#HDFS总体架构">HDFS总体架构</a></li><li><a href="#HDFS写流程">HDFS写流程</a></li><li><a href="#HDFS读流程">HDFS读流程</a></li><li><a href="#HDFS块信息介绍">HDFS块信息介绍</a><ul class="nav toc-ul"><li><a href="#HDFS块设计原则">HDFS块设计原则</a></li><li><a href="#HDFS块存储原则">HDFS块存储原则</a></li><li><a href="#HDFS块元数据信息">HDFS块元数据信息</a></li></ul></li><li><a href="#HDFS小文件存储方案">HDFS小文件存储方案</a><ul class="nav toc-ul"><li><a href="#HAR存储方案">HAR存储方案</a></li><li><a href="#SequenceFile存储方案">SequenceFile存储方案</a><ul class="nav toc-ul"><li><a href="#Record组织模式">Record组织模式</a></li><li><a href="#Block组织模式">Block组织模式</a></li><li><a href="#SequenceFile示例">SequenceFile示例</a></li><li><a href="#SequenceFile优缺点">SequenceFile优缺点</a><ul class="nav toc-ul"><li><a href="#优点">优点</a></li><li><a href="#缺点">缺点</a></li></ul></li></ul></li><li><a href="#CombinedFile存储方案">CombinedFile存储方案</a></li><li><a href="#总结">总结</a></li></ul></li><li><a href="#其它小文件存储方案">其它小文件存储方案</a><ul class="nav toc-ul"><li><a href="#基于HBase的小文件存储方案">基于HBase的小文件存储方案</a></li><li><a href="#基于打包构建索引方案">基于打包构建索引方案</a></li><li><a href="#其它方案对比">其它方案对比</a></li></ul></li><li><a href="#总结-1">总结</a></li><li><a href="#参考">参考</a></li><li><a href="#附件">附件</a></li></ul>
+        </div>
+      </nav>
+</div>
+
+      
+    </aside>
+  </div> <!-- end aside column  -->
+</div> <!-- end row -->
+</div> <!-- end container -->
+
+  <!-- footer -->
+  <footer id="body-footer">
+  <div class="divider"></div>
+  <div>&nbsp;</div>
+  <div class="inner text-center">
+    <div id="footer-copyright">
+      &copy; 2020 <a href="http://zendwind.com" target="_blank">Wen Qiuliang</a> powered by <a href="http://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Jamling/hexo-theme-nova" target="_blank">Nova</a><br>
+      <!-- Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>. -->
+    </div>
+    <div>
+      <a href="http://www.beian.miit.gov.cn" target="_blank">苏ICP备15019510号</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- fixed action bar -->
+  
+  <div class="fab hidden-print" style="bottom: 45px; right: 24px;">
+  <!--
+    <ul class="top-expand" id="top-expand">
+      <li><a class="fab-item large red" href="#top"><i class="icon nova-top"></i></a></li>
+      <li><a class="fab-item large yellow " href="//www.jiathis.com/share?uid=2064663" target="_blank"><i class="icon nova-share"></i></a></li>
+    </ul>
+    <a class="fab-item large red " onclick="$('#top-expand').toggle();">
+      <i class="icon nova-list-ul"></i>
+    </a>
+    -->
+    <a class="fab-item large red " href="#top">
+      <i class="icon nova-top"></i>
+    </a>
+  </div>
+
+  <!-- after footer, some 3rd script place here -->
+    <script>
+    var hljs_labels = {
+        left: "Code",
+        right: ":",
+        copy: "Copy to clipboard"
+    }
+    </script>
+    <script src="/js/hljs.js"></script>
+    <script src="/js/script.js"></script>
+    
+    <!-- 安装自动推送JS代码的网页，在页面被访问时，页面URL将立即被推送给百度 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+    <!-- 新建的搜索框代码，建立使用你自己的代码替换-->
+<script>
+(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=11812712506721118476' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();
+</script>
+
+    
+
+<!-- LeanClound官方Javascript SDK -->
+<script>
+  var page_layout = 'false'
+  var lc_debug = false;
+  if(typeof AV === 'undefined') {
+    $.getScript('//cdn1.lncld.net/static/js/av-min-1.2.1.js',function() {
+      lc_debug && console.log('init AV after av.js loaded');
+        AV.init({
+          appId : 'rYUER9KxmGUXSpfEtu7wCFMo-gzGzoHsz',
+          appKey : 'k7hzTkcS0blxgry4VT9rJjYj'
+        });
+        if (page_layout === 'true') {
+          lc_index_views('.card-action', {
+            style : 'hidden-xs',
+            p : {
+              views : '.nova-eye .count'
+            }
+          })
+        }
+        lc_page_views();
+    });
+  }
+
+  var lc_config = {
+    pageId : '232e5df4cf0e6e325ab564fb945fb0c0',
+    url : '2018/05/15/hadoop-small-file-storage/' || 'http://zendwind.com/2018/05/15/hadoop-small-file-storage/',
+    title : '【原】Hadoop小文件存储方案'
+  };
+  lc_debug && console.log('lcconfig', lc_config);
+
+  var lc_table = 'Counter' || 'Counter';
+
+  function lc_page_views() {
+    var query = new AV.Query(lc_table);
+    query.select(['-ACL']);
+    query.equalTo('pageId', lc_config.pageId);
+    query.first({
+      success: function(results) {
+        // results is an array of AV.Object.
+        if (typeof results === 'undefined') {
+          insert(results);
+          return;
+        }
+        update(results);
+        show(results);
+      },
+      error: function(error) {
+        // error is an instance of AV.Error.
+        console.log(error);
+      }
+    });
+
+    function insert(data) {
+      if (!data) {
+        lc_debug && console.log('data is null new object');
+        var M = AV.Object.extend(lc_table);
+        data = new M();
+        data.set('views', 1);
+      }
+      for ( var key in lc_config) {
+        data.set(key, lc_config[key]);
+      }
+      data.save().then(function(data) {
+        lc_debug && console.log('created objectId is ' + data.id);
+      }, function(error) {
+        lc_debug && console.log("create object failed", error);
+      });
+    }
+
+    function update(data) {
+      for ( var key in lc_config) {
+        if (key !== 'pageId')
+        data.set(key, lc_config[key]);
+      }
+      lc_debug && console.log("after change,data", data);
+      data.increment('views', 1);
+      data.save().then(function(data) {
+        lc_debug && console.log("update to " + data.get('views'));
+      }, function(error) {
+        lc_debug && console.log("update object failed", error);
+      });
+    }
+
+    function show(data) {
+      $(".lc-count").html(data.get('views'));
+    }
+    function show_count(count) {
+      $(".lc-count").html(count);
+    }
+  };
+
+  function lc_index_views() {
+    // load views count from leanclound
+    // make sure you are created Counter table on leanclound
+    function lc_load_views(selector, options) {
+      var o = options || {};
+      var tkeys = [];
+      $(selector).each(function(i) {
+        var tkey = $(this).data('tkey');
+        tkeys.push(tkey);
+      });
+
+      var query = new AV.Query(lc_table);
+      query.select([ '-ACL', '-createdAt', '-updatedAt', '-url' ]);
+      query.containedIn('pageId', tkeys);
+      query.find().then(function(results) {
+        $(selector).each(function(i) {
+          var tkey = $(this).data('tkey');
+          for (var i = 0; i < results.length; i++) {
+            var t = results[i];
+            if (t.get('pageId') === tkey) {
+              var c = t.get('views') + '';
+              $(this).find(o.p.views).html(c);
+            }
+          }
+        });
+      }, function(error) {
+      });
+    }
+
+    lc_load_views('.card-action', {
+      style : 'hidden-xs',
+      p : {
+        views : '.nova-eye .count'
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,4 +1,413 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>DynamoDB,COS | Zend Wind's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="stylesheet" type="text/css" href="/css/copyright.css?v=0.0.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Zend Wind's Blog</h1><a id="logo" href="/.">Zend Wind's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/" class="current"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><h1 class="label-title">正在查看 DynamoDB,COS 下的文章</h1><div class="post"><div class="post-archive"><!--Use lodash to classify posts. See https://lodash.com/docs#groupBy--><h2>2020</h2><ul class="listing"><li><span class="date">2020/03/28</span><a href="/2020/03/28/en/dynamodb-migrate-s3/" title="How to Migrate DynamoDB to Anonther Platform">How to Migrate DynamoDB to Anonther Platform</a></li></ul></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://zendwind.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HBase/">HBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Serverless/">Serverless</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TencentCloud/">TencentCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hadoop/">hadoop</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/Airflow/" style="font-size: 15px;">Airflow</a> <a href="/tags/DynamoDB-COS/" style="font-size: 15px;">DynamoDB,COS</a> <a href="/tags/vuepress-serverless/" style="font-size: 15px;">vuepress,serverless</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/23/en/serverless-deploy-vuepress/">How to Deploy Vuepress with Serverless Framework</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/en/airflow-docker-install/">How to Deploy Airflow with Docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/28/en/dynamodb-migrate-s3/">How to Migrate DynamoDB to Anonther Platform</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/22/en/hbase-api/">An Introduction to HBase Native API</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/15/hadoop-small-file-storage/">【原】Hadoop小文件存储方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/phoenix-introduction/">【原】浅谈Phoenix在HBase中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/15/python-read-dump/">【原】Python解析mysqldump文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/11/hbase-read-write-exception-summary/">【原】HBase读写异常问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/08/hadoop-ha-qjm/">【原】Hadoop HA机制学习</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.cnblogs.com/ballwql" title="cnblogs" target="_blank">cnblogs</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<span>Total PV:<span id="busuanzi_value_site_pv"></span></span>
-<span>Total UV:<span id="busuanzi_value_site_uv"></span></span>
-<br>Copyright © 2020 <a href="/." rel="nofollow">Zend Wind's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<head>
+  <meta charset="utf-8">
+  <title>Tags－DynamoDB-COS</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="Jamling's Open Project include Java, Android, Eclipse and Technology Blog Articles.">
+  
+
+  <meta name="og:type" content="website">
+  <meta name="og:site_name" content="Jamling's Blog and Project Site">
+  <meta name="og:image" content="http://zendwind.com/image/logo.png">
+  <meta name="og:title" content="Tags－DynamoDB-COS">
+  <meta name="og:url" content="http://zendwind.com/tags/DynamoDB-COS/index.html">
+  <meta name="og:description" content="Jamling's Open Project include Java, Android, Eclipse and Technology Blog Articles.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="Jamling's Blog and Project Site">
+  <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
+  <meta name="twitter:title" content="Tags－DynamoDB-COS">
+  <meta name="twitter:creator" content="@JamlingLi">
+  <meta name="twitter:description" content="Jamling's Open Project include Java, Android, Eclipse and Technology Blog Articles.">
+
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zendwind.com/tags/DynamoDB-COS/index.html">
+  <!-- Alternative links -->
+  <!-- CSS and JS-->
+  <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/sidr/2.2.1/jquery.sidr.min.js"></script>
+<script src="/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.15.10/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css">
+<script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.css">
+<script src="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<link rel="stylesheet" href="/css/nova_font.css">
+<link rel="stylesheet" href="/css/bs/nova.css">
+
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="Zend Wind's Blog">
+  <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <!-- header -->
+  <header id="body-header">
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse_" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/" id="logo"><img src="/image/logo.png" height="50" alt="logo"></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+        <li><a href="/" class="main-nav">Home</a></li><li><a href="/p/" class="main-nav">Projects</a></li><li><a href="/categories/" class="main-nav">Category</a></li><li><a href="/archives/" class="main-nav">Archive</a></li><li><a href="/donate/" class="main-nav">Donate</a></li><li><a href="/about/" class="main-nav">About</a></li>
+        </ul>
+        <!-- search input -->
+        
+
+<!-- 百度站内搜索（已通过站点验证） -->
+<form class="navbar-form navbar-left" role="search"
+  action="//search.ieclipse.cn/cse/search">
+  <div class="form-group search">
+    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="Search">
+    <input type="hidden" name="s" value="11812712506721118476">
+    <input type="hidden" name="nsid" value="0">
+    <!-- 
+    <input name="tn" type="hidden" value="SE_zzsearchcode_shhzc78w">
+    <input name="cl" type="hidden" value="3">
+    <input name="ct" type="hidden" value="2097152">
+    <input name="si" type="hidden" value="ieclipse.cn">
+    <input name="ie" type="hidden" value="utf-8">
+    -->
+  </div>
+</form>
+
+        <ul class="nav navbar-nav navbar-right">
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- main -->
+  
+<div class="container container-fluid">
+<div class="row">
+  <div class="col-sx-12 col-sm-8 col-md-9 col-lg-9">
+    
+<section class="archive-wrap">
+<div class="archive-heading">
+<h1><a class="archive-heading-link" href="/archives/2020/">2020</a></h1><hr></div>
+<div class="archive-body">
+<article class="archive-article archive-type-post">
+<header class="archive-article-header">
+<h3><a href="/2020/03/28/en/dynamodb-migrate-s3/">How to Migrate DynamoDB to Anonther Platform <small>2020-03-28</small></a></h3>
+</header>
+</article>
+</div>
+</section>
+
+
+<nav>  </nav>
+
+    
+  </div> <!-- end main column  -->
+  <!-- aside -->
+  <div class="col-sx-12 col-sm-4 col-md-3 col-lg-3">
+    <aside>
+
+
+    <div class="panel panel-primary animated slideInUp faster">
+      <div class="panel-heading">
+        <h3 class="panel-title">Announce</h3>
+      </div>
+      <div class="panel-body" id="widget_announce">
+        本站评论系统已由友言切换为多说，原有的友言评论数据在友言云端数据迁移完毕之后再导入，在此期间，原先的评论暂不可见，请见谅！
+      </div>
+    </div>
+    <script>
+    function loadAnnounce() {
+      var ds_top_url = '/other/announce.html';
+      var ds_top_dom = $('#widget_announce');
+      $.ajax({
+        url : ds_top_url,
+        dataType : "html",
+        type : 'get',
+        success : function(data) {
+          if (data) {
+            ds_top_dom.html(data);
+          }
+        },
+        error: function (xhr, msg, e) {
+          ds_top_dom.html('<div class="text-center">Load failed</div>');
+        }
+      });
+    }
+    loadAnnounce();
+    </script>
+
+
+    <div class="panel panel-primary animated slideInUp faster">
+      <div class="panel-heading">
+        <h3 class="panel-title">About</h3>
+      </div>
+      <div class="panel-body text-center">
+        <div>欢迎点击以下图标关注我或与我互动！</div>
+        <div id="widget-about" class="h3 text-center">
+          <a class="icon-item github" href="https://github.com/Jamling" title="Jamling on Github" target="_blank">
+            <i class="icon nova-github-alt icon-font"></i>
+          </a>
+          <a class="icon-item weibo" href="http://weibo.com/Jamling" title="Jamling on Weibo" target="_blank">
+            <i class="icon nova-weibo icon-font"></i>
+          </a>
+          <a class="icon-item twitter" href="https://twitter.com/JamlingLi" title="Jamling on Twitter" target="_blank">
+            <i class="icon nova-twitter icon-font"></i>
+          </a>
+          <a class="icon-item email" href="mailto:li.jamling@gmail.com" title="mail to Jamling" target="_blank">
+            <i class="icon nova-email icon-font" style="font-size: 22px"></i>
+          </a>
+          <!-- 剩下的自己加 -->
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-primary hidden-xs animated slideInUp faster" id="category">
+      <div class="panel-heading">
+        <h3 class="panel-title">Category</h3>
+      </div>
+      
+      <!-- use category tree -->
+      <ul class="list-group"><li class="list-group-item"><a class="list-group-link" href="/categories/Docker/">Docker</a><span class="badge">1</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/HBase/">HBase</a><span class="badge">3</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/Python/">Python</a><span class="badge">1</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/Serverless/">Serverless</a><span class="badge">1</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/TencentCloud/">TencentCloud</a><span class="badge">1</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/hadoop/">hadoop</a><span class="badge">2</span></li></ul>
+    </div>
+    
+
+    <div class="panel panel-primary animated slideInUp faster">
+      <div class="panel-heading">
+        <h3 class="panel-title">Tags</h3>
+      </div>
+      
+      <div class="panel-body">
+      <a href="/tags/Airflow/" style="font-size: 10px; color: #795548">Airflow</a> <a href="/tags/DynamoDB-COS/" style="font-size: 10px; color: #795548">DynamoDB,COS</a> <a href="/tags/HBase/" style="font-size: 20px; color: #212121">HBase</a> <a href="/tags/hadoop/" style="font-size: 15px; color: #4d3b35">hadoop</a> <a href="/tags/python/" style="font-size: 10px; color: #795548">python</a> <a href="/tags/vuepress-serverless/" style="font-size: 10px; color: #795548">vuepress,serverless</a>
+      </div>
+    </div>
+
+    <div class="panel panel-primary animated slideInUp faster">
+      <div class="panel-heading">
+        <h3 class="panel-title">Links</h3>
+      </div>
+      <div class="list-group" id="widget-links">
+      <a class="list-group-item has-icon" href="http://life.ieclipse.cn" title="Jamling's Blog" target="_blank"><img src="/image/logo.png" alt="Jamling's Blog">Jamling's Blog</a><a class="list-group-item has-icon" href="//www.ieclipse.cn/birthday-tool/" title="生辰助手" target="_blank"><img src="//www.ieclipse.cn/birthday-tool/image.png" alt="生辰助手">生辰助手</a>
+      </div>
+    </div>
+
+    </aside>
+  </div> <!-- end aside column  -->
+</div> <!-- end row -->
+</div> <!-- end container -->
+
+  <!-- footer -->
+  <footer id="body-footer">
+  <div class="divider"></div>
+  <div>&nbsp;</div>
+  <div class="inner text-center">
+    <div id="footer-copyright">
+      &copy; 2020 <a href="http://zendwind.com" target="_blank">Wen Qiuliang</a> powered by <a href="http://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Jamling/hexo-theme-nova" target="_blank">Nova</a><br>
+      <!-- Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>. -->
+    </div>
+    <div>
+      <a href="http://www.beian.miit.gov.cn" target="_blank">苏ICP备15019510号</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- fixed action bar -->
+  
+  <div class="fab hidden-print" style="bottom: 45px; right: 24px;">
+  <!--
+    <ul class="top-expand" id="top-expand">
+      <li><a class="fab-item large red" href="#top"><i class="icon nova-top"></i></a></li>
+      <li><a class="fab-item large yellow " href="//www.jiathis.com/share?uid=2064663" target="_blank"><i class="icon nova-share"></i></a></li>
+    </ul>
+    <a class="fab-item large red " onclick="$('#top-expand').toggle();">
+      <i class="icon nova-list-ul"></i>
+    </a>
+    -->
+    <a class="fab-item large red " href="#top">
+      <i class="icon nova-top"></i>
+    </a>
+  </div>
+
+  <!-- after footer, some 3rd script place here -->
+    <script>
+    var hljs_labels = {
+        left: "Code",
+        right: ":",
+        copy: "Copy to clipboard"
+    }
+    </script>
+    <script src="/js/hljs.js"></script>
+    <script src="/js/script.js"></script>
+    
+    <!-- 安装自动推送JS代码的网页，在页面被访问时，页面URL将立即被推送给百度 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+    <!-- 新建的搜索框代码，建立使用你自己的代码替换-->
+<script>
+(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=11812712506721118476' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();
+</script>
+
+    
+
+<!-- LeanClound官方Javascript SDK -->
+<script>
+  var page_layout = 'false'
+  var lc_debug = false;
+  if(typeof AV === 'undefined') {
+    $.getScript('//cdn1.lncld.net/static/js/av-min-1.2.1.js',function() {
+      lc_debug && console.log('init AV after av.js loaded');
+        AV.init({
+          appId : 'rYUER9KxmGUXSpfEtu7wCFMo-gzGzoHsz',
+          appKey : 'k7hzTkcS0blxgry4VT9rJjYj'
+        });
+        if (page_layout === 'true') {
+          lc_index_views('.card-action', {
+            style : 'hidden-xs',
+            p : {
+              views : '.nova-eye .count'
+            }
+          })
+        }
+        lc_page_views();
+    });
+  }
+
+  var lc_config = {
+    pageId : '8d02fbada873af136e85845320886d58',
+    url : 'tags/DynamoDB-COS/index.html' || '',
+    title : 'Tags－DynamoDB-COS'
+  };
+  lc_debug && console.log('lcconfig', lc_config);
+
+  var lc_table = 'Counter' || 'Counter';
+
+  function lc_page_views() {
+    var query = new AV.Query(lc_table);
+    query.select(['-ACL']);
+    query.equalTo('pageId', lc_config.pageId);
+    query.first({
+      success: function(results) {
+        // results is an array of AV.Object.
+        if (typeof results === 'undefined') {
+          insert(results);
+          return;
+        }
+        update(results);
+        show(results);
+      },
+      error: function(error) {
+        // error is an instance of AV.Error.
+        console.log(error);
+      }
+    });
+
+    function insert(data) {
+      if (!data) {
+        lc_debug && console.log('data is null new object');
+        var M = AV.Object.extend(lc_table);
+        data = new M();
+        data.set('views', 1);
+      }
+      for ( var key in lc_config) {
+        data.set(key, lc_config[key]);
+      }
+      data.save().then(function(data) {
+        lc_debug && console.log('created objectId is ' + data.id);
+      }, function(error) {
+        lc_debug && console.log("create object failed", error);
+      });
+    }
+
+    function update(data) {
+      for ( var key in lc_config) {
+        if (key !== 'pageId')
+        data.set(key, lc_config[key]);
+      }
+      lc_debug && console.log("after change,data", data);
+      data.increment('views', 1);
+      data.save().then(function(data) {
+        lc_debug && console.log("update to " + data.get('views'));
+      }, function(error) {
+        lc_debug && console.log("update object failed", error);
+      });
+    }
+
+    function show(data) {
+      $(".lc-count").html(data.get('views'));
+    }
+    function show_count(count) {
+      $(".lc-count").html(count);
+    }
+  };
+
+  function lc_index_views() {
+    // load views count from leanclound
+    // make sure you are created Counter table on leanclound
+    function lc_load_views(selector, options) {
+      var o = options || {};
+      var tkeys = [];
+      $(selector).each(function(i) {
+        var tkey = $(this).data('tkey');
+        tkeys.push(tkey);
+      });
+
+      var query = new AV.Query(lc_table);
+      query.select([ '-ACL', '-createdAt', '-updatedAt', '-url' ]);
+      query.containedIn('pageId', tkeys);
+      query.find().then(function(results) {
+        $(selector).each(function(i) {
+          var tkey = $(this).data('tkey');
+          for (var i = 0; i < results.length; i++) {
+            var t = results[i];
+            if (t.get('pageId') === tkey) {
+              var c = t.get('views') + '';
+              $(this).find(o.p.views).html(c);
+            }
+          }
+        });
+      }, function(error) {
+      });
+    }
+
+    lc_load_views('.card-action', {
+      style : 'hidden-xs',
+      p : {
+        views : '.nova-eye .count'
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
