@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>【原】Python解析mysqldump文件 - Zend Wind&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+<link href="/2017/10/15/zh-cn/python-read-dump/" rel="alternate" hreflang="en" />
+    
+
+
+
+
+
+
+    <meta name="description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x5728;&amp;#x505A;&amp;#x79BB;&amp;#x7EBF;&amp;#x6570;&amp;#x636E;&amp;#x5BFC;&amp;#x5165;HBase&amp;#x9879;&amp;#x76EE;&amp;#xFF0C;&amp;#x6D89;&amp;#x53CA;&amp;#x5C06;&amp;#x5B58;&amp;#x50A8;&amp;#x5728;Mysql&amp;#x4E2D;&amp;#x7684;&amp;#x5386;&amp;#x53F2;&amp;#x657">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【原】Python解析mysqldump文件">
+<meta property="og:url" content="http://zendwind.com/zh-cn/2017/10/15/zh-cn/python-read-dump/index.html">
+<meta property="og:site_name" content="Zend Wind&#39;s Blog">
+<meta property="og:description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x5728;&amp;#x505A;&amp;#x79BB;&amp;#x7EBF;&amp;#x6570;&amp;#x636E;&amp;#x5BFC;&amp;#x5165;HBase&amp;#x9879;&amp;#x76EE;&amp;#xFF0C;&amp;#x6D89;&amp;#x53CA;&amp;#x5C06;&amp;#x5B58;&amp;#x50A8;&amp;#x5728;Mysql&amp;#x4E2D;&amp;#x7684;&amp;#x5386;&amp;#x53F2;&amp;#x657">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://zendwind.com/2017/10/15/zh-cn/python-read-dump/read_flow.png">
+<meta property="og:updated_time" content="2018-05-15T16:01:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【原】Python解析mysqldump文件">
+<meta name="twitter:description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x5728;&amp;#x505A;&amp;#x79BB;&amp;#x7EBF;&amp;#x6570;&amp;#x636E;&amp;#x5BFC;&amp;#x5165;HBase&amp;#x9879;&amp;#x76EE;&amp;#xFF0C;&amp;#x6D89;&amp;#x53CA;&amp;#x5C06;&amp;#x5B58;&amp;#x50A8;&amp;#x5728;Mysql&amp;#x4E2D;&amp;#x7684;&amp;#x5386;&amp;#x53F2;&amp;#x657">
+<meta name="twitter:image" content="http://zendwind.com/2017/10/15/zh-cn/python-read-dump/read_flow.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/zh-cn">
+                
+                <img src="/images/logo.png" alt="" height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/zh-cn/archives">归档</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/Technology">技术</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/LifeStyle">生活</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+       
+            
+<div class="column is-narrow has-text-centered">
+    <div class="dropdown is-up is-right is-hoverable" style="margin-top: -0.2em;">
+        <div class="dropdown-trigger">
+            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+                <span class="icon">
+                    <i class="fas fa-globe"></i>
+                </span>
+                <span>简体中文</span>
+                <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+            </button>
+        </div>
+        <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
+            <div class="dropdown-content">
+            
+                <a href="/2017/10/15/zh-cn/python-read-dump/" class="dropdown-item">
+                    English
+                </a>
+            
+                <a href="/zh-cn/2017/10/15/zh-cn/python-read-dump/" class="dropdown-item">
+                    简体中文
+                </a>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+   
+
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            【原】Python解析mysqldump文件
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-10-15T14:00:00.000Z" itemprop="datePublished">10月 15 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Python/">Python</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1109 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x6700;&#x8FD1;&#x5728;&#x505A;&#x79BB;&#x7EBF;&#x6570;&#x636E;&#x5BFC;&#x5165;HBase&#x9879;&#x76EE;&#xFF0C;&#x6D89;&#x53CA;&#x5C06;&#x5B58;&#x50A8;&#x5728;Mysql&#x4E2D;&#x7684;&#x5386;&#x53F2;&#x6570;&#x636E;&#x901A;&#x8FC7;bulkload&#x7684;&#x65B9;&#x5F0F;&#x5BFC;&#x5165;HBase&#x3002;&#x7531;&#x4E8E;&#x6E90;&#x6570;&#x636E;&#x5DF2;&#x7ECF;&#x4E0D;&#x5728;DB&#x4E2D;&#xFF0C;&#x800C;&#x662F;&#x4EE5;&#x6587;&#x4EF6;&#x5F62;&#x5F0F;&#x5B58;&#x50A8;&#x5728;&#x673A;&#x5668;&#x78C1;&#x76D8;&#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x662F;mysqldump&#x5BFC;&#x51FA;&#x7684;&#x683C;&#x5F0F;&#x3002;&#x5982;&#x4F55;&#x5C06;mysqldump&#x683C;&#x5F0F;&#x7684;&#x6587;&#x4EF6;&#x8F6C;&#x6362;&#x6210;&#x5B9E;&#x9645;&#x7684;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x63D0;&#x4F9B;&#x7ED9;bulkload&#x4F5C;&#x8F6C;&#x6362;&#xFF0C;&#x662F;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x3002;<br><a id="more"></a></p>
+<h1 id="&#x4E00;&#x3001;&#x601D;&#x8DEF;"><a href="#&#x4E00;&#x3001;&#x601D;&#x8DEF;" class="headerlink" title="&#x4E00;&#x3001;&#x601D;&#x8DEF;"></a>&#x4E00;&#x3001;&#x601D;&#x8DEF;</h1><p>&#x6211;&#x4EEC;&#x77E5;&#x9053;mysqldump&#x5BFC;&#x51FA;&#x7684;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x662F;Insert&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x8868;&#x7ED3;&#x6784;&#x5B9A;&#x4E49;&#x8BED;&#x53E5;&#x3002;&#x800C;&#x8981;&#x89E3;&#x6790;&#x7684;&#x5BF9;&#x8C61;&#x4E5F;&#x4E3B;&#x8981;&#x662F;&#x5305;&#x542B;INSERT&#x5173;&#x952E;&#x5B57;&#x8BB0;&#x5F55;&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x628A;&#x95EE;&#x9898;&#x8F6C;&#x6362;&#x6210;&#x5982;&#x4F55;&#x4ECE;dmp&#x6587;&#x4EF6;&#x89E3;&#x6790;Insert&#x8BED;&#x53E5;&#x3002;&#x63A5;&#x89E6;&#x8FC7;dmp&#x6587;&#x4EF6;&#x7684;&#x540C;&#x5B66;&#x5E94;&#x8BE5;&#x4E86;&#x89E3;&#xFF0C;&#x5176;INSERT&#x8BED;&#x53E5;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x8868;&#x540D;&#x3001;&#x5B57;&#x6BB5;&#x540D;&#x3001;&#x5B57;&#x6BB5;&#x503C;, &#x8FD9;&#x91CC;&#x9762;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x51E0;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#xFF1A;INSERT INTO, VALUES&#x3002;&#x6211;&#x4EEC;&#x8981;&#x505A;&#x7684;&#x5C31;&#x662F;&#x628A;Values&#x62EC;&#x53F7;&#x540E;&#x7684;&#x5B57;&#x6BB5;&#x503C;&#x7ED9;&#x89E3;&#x6790;&#x51FA;&#x6765;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x9700;&#x8981;&#x8003;&#x8651;VALUES&#x540E;&#x9762;&#x5305;&#x542B;&#x7684;&#x662F;&#x591A;&#x5C11;&#x884C;&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x6709;&#x53EF;&#x80FD;&#x5BFC;&#x51FA;&#x7684;&#x8BB0;&#x5F55;Values&#x540E;&#x9762;&#x5305;&#x542B;&#x591A;&#x884C;&#x5BF9;&#x5E94;mysql&#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x8BB0;&#x5F55;&#x3002;</p>
+<p>&#x5728;&#x89E3;&#x6790;&#x6587;&#x4EF6;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x81EA;&#x7136;&#x60F3;&#x5230;&#x7528;Python&#x6765;&#x5199;&#xFF0C;&#x56E0;&#x4E3A;Python&#x5728;&#x5904;&#x7406;&#x6587;&#x4EF6;&#x65B9;&#x9762;&#x6709;&#x5F88;&#x591A;&#x4F18;&#x52BF;&#xFF0C;&#x4E5F;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#x3002;&#x5728;&#x5904;&#x7406;DMP&#x6587;&#x4EF6;&#x8FD9;&#x5757;&#xFF0C;&#x8003;&#x8651;&#x5230;&#x5B57;&#x6BB5;&#x503C;&#x95F4;&#x662F;&#x7528;&#x9017;&#x53F7;&#x5206;&#x5272;&#x7684;&#xFF0C;&#x5728;python&#x4E2D;&#x6B63;&#x597D;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#x53EF;&#x4EE5;&#x5F88;&#x597D;&#x7684;&#x6765;&#x5904;&#x7406;&#x6B64;&#x7C7B;&#x683C;&#x5F0F; &#xFF0C;&#x5373;&#x5927;&#x5BB6;&#x5F88;&#x719F;&#x6089;&#x7684;CSV&#x6A21;&#x5757;&#xFF0C;&#x5728;&#x5904;&#x7406;CSV&#x7C7B;&#x578B;&#x7684;&#x6587;&#x4EF6;&#x6709;&#x5F88;&#x591A;&#x4F18;&#x52BF;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x628A;CSV&#x6A21;&#x5757;&#x6709;&#x5728;&#x89E3;&#x6790;dmp&#x6587;&#x4EF6;&#xFF0C;&#x540C;&#x65F6;&#x52A0;&#x4E00;&#x4E9B;&#x89E3;&#x6790;&#x903B;&#x8F91;&#xFF0C;&#x53EF;&#x4EE5;&#x5F88;&#x597D;&#x89E3;&#x51B3;&#x6B64;&#x7C7B;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x540C;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5904;&#x7406;&#x7684;dmp&#x6587;&#x4EF6;&#x662F;&#x7ECF;&#x8FC7;&#x538B;&#x7F29;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x5355;&#x4E2A;&#x6587;&#x4EF6;&#x90FD;&#x6BD4;&#x8F83;&#x5927;&#xFF0C;&#x90FD;&#x662F;Gigbytes&#x7684;&#xFF0C;&#x5728;&#x8BFB;&#x53D6;&#x65F6;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x673A;&#x5668;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#xFF0C;&#x4E0D;&#x80FD;&#x4E00;&#x6B21;&#x8BFB;&#x51FA;&#x6240;&#x6709;&#x7684;&#x6570;&#x636E;&#xFF0C;python&#x4E5F;&#x8003;&#x8651;&#x5230;&#x6B64;&#x7C7B;&#x95EE;&#x9898;&#xFF0C;&#x91C7;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x60F0;&#x6027;&#x53D6;&#x503C;&#xFF0C;&#x5373;&#x5728;&#x771F;&#x6B63;&#x4F7F;&#x7528;&#x65F6;&#x624D;&#x4ECE;&#x78C1;&#x76D8;&#x4E2D;&#x52A0;&#x8F7D;&#x76F8;&#x5E94;&#x7684;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x3002;&#x5982;&#x679C;&#x60F3;&#x52A0;&#x5757;&#x89E3;&#x6790;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x91C7;&#x96C6;&#x591A;&#x8FDB;&#x7A0B;&#x6216;&#x591A;&#x7EBF;&#x7A0B;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h1 id="&#x4E8C;&#x3001;&#x65B9;&#x6CD5;"><a href="#&#x4E8C;&#x3001;&#x65B9;&#x6CD5;" class="headerlink" title="&#x4E8C;&#x3001;&#x65B9;&#x6CD5;"></a>&#x4E8C;&#x3001;&#x65B9;&#x6CD5;</h1><p>&#x5904;&#x7406;&#x6D41;&#x7A0B;&#x56FE;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2017/10/15/zh-cn/python-read-dump/read_flow.png" alt="&#x89E3;&#x6790;&#x6D41;&#x7A0B;&#x56FE;"></p>
+<p>&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>#!/usr/bin/env python
+import fileinput
+import csv
+import sys
+import gzip
+
+
+# &#x8BBE;&#x5B9A;CSV&#x8BFB;&#x53D6;&#x7684;&#x6700;&#x5927;&#x5BB9;&#x91CF;
+csv.field_size_limit(sys.maxsize)
+
+def check_insert(line):
+    &quot;&quot;&quot;
+    &#x8FD4;&#x56DE;&#x8BED;&#x53E5;&#x662F;&#x5426;&#x4EE5;insert into&#x5F00;&#x5934;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x8FD4;&#x56DE;true,&#x5426;&#x5219;&#x8FD4;&#x56DE;false
+    &quot;&quot;&quot;
+    return line.startswith(&apos;INSERT INTO&apos;) or False
+
+
+def get_line_values(line):
+    &quot;&quot;&quot;
+    &#x8FD4;&#x56DE;Insert&#x8BED;&#x53E5;&#x4E2D;&#x5305;&#x542B;Values&#x7684;&#x90E8;&#x5206;
+    &quot;&quot;&quot;
+    return line.partition(&apos;VALUES &apos;)[2]
+
+
+def check_values_style(values):
+    &quot;&quot;&quot;
+    &#x4FDD;&#x8BC1;INSERT&#x8BED;&#x53E5;&#x6EE1;&#x8DB3;&#x57FA;&#x672C;&#x7684;&#x6761;&#x4EF6;&#xFF0C;&#x5373;&#x5305;&#x542B;(&#x53F3;&#x62EC;&#x53F7;    
+    &quot;&quot;&quot;
+
+    if values and values[0] == &apos;(&apos;:
+        return True
+    return False
+
+def parse_line(values):
+    &quot;&quot;&quot;
+    &#x521B;&#x5EFA;csv&#x5BF9;&#x8C61;&#xFF0C;&#x8BFB;&#x53D6;INSERT VALUES &#x5B57;&#x6BB5;&#x503C;
+    &quot;&quot;&quot;
+    latest_row = []
+
+    reader = csv.reader([values], delimiter=&apos;,&apos;,
+                        doublequote=False,
+                        escapechar=&apos;\\&apos;,
+                        quotechar=&quot;&apos;&quot;,
+                        strict=True
+    )
+
+
+    for reader_row in reader:
+        for column in reader_row:
+            # &#x5224;&#x65AD;&#x5B57;&#x6BB5;&#x503C;&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#x6216;&#x4E3A;NULL
+            if len(column) == 0 or column == &apos;NULL&apos;:
+                latest_row.append(&quot;&quot;)
+                continue
+
+            # &#x5224;&#x65AD;&#x5B57;&#x6BB5;&#x5F00;&#x5934;&#x662F;&#x5426;&#x4EE5;&#xFF08;&#x5F00;&#x5934;,&#x5982;&#x679C;&#x662F;&#x5219;&#x8BF4;&#x660E;&#x6B64;VALUES&#x540E;&#x9762;&#x4E0D;&#x53EA;&#x5305;&#x542B;&#x4E00;&#x884C;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x80FD;&#x6709;&#x591A;&#x884C;&#xFF0C;&#x8981;&#x5206;&#x522B;&#x89E3;&#x6790;
+            if column[0] == &quot;(&quot;:                
+                new_row = False                
+                if len(latest_row) &gt; 0:
+                    #&#x5224;&#x65AD;&#x884C;&#x662F;&#x5426;&#x5305;&#x542B;&#xFF09;,&#x5982;&#x679C;&#x5305;&#x542B;&#x5219;&#x8BF4;&#x660E;&#x4E00;&#x884C;&#x6570;&#x636E;&#x5B8C;&#x6BD5;
+                    if latest_row[-1][-1] == &quot;)&quot;:
+                        # &#x79FB;&#x9664;&#xFF09;
+                        latest_row[-1] = latest_row[-1][:-1]
+                        if latest_row[-1] == &quot;NULL&quot;:
+                            latest_row[-1] = &quot;&quot;
+                        new_row = True
+                # &#x5982;&#x679C;&#x662F;&#x65B0;&#x884C;&#xFF0C;&#x5219;&#x6253;&#x5370;&#x8BE5;&#x884C;
+                if new_row:                    
+                    line=&quot;}}}{{{&quot;.join(latest_row)
+                    print &quot;%s<{||}>&quot; % line
+                    latest_row = []
+                
+                if len(latest_row) == 0:
+                    column = column[1:]
+            
+            latest_row.append(column)
+        # &#x5224;&#x65AD;&#x884C;&#x7ED3;&#x675F;&#x7B26;
+        if latest_row[-1][-2:] == &quot;);&quot;:
+            latest_row[-1] = latest_row[-1][:-2]
+            if latest_row[-1] == &quot;NULL&quot;:
+                latest_row[-1] = &quot;&quot;
+            
+            line=&quot;}}}{{{&quot;.join(latest_row)
+            print &quot;%s&lt;{||}&gt;&quot; % line
+
+def main():   
+
+    filename=sys.argv[1]
+    try:
+        #&#x60F0;&#x6027;&#x53D6;&#x884C;
+        with gzip.open(filename,&quot;rb&quot;) as f:
+            for line in f:                
+                    if check_insert(line):
+                        values = get_line_values(line)
+                        if check_values_style(values):
+                            parse_line(values)
+    except KeyboardInterrupt:
+        sys.exit(0)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</{||}></code></pre><h1 id="&#x4E09;&#x3001;&#x603B;&#x7ED3;"><a href="#&#x4E09;&#x3001;&#x603B;&#x7ED3;" class="headerlink" title="&#x4E09;&#x3001;&#x603B;&#x7ED3;"></a>&#x4E09;&#x3001;&#x603B;&#x7ED3;</h1><p>&#x603B;&#x7684;&#x8BF4;&#x6765;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x5229;&#x7528;Python&#x7684;CSV&#x6A21;&#x5757;&#x6765;&#x89E3;&#x6790;DMP&#x6587;&#x4EF6;&#x7684;INSERT&#x8BED;&#x53E5;&#xFF0C;&#x5982;&#x679C;DMP&#x6587;&#x4EF6;&#x4E0D;&#x89C4;&#x6574;&#xFF0C;&#x53EF;&#x80FD;&#x8FD8;&#x662F;&#x6709;&#x4E9B;&#x95EE;&#x9898;&#x3002;&#x5BF9;&#x4E8E;dmp&#x6587;&#x4EF6;&#x5F88;&#x5927;&#x60C5;&#x51B5;&#xFF0C;&#x4E5F;&#x662F;&#x9700;&#x8981;&#x8003;&#x8651;&#x89E3;&#x6790;&#x65F6;&#x95F4;&#x6548;&#x7387;&#x95EE;&#x9898;&#xFF0C;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x589E;&#x52A0;&#x591A;&#x8FDB;&#x7A0B;&#x6216;&#x591A;&#x7EBF;&#x7A0B;&#x673A;&#x5236;&#x3002;</p>
+<p><strong>&#x7248;&#x6743;&#x58F0;&#x660E;&#xFF1A;&#x672C;&#x6587;&#x4E3A;&#x535A;&#x4E3B;&#x539F;&#x521B;&#x6587;&#x7AE0;&#xFF0C;&#x672A;&#x7ECF;&#x535A;&#x4E3B;&#x5141;&#x8BB8;&#x4E0D;&#x5F97;&#x8F6C;&#x8F7D;&#x3002;</strong></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/python/">#python</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/11/11/zh-cn/phoenix-introduction/">【原】浅谈Phoenix在HBase中的应用</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/10/11/zh-cn/hbase-read-write-exception-summary/">【原】HBase读写异常问题总结</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="notification is-danger">
+    You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.
+</div>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="disqus_thread">
+    
+    <div class="notification is-danger">
+        You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.
+    </div>
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Wen Qiuliang&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.zh-cn.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

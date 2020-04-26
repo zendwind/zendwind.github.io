@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>How to Deploy Airflow with Docker - Zend Wind&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+<link href="/2020/04/04/airflow-docker-install/" rel="alternate" hreflang="en" />
+    
+
+
+
+
+
+
+    <meta name="description" content="This post introduces how to deploy Airflow with Docker.">
+<meta name="keywords" content="Airflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Deploy Airflow with Docker">
+<meta property="og:url" content="http://zendwind.com/zh-cn/2020/04/04/airflow-docker-install/index.html">
+<meta property="og:site_name" content="Zend Wind&#39;s Blog">
+<meta property="og:description" content="This post introduces how to deploy Airflow with Docker.">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-04-24T02:52:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to Deploy Airflow with Docker">
+<meta name="twitter:description" content="This post introduces how to deploy Airflow with Docker.">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/zh-cn">
+                
+                <img src="/images/logo.png" alt="" height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/zh-cn/archives">归档</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/Technology">技术</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/LifeStyle">生活</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目录">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Prerequisites">1&nbsp;&nbsp;<b>Prerequisites</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Docker-Install">2&nbsp;&nbsp;<b>Docker Install</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Docker-Install-1">2.1&nbsp;&nbsp;Docker Install</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Docker-Compose-Install">2.2&nbsp;&nbsp;Docker Compose Install</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Airflow-Docker-Install">2.3&nbsp;&nbsp;Airflow Docker Install</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Airflow-LocalExecutor-Deploy">2.4&nbsp;&nbsp;Airflow LocalExecutor Deploy</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Introduction">2.4.1&nbsp;&nbsp;Introduction</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#LocalExecutor-Deploy">2.4.2&nbsp;&nbsp;LocalExecutor Deploy</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+       
+            
+<div class="column is-narrow has-text-centered">
+    <div class="dropdown is-up is-right is-hoverable" style="margin-top: -0.2em;">
+        <div class="dropdown-trigger">
+            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+                <span class="icon">
+                    <i class="fas fa-globe"></i>
+                </span>
+                <span>简体中文</span>
+                <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+            </button>
+        </div>
+        <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
+            <div class="dropdown-content">
+            
+                <a href="/2020/04/04/airflow-docker-install/" class="dropdown-item">
+                    English
+                </a>
+            
+                <a href="/zh-cn/2020/04/04/airflow-docker-install/" class="dropdown-item">
+                    简体中文
+                </a>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+   
+
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            How to Deploy Airflow with Docker
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-04-04T06:00:00.000Z" itemprop="datePublished">4月 4 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Docker/">Docker</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 610 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>This post introduces how to deploy Airflow with Docker.<br><a id="more"></a></p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><ul>
+<li>CentOS7 (64-bit)</li>
+<li>TencentCloud CVM (4C,8G)</li>
+<li>Python3.6.0<h1 id="Docker-Install"><a href="#Docker-Install" class="headerlink" title="Docker Install"></a>Docker Install</h1><h2 id="Docker-Install-1"><a href="#Docker-Install-1" class="headerlink" title="Docker Install"></a>Docker Install</h2><pre><code>yum install -y docker   #in centos8, yum install -y docker-ce
+systemctl start docker
+</code></pre><h2 id="Docker-Compose-Install"><a href="#Docker-Compose-Install" class="headerlink" title="Docker Compose Install"></a>Docker Compose Install</h2></li>
+</ul>
+<pre><code># download from github with curl
+curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+#install python module
+pip install docker-compose
+
+#check docker-compose version
+docker-compose version
+</code></pre><h2 id="Airflow-Docker-Install"><a href="#Airflow-Docker-Install" class="headerlink" title="Airflow Docker Install"></a>Airflow Docker Install</h2><ul>
+<li>Pull from Repository<pre><code>docker pull puckel/docker-airflow
+</code></pre></li>
+<li>Download Git Package<pre><code>git clone https://github.com/puckel/docker-airflow.git
+</code></pre></li>
+</ul>
+<h2 id="Airflow-LocalExecutor-Deploy"><a href="#Airflow-LocalExecutor-Deploy" class="headerlink" title="Airflow LocalExecutor Deploy"></a>Airflow LocalExecutor Deploy</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>The Airflow supports various deployment mode,  such as SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor, KubernetesExecutor.</p>
+<ul>
+<li>Airflow Local Executor Mode<br>Running Airflow on a LocalExecutor exemplifies single-node architecture. In dev or test environment, this mode is simple and easy for users to use Airflow.</li>
+<li>Airflow CeleryExecutor Mode<br>Running Airflow on a CeleryExecutor exemplifies distributed architecture, and communicates with Celery. For production environment, this mode is popular for users to deploy.</li>
+</ul>
+<p>In this solution, only introduce how to deploy a LocalExecutor with docker.</p>
+<h3 id="LocalExecutor-Deploy"><a href="#LocalExecutor-Deploy" class="headerlink" title="LocalExecutor Deploy"></a>LocalExecutor Deploy</h3><ul>
+<li>Step 1. Modify airflow.cfg<br>Go into <code>docker-airflow/config</code> directory, open airflow.cfg and modify two items as below:<br>```<br>#specify executor type<br>executor = LocalExecutor</li>
+</ul>
+<p>#specify postgresql data source<br>sql_alchemy_conn = postgresql+psycopg2://airflow:airflow@postgres:5432/airflow</p>
+<pre><code>* Step2. Modify Dockerfile
+The dockerfile in puckel image is based on Debian and includes all of steps how to build the airflow docker image. So it&apos;s unnecessary for you to rebuild the whole image, the simplified dockerfile is as below, which only contains basic steps.
+</code></pre><p>FROM puckel/docker-airflow:latest</p>
+<p>#RUN pip install &#x2013;user psycopg2-binary<br>ARG AIRFLOW_USER_HOME=/usr/local/airflow<br>USER root</p>
+<p>#RUN pip install  xxx<br>ENV AIRFLOW_HOME=/usr/local/airflow<br>COPY config/airflow.cfg /usr/local/airflow/airflow.cfg</p>
+<p>RUN chown -R airflow: ${AIRFLOW_USER_HOME}</p>
+<p>EXPOSE 8080 5555 8793</p>
+<p>USER airflow<br>WORKDIR ${AIRFLOW_USER_HOME}<br>ENTRYPOINT [&#x201C;/entrypoint.sh&#x201D;]<br>CMD [&#x201C;webserver&#x201D;]</p>
+<pre><code>
+* Step3. Modify docker-compose-LocalExecutor.yml
+This file includes the containers we need to deploy, such as postgres and webserver. Meanwhile, specify the `volumes` for container.
+</code></pre><p>version: &#x2018;3.7&#x2019;<br>services:<br>    postgres:<br>        image: postgres:9.6<br>        environment:</p>
+<pre><code>        - POSTGRES_USER=airflow
+        - POSTGRES_PASSWORD=airflow
+        - POSTGRES_DB=airflow
+    ports:
+        - &quot;5432:5432&quot;
+    volumes:
+        - ./data/postgres:/var/lib/postgresql/data
+    logging:
+        options:
+            max-size: 10m
+            max-file: &quot;3&quot;
+
+webserver:
+    image: puckel/docker-airflow:latest
+    restart: always
+    depends_on:
+        - postgres
+    environment:
+        - LOAD_EX=n
+        - EXECUTOR=Local
+    logging:
+        options:
+            max-size: 10m
+            max-file: &quot;3&quot;
+    volumes:
+        - ./dags:/usr/local/airflow/dags
+        # - ./plugins:/usr/local/airflow/plugins
+    ports:
+        - &quot;8080:8080&quot;
+    command: webserver
+    healthcheck:
+        test: [&quot;CMD-SHELL&quot;, &quot;[ -f /usr/local/airflow/airflow-webserver.pid ]&quot;]
+        interval: 30s
+        timeout: 30s
+        retries: 3
+</code></pre><pre><code>__Note__: the image version of webserver need change to `latest` version
+
+* Step4. Rebuild image
+</code></pre><p>cd puckel-docker-airflow<br>docker build &#x2013;rm -t puckel/docker-airflow .</p>
+<pre><code>* Step5. Deploy container
+</code></pre><p>cd puckel-docker-airflow<br>docker-compose -f docker-compose-LocalExecutor.yml up -d</p>
+<pre><code>Then you can execute `docker ps` to get the container list.
+If you want to restart container, such as webserver, the command is as below:
+</code></pre><p>docker-compose -f ./docker-compose-LocalExecutor.yml stop webserver<br>docker-compose -f ./docker-compose-LocalExecutor.yml start webserver</p>
+<pre><code>
+* Step6. Deploy Dag
+Add a dag file (Python) in `dags` directory which is defined as volumes of `webserver` container in docker-compose-LocalExecutor.yml. Then, you can find it on the Airflow website.
+</code></pre><p><a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a></p>
+<pre><code># FAQ
+
+1. `airflow initdb` error: airflow.exceptions.AirflowException: Could not create Fernet object: Incorrect padding
+</code></pre><p>python -c &#x201C;from cryptography.fernet import Fernet;print(Fernet.generate_key().decode())&#x201D;<br>3vWG_GoK_2MtU1fqRwCKrfNVsKW-ZcpdP8Ltz51xm64=</p>
+<p>export AIRFLOW<strong>CORE</strong>FERNET_KEY=3vWG_GoK_2MtU1fqRwCKrfNVsKW-ZcpdP8Ltz51xm64=<br>```</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Airflow/">#Airflow</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/04/23/serverless-deploy-vuepress/">How to Deploy Vuepress with Serverless Framework</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/03/28/dynamodb-migrate-s3/">How to Migrate DynamoDB to Another Platform</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="notification is-danger">
+    You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.
+</div>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="disqus_thread">
+    
+    <div class="notification is-danger">
+        You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.
+    </div>
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ballen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.zh-cn.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

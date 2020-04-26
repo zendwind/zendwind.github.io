@@ -2,13 +2,13 @@
 <html class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
-<title>分类 - Zend Wind&#39;s Blog</title>
+<title>Categories - Zend Wind&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link href="/en/categories/index.html" rel="alternate" hreflang="en" />
+<link href="/zh-cn/categories/index.html" rel="alternate" hreflang="zh-CN" />
     
 
 
@@ -21,7 +21,7 @@
 <meta property="og:title" content="Zend Wind&#39;s Blog">
 <meta property="og:url" content="http://zendwind.com/categories/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:locale" content="zh-cn">
+<meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zend Wind&#39;s Blog">
 
@@ -82,22 +82,25 @@
         <div class="navbar-menu navbar-start">
             
             <a class="navbar-item "
-               href="/zh-cn/archives">归档</a>
+               href="/archives">Archives</a>
             
             <a class="navbar-item "
-               href="/zh-cn/categories/Technology">技术</a>
+               href="/categories/Technology">Technology</a>
             
             <a class="navbar-item "
-               href="/zh-cn/categories/LifeStyle">生活</a>
+               href="/categories/Lifestyle">Lifestyle</a>
             
             <a class="navbar-item "
-               href="/zh-cn/about">关于</a>
+               href="/tags">Tags</a>
+            
+            <a class="navbar-item "
+               href="/about">About</a>
             
         </div>
         
         <div class="navbar-menu navbar-end">
             
-            <a class="navbar-item search" title="搜索" href="javascript:;">
+            <a class="navbar-item search" title="Search" href="javascript:;">
                 <i class="fas fa-search"></i>
             </a>
             
@@ -119,7 +122,7 @@
                 <span class="icon">
                     <i class="fas fa-globe"></i>
                 </span>
-                <span>简体中文</span>
+                <span>English</span>
                 <span class="icon is-small">
             <i class="fas fa-angle-down" aria-hidden="true"></i>
           </span>
@@ -129,11 +132,11 @@
             <div class="dropdown-content">
             
                 <a href="/categories/index.html" class="dropdown-item">
-                    简体中文
+                    English
                 </a>
             
-                <a href="/en/categories/index.html" class="dropdown-item">
-                    English
+                <a href="/zh-cn/categories/index.html" class="dropdown-item">
+                    简体中文
                 </a>
             
             </div>
@@ -151,7 +154,7 @@
     <section class="section section-heading">
     <div class="container">
         <div class="content">
-            <h5><i class="far fa-folder"></i>分类</h5>
+            <h5><i class="far fa-folder"></i>Categories</h5>
         </div>
     </div>
 </section>
@@ -160,7 +163,7 @@
         <div class="columns is-variable is-1 is-multiline is-mobile">
             
             <span class="column is-narrow">
-                <a class="tag is-light article-tag" href="/categories/HBase/">HBase&nbsp;(3)</a>
+                <a class="tag is-light article-tag" href="/categories/HBase/">HBase&nbsp;(1)</a>
             </span>
             
             <span class="column is-narrow">
@@ -173,14 +176,6 @@
             
             <span class="column is-narrow">
                 <a class="tag is-light article-tag" href="/categories/Serverless/">Serverless&nbsp;(1)</a>
-            </span>
-            
-            <span class="column is-narrow">
-                <a class="tag is-light article-tag" href="/categories/Python/">Python&nbsp;(1)</a>
-            </span>
-            
-            <span class="column is-narrow">
-                <a class="tag is-light article-tag" href="/categories/Hadoop/">Hadoop&nbsp;(2)</a>
             </span>
             
         </div>
@@ -239,7 +234,7 @@
     window.FontAwesomeConfig = {
         searchPseudoElements: true
     }
-    moment.locale("zh-CN");
+    moment.locale("en-AU");
 </script>
 
 
@@ -363,7 +358,7 @@
     <div class="searchbox-mask"></div>
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -375,11 +370,11 @@
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
         };
