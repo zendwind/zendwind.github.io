@@ -2,20 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zendwind.com/2020/04/23/en/serverless-deploy-vuepress/</loc>
-    
-    <lastmod>2020-04-26T05:25:04.014Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/en/serverless-deploy-vuepress.html</loc>
-    
-    <lastmod>2020-04-26T05:25:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zendwind.com/donate/index.html</loc>
     
     <lastmod>2020-04-26T02:03:08.796Z</lastmod>
@@ -30,37 +16,9 @@
   </url>
   
   <url>
-    <loc>http://zendwind.com/2020/03/28/en/dynamodb-migrate-s3/</loc>
-    
-    <lastmod>2020-04-25T14:32:07.272Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/en/dynamodb-migrate-s3.html</loc>
-    
-    <lastmod>2020-04-25T14:32:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zendwind.com/en/about/index.html</loc>
     
     <lastmod>2020-04-24T15:51:43.893Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2020/04/04/en/airflow-docker-install/</loc>
-    
-    <lastmod>2020-04-24T02:52:17.024Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/en/airflow-docker-install.html</loc>
-    
-    <lastmod>2020-04-24T02:52:17.000Z</lastmod>
     
   </url>
   
@@ -75,20 +33,6 @@
     <loc>http://zendwind.com/2018/05/15/hadoop-small-file-storage/</loc>
     
     <lastmod>2020-04-24T02:51:43.090Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2018/10/22/en/hbase-api/</loc>
-    
-    <lastmod>2020-04-24T02:51:34.185Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/en/hbase-api.html</loc>
-    
-    <lastmod>2020-04-24T02:51:34.000Z</lastmod>
     
   </url>
   
