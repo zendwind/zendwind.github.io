@@ -200,7 +200,196 @@
 
     <section class="section">
     <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            How to Deploy Airflow with Docker
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2020-04-04T06:00:00.000Z" itemprop="datePublished">
+                        4月 4 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Docker/">Docker</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 610 字)
+        </span>
+        
+        
+            <span class="column is-narrow" id="busuanzi_value_page_pv">0阅读量</span>
+        
+    </div>
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
+        <p>This post introduces how to deploy Airflow with Docker.<br><a id="more"></a></p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><ul>
+<li>CentOS7 (64-bit)</li>
+<li>TencentCloud CVM (4C,8G)</li>
+<li>Python3.6.0<h1 id="Docker-Install"><a href="#Docker-Install" class="headerlink" title="Docker Install"></a>Docker Install</h1><h2 id="Docker-Install-1"><a href="#Docker-Install-1" class="headerlink" title="Docker Install"></a>Docker Install</h2><pre><code>yum install -y docker   #in centos8, yum install -y docker-ce
+systemctl start docker
+</code></pre><h2 id="Docker-Compose-Install"><a href="#Docker-Compose-Install" class="headerlink" title="Docker Compose Install"></a>Docker Compose Install</h2></li>
+</ul>
+<pre><code># download from github with curl
+curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+#install python module
+pip install docker-compose
+
+#check docker-compose version
+docker-compose version
+</code></pre><h2 id="Airflow-Docker-Install"><a href="#Airflow-Docker-Install" class="headerlink" title="Airflow Docker Install"></a>Airflow Docker Install</h2><ul>
+<li>Pull from Repository<pre><code>docker pull puckel/docker-airflow
+</code></pre></li>
+<li>Download Git Package<pre><code>git clone https://github.com/puckel/docker-airflow.git
+</code></pre></li>
+</ul>
+<h2 id="Airflow-LocalExecutor-Deploy"><a href="#Airflow-LocalExecutor-Deploy" class="headerlink" title="Airflow LocalExecutor Deploy"></a>Airflow LocalExecutor Deploy</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>The Airflow supports various deployment mode,  such as SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor, KubernetesExecutor.</p>
+<ul>
+<li>Airflow Local Executor Mode<br>Running Airflow on a LocalExecutor exemplifies single-node architecture. In dev or test environment, this mode is simple and easy for users to use Airflow.</li>
+<li>Airflow CeleryExecutor Mode<br>Running Airflow on a CeleryExecutor exemplifies distributed architecture, and communicates with Celery. For production environment, this mode is popular for users to deploy.</li>
+</ul>
+<p>In this solution, only introduce how to deploy a LocalExecutor with docker.</p>
+<h3 id="LocalExecutor-Deploy"><a href="#LocalExecutor-Deploy" class="headerlink" title="LocalExecutor Deploy"></a>LocalExecutor Deploy</h3><ul>
+<li>Step 1. Modify airflow.cfg<br>Go into <code>docker-airflow/config</code> directory, open airflow.cfg and modify two items as below:<br>```<br>#specify executor type<br>executor = LocalExecutor</li>
+</ul>
+<p>#specify postgresql data source<br>sql_alchemy_conn = postgresql+psycopg2://airflow:airflow@postgres:5432/airflow</p>
+<pre><code>* Step2. Modify Dockerfile
+The dockerfile in puckel image is based on Debian and includes all of steps how to build the airflow docker image. So it&apos;s unnecessary for you to rebuild the whole image, the simplified dockerfile is as below, which only contains basic steps.
+</code></pre><p>FROM puckel/docker-airflow:latest</p>
+<p>#RUN pip install &#x2013;user psycopg2-binary<br>ARG AIRFLOW_USER_HOME=/usr/local/airflow<br>USER root</p>
+<p>#RUN pip install  xxx<br>ENV AIRFLOW_HOME=/usr/local/airflow<br>COPY config/airflow.cfg /usr/local/airflow/airflow.cfg</p>
+<p>RUN chown -R airflow: ${AIRFLOW_USER_HOME}</p>
+<p>EXPOSE 8080 5555 8793</p>
+<p>USER airflow<br>WORKDIR ${AIRFLOW_USER_HOME}<br>ENTRYPOINT [&#x201C;/entrypoint.sh&#x201D;]<br>CMD [&#x201C;webserver&#x201D;]</p>
+<pre><code>
+* Step3. Modify docker-compose-LocalExecutor.yml
+This file includes the containers we need to deploy, such as postgres and webserver. Meanwhile, specify the `volumes` for container.
+</code></pre><p>version: &#x2018;3.7&#x2019;<br>services:<br>    postgres:<br>        image: postgres:9.6<br>        environment:</p>
+<pre><code>        - POSTGRES_USER=airflow
+        - POSTGRES_PASSWORD=airflow
+        - POSTGRES_DB=airflow
+    ports:
+        - &quot;5432:5432&quot;
+    volumes:
+        - ./data/postgres:/var/lib/postgresql/data
+    logging:
+        options:
+            max-size: 10m
+            max-file: &quot;3&quot;
+
+webserver:
+    image: puckel/docker-airflow:latest
+    restart: always
+    depends_on:
+        - postgres
+    environment:
+        - LOAD_EX=n
+        - EXECUTOR=Local
+    logging:
+        options:
+            max-size: 10m
+            max-file: &quot;3&quot;
+    volumes:
+        - ./dags:/usr/local/airflow/dags
+        # - ./plugins:/usr/local/airflow/plugins
+    ports:
+        - &quot;8080:8080&quot;
+    command: webserver
+    healthcheck:
+        test: [&quot;CMD-SHELL&quot;, &quot;[ -f /usr/local/airflow/airflow-webserver.pid ]&quot;]
+        interval: 30s
+        timeout: 30s
+        retries: 3
+</code></pre><pre><code>__Note__: the image version of webserver need change to `latest` version
+
+* Step4. Rebuild image
+</code></pre><p>cd puckel-docker-airflow<br>docker build &#x2013;rm -t puckel/docker-airflow .</p>
+<pre><code>* Step5. Deploy container
+</code></pre><p>cd puckel-docker-airflow<br>docker-compose -f docker-compose-LocalExecutor.yml up -d</p>
+<pre><code>Then you can execute `docker ps` to get the container list.
+If you want to restart container, such as webserver, the command is as below:
+</code></pre><p>docker-compose -f ./docker-compose-LocalExecutor.yml stop webserver<br>docker-compose -f ./docker-compose-LocalExecutor.yml start webserver</p>
+<pre><code>
+* Step6. Deploy Dag
+Add a dag file (Python) in `dags` directory which is defined as volumes of `webserver` container in docker-compose-LocalExecutor.yml. Then, you can find it on the Airflow website.
+</code></pre><p><a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a></p>
+<pre><code># FAQ
+
+1. `airflow initdb` error: airflow.exceptions.AirflowException: Could not create Fernet object: Incorrect padding
+</code></pre><p>python -c &#x201C;from cryptography.fernet import Fernet;print(Fernet.generate_key().decode())&#x201D;<br>3vWG_GoK_2MtU1fqRwCKrfNVsKW-ZcpdP8Ltz51xm64=</p>
+<p>export AIRFLOW<strong>CORE</strong>FERNET_KEY=3vWG_GoK_2MtU1fqRwCKrfNVsKW-ZcpdP8Ltz51xm64=<br>```</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Airflow/">#Airflow</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/04/23/serverless-deploy-vuepress/">How to Deploy Vuepress with Serverless Framework</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/03/28/dynamodb-migrate-s3/">How to Migrate DynamoDB to Another Platform</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5ea559fc6ee5a0001d8b95db&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#valine-thread',
+        appId: 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
+        appKey: 'QdFr23RGUj3JYo0I4Yi8wuV3',
+        notify: false,
+        verify: false,
+        avatar: '',
+        placeholder: 'Say something...',
+        meta: ['nick', 'mail'],
+        visitor: true,
+        lang: ''
+    })
+</script>
+
+
+</div>
+
+
     </div>
 </section>
     <footer class="footer">
