@@ -2,24 +2,24 @@
 <html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
 <head>
   <meta charset="utf-8">
-  <title>分类</title>
+  <title>categories</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="keywords" content="分类">
+  <meta name="keywords" content="categories">
   <meta name="description" content="ZendWind's Open Project">
   
 
   <meta name="og:type" content="website">
   <meta name="og:site_name" content="ZendWind's Blog and Project Site">
   <meta name="og:image" content="http://zendwind.com/image/logo.png">
-  <meta name="og:title" content="分类">
+  <meta name="og:title" content="categories">
   <meta name="og:url" content="http://zendwind.com/categories/index.html">
   <meta name="og:description" content="ZendWind's Open Project">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="ZendWind's Blog and Project Site">
   <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
-  <meta name="twitter:title" content="分类">
+  <meta name="twitter:title" content="categories">
   <meta name="twitter:creator" content="@JamlingLi">
   <meta name="twitter:description" content="ZendWind's Open Project">
 
@@ -111,117 +111,95 @@
 
   <!-- main -->
   
-<div class="container container-fluid">
-  <div class="row">
-    <div class="col-sx-12 col-sm-8 col-md-9 col-lg-9">
-      
-<article class="article page" itemscope="itemscope" itemtype="http://schema.org/Article">
-  <header class="article-header">
-    <h1 class="article-title" itemprop="name headline">
-      分类
-    </h1>
-    <meta content="2020-04-24T02:00:00.000Z" itemprop="datePublished">
-  </header>
-  <div class="article-content" itemprop="articleBody">
-  
-    
+<!--<link type="text/css" rel="stylesheet" href="https://raw.githubusercontent.com/hizzgdev/jsmind/master/style/jsmind.css" />-->
+<style>
+/* important section */
+.jsmind-inner{position:relative;overflow:auto;width:100%;height:100%;}/*box-shadow:0 0 2px #000;*/
+.jsmind-inner{
+    moz-user-select:-moz-none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+/* z-index:1 */
+canvas{position:absolute;z-index:1;}
+
+/* z-index:2 */
+jmnodes{position:absolute;z-index:2;background-color:rgba(0,0,0,0);}/*background color is necessary*/
+jmnode{position:absolute;cursor:default;max-width:400px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+jmexpander{position:absolute;width:11px;height:11px;display:block;overflow:hidden;line-height:12px;font-size:12px;text-align:center;border-radius:6px;border-width:1px;border-style:solid;cursor:pointer;}
+
+/* default theme */
+jmnode{padding:10px;background-color:#fff;color:#333;border-radius:5px;box-shadow:1px 1px 1px #666;font:16px/1.125 Verdana,Arial,Helvetica,sans-serif;}
+jmnode:hover{box-shadow:2px 2px 8px #000;background-color:#ebebeb;color:#333;}
+jmnode.selected{background-color:#11f;color:#fff;box-shadow:2px 2px 8px #000;}
+jmnode.root{font-size:24px;}
+jmexpander{border-color:gray;}
+jmexpander:hover{border-color:#000;}
+
+@media screen and (max-width: 1024px) {
+    jmnode{padding:5px;border-radius:3px;font-size:14px;}
+    jmnode.root{font-size:21px;}
+}
+/* primary theme */
+jmnodes.theme-primary jmnode{background-color:#428bca;color:#fff;border-color:#357ebd;}
+jmnodes.theme-primary jmnode:hover{background-color:#3276b1;border-color:#285e8e;}
+jmnodes.theme-primary jmnode.selected{background-color:#f1c40f;color:#fff;}
+jmnodes.theme-primary jmnode.root{}
+jmnodes.theme-primary jmexpander{}
+jmnodes.theme-primary jmexpander:hover{}
+
+#jsmind_container{
+  width: auto;
+  height: 100px;
+  display: block;
+  margin: 0px;
+}
+.jsmind-inner a{
+  color: #fff;
+}
+</style>
+<!-- fix chrome load js issue from github -->
+<!--<script type="text/javascript" src="https://raw.githubusercontent.com/hizzgdev/jsmind/master/js/jsmind.js"></script>-->
+<script src="/js/jsmind.js"></script>
+<div class="container-fluid">
+  <div id="jsmind_container"></div>
+  <div id="category" class="h1">
   
   </div>
+  <script>
+    var mind = {
+      /* 元数据，定义思维导图的名称、作者、版本等信息 */
+      "meta":{
+          "name":"jsMind-demo-tree",
+          "author":"hizzgdev@163.com",
+          "version":"0.2"
+      },
+      /* 数据格式声明 */
+      "format":"node_tree",
+      /* 数据内容 */
+      "data":{id:"root", topic:"ZendWind's Blog and Project Site", children:[{id:"ck9gr8x9o000a2jc9ivd0m8ve",topic:'<a class="category-link" href="/en/categories/HBase/">HBase</a>', direction:"left"}, {id:"ck9gr8xay000h2jc91jbvasb2",topic:'<a class="category-link" href="/en/categories/Hadoop/">Hadoop</a>', direction:"right"}, {id:"ck9gr8x9f00032jc9tvsf32kv",topic:'<a class="category-link" href="/en/categories/Python/">Python</a>', direction:"left"}]}
+      };
+    var options = {
+        container:'jsmind_container',
+        editable:false,
+        support_html : true,
+        //mode: 'full',
+        theme:'primary'
+    };
 
-  <script src="/js/decrypt.min.js"></script>
-  <footer class="article-footer">
-    <time class="article-footer-updated" datetime="2020-04-26T07:47:22.610Z" itemprop="dateModified">
-    Last updated: 2020-04-26
-    </time>
-    <span itemprop="author publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
-      <meta content="http://zendwind.com" itemprop="url">
-      <meta content="ZendWind's Blog and Project Site" itemprop="name">
-      <meta content="/image/logo.png" itemprop="logo">
-    </span>
+    var jm = new jsMind(options);
+    // 让 jm 显示这个 mind 即可
+    jm.show(mind);
+    jm.select_node('root');
     
-
-  </footer>
-</article>
-
-<div class="page-footer">
-  <nav></nav>
-  
-<!-- Button trigger modal -->
-<blockquote class="donate"><!--
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#DonateModal">
-    Donate
-  </button>-->
-  <p>
-  <a href="#" role="button" data-toggle="modal" data-target="#DonateModal">
-  <img src="/image/donate_button.png" alt="donate">
-  <span>Dear reader, if you feel this good, could you rewark me a `bread` as awark? Thank you very much~</span></a>
-  </p>
-</blockquote>
-<!-- Modal -->
-<div class="modal fade" id="DonateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class="modal-title" id="myModalLabel">Donate</span>
-      </div>
-      <div class="modal-body"><!--
-        <table>
-        <thead>
-          <th class="text-center">AliPay</th>
-          <th class="text-center">WechatPay</th>
-        </thead>
-        <tr>
-          <td><img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="img-rounded donate" width="200" height="200"></td>
-          <td><img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="img-rounded donate" width="200" height="200"></td>
-        </tr>
-        </table>-->
-        <div class="container-fluid">
-        <div class="row">
-        <div class="col-md-6">
-          <div class="text-center">
-            <span style="display:block;">AliPay</span>
-            <img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="donate" />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="text-center">
-            <span style="display:block;">WechatPay</span>
-            <img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="donate" />
-          </div>
-        </div>
-        </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-  <a id="comment"></a>
-
-
-
-</div>
-
-
-    </div><!-- end main column -->
-    <div class="col-sx-12 col-sm-4 col-md-3 col-lg-3 hidden-xs">
-      <div id="navbar-toc">
-      <nav id="toc" class="hidden-print hidden-xs hidden-sm" data-spy="affix">
-        <div class="toc-title"><a role="button" data-toggle="collapse" href="#toc-body" aria-expanded="true">
-          Table Of Contents
-        </a></div>
-        <div id="toc-body" class="in">
-        
-        </div>
-      </nav>
-</div>
-
-    </div><!-- end aside -->
-  </div><!--  end row -->
+    var h = $(".theme-primary").css('height');
+    $('#jsmind_container').css('height', h);
+</script>
 </div>
 
   <!-- footer -->
@@ -316,7 +294,7 @@
   var lc_config = {
     pageId : 'b1ccbd874ee3fc58be7a7083354f9b8e',
     url : 'en/categories/index.html' || 'http://zendwind.com/categories/index.html',
-    title : '分类'
+    title : 'categories'
   };
   lc_debug && console.log('lcconfig', lc_config);
 
