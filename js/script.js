@@ -1,111 +1,82 @@
 (function ($) {
-  // mobile 
-  $('.navbar-toggle').sidr({
-    name: 'sidr-main',
-    source: '#bs-example-navbar-collapse-1'
-  });
-  $('body').click(function () {
-    $.sidr('close', 'sidr-main');
-  });
-
-  $(".navbar-fixed-top").autoHidingNavbar({
-    // see next for specifications
-  });
-  // scroll-spy
-  if ($('#navbar-toc').get(0)) {
-    $('body').scrollspy({ target: '#navbar-toc' });
-    $('#toc').css('min-width', $('#navbar-toc').css('width'));
-  }
-
-  // index card thumbnails 
-  $('.index-card .card-content .excerpt-box .excerpt').each(function (i) {
-    var content = $(this).parent();
-    // image
-    $(this).find('img').each(function () {
-      if (!$(this).prev().hasClass('.excerpt-img')) {
-        $(this).addClass('excerpt-img');
-        content.prepend($(this).remove());
-      } else {
-        $(this).remove();
-      }
+    $('.navbar-burger').click(function () {
+        $(this).toggleClass('is-active');
+        $('.navbar-main .navbar-start').toggleClass('is-active');
+        $('.navbar-main .navbar-end').toggleClass('is-active');
     });
-  });
 
-  // Article
-  $('.article').each(function (i) {
-    // image
-    $(this).find('img').each(function () {
-      if ($(this).parent().hasClass('fancybox-button')) return;
-      if ($(this).parent().get(0).nodeName.toLowerCase() === 'a') {
-        var href = $(this).attr('src');
-        if (href && (href.indexOf('https://img.shields.io/') === 0 || href.indexOf('https://travis-ci.org') === 0)) {
-          var br = $(this).parent().next();
-          if ($(br).is('br')) {
-            $(br).remove();
-          }
+    // Hide Header on on scroll down
+    var didScroll;
+    var lastScrollTop = 0;
+    var delta = 5;
+    var navbarHeight = $('.navbar-main').outerHeight();
+
+    $(window).scroll(function(event){
+        didScroll = true;
+    });
+
+    setInterval(function() {
+        if (didScroll) {
+            hasScrolled();
+            didScroll = false;
         }
-        return;
-      }
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="funcybox-caption">' + alt + '</span>');
+    }, 250);
 
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox-button"></a>');
+    function hasScrolled() {
+        var st = $(this).scrollTop();
 
-    });
-
-    $(this).find('.fancybox-button').each(function (j) {
-      $(this).attr('rel', 'fancybox-button');
-    });
-
-    // table
-    $(this).find('table').each(function () {
-      if (!$(this).hasClass('table-bordered')) {
-        $(this).addClass('table');
-        $(this).addClass('table-bordered');
-      }
-    });
-  });
-
-  if ($.fancybox) {
-    $('.fancybox-button').fancybox({
-      helpers: {
-        title: {
-          type: 'over'
-        },
-        buttons: {},
-        overlay: {
-          css: {
-            'background': 'rgba(58, 42, 45, 0.5)'
-          }
+        // Make sure they scroll more than delta
+        if(Math.abs(lastScrollTop - st) <= delta) {
+            return;
         }
-      },
-      afterShow: function () {
-        /* Add watermark */
-        $('<div class="watermark"></div>').bind("contextmenu", function (e) {
-          return false; /* Disables right click */
-        }).prependTo($.fancybox.inner);
 
-        $(".fancybox-title").wrapInner('<div />').show();
+        // If they scrolled down and are past the navbar, add class .navbar-down.
+        // This is necessary so you never see what is "behind" the navbar.
+        if (st > lastScrollTop && st > navbarHeight) {
+            var posY = Math.min(st, navbarHeight);
+            // Scroll Down
+            $('.navbar-main').css({
+                '-webkit-transform' : 'translateY(-' + posY + 'px)',
+                '-moz-transform'    : 'translateY(-' + posY + 'px)',
+                '-ms-transform'     : 'translateY(-' + posY + 'px)',
+                '-o-transform'      : 'translateY(-' + posY + 'px)',
+                'transform'         : 'translateY(-' + posY + 'px)'
+            });
+        } else {
+            // Scroll Up
+            if(st + $(window).height() < $(document).height()) {
+                $('.navbar-main').css({
+                    '-webkit-transform' : 'translateY(0px)',
+                    '-moz-transform'    : 'translateY(0px)',
+                    '-ms-transform'     : 'translateY(0px)',
+                    '-o-transform'      : 'translateY(0px)',
+                    'transform'         : 'translateY(0px)'
+                });
+            }
+        }
 
-        $(".fancybox-wrap").hover(function () {
-          $(".fancybox-title").show();
-        }, function () {
-          $(".fancybox-title").hide();
+        lastScrollTop = st;
+    }
+
+    $('.article.gallery img:not(".not-gallery-item")').each(function () {
+        // wrap images with link and add caption if possible
+        if ($(this).parent('a').length === 0) {
+            $(this).wrap('<a class="gallery-item" href="' + $(this).attr('src') + '"></a>');
+            if (this.alt) {
+                $(this).after('<div class="caption">' + this.alt + '</div>');
+            }
+        }
+    });
+
+    $('.article-entry').find('h1, h2, h3, h4, h5, h6').on('click', function () {
+        if ($(this).get(0).id) {
+            window.location.hash = $(this).get(0).id;
+        }
+    });
+
+    if (typeof(moment) === 'function') {
+        $('.article-meta time').each(function () {
+            $(this).text(moment($(this).attr('datetime')).fromNow());
         });
-      }
-    });
-  }
-
-  $.fn.chk_userlanguage = function () {
-    /* check if <style=display:none;> not set to that element */
-    // if (!this.is(":hidden")) { this.hide(); };
-    /* get browser default lang */
-    if (navigator.userLanguage) {
-      baseLang = navigator.userLanguage.substring(0, 2).toLowerCase();
     }
-    else {
-      baseLang = navigator.language.substring(0, 2).toLowerCase();
-    }
-    console.log(baseLang);//zh
-  };
 })(jQuery);

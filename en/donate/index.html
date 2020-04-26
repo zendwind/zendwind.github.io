@@ -1,437 +1,413 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<html class="has-navbar-fixed-top">
 <head>
-  <meta charset="utf-8">
-  <title>捐赠墙</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="keywords" content="捐赠墙">
-  <meta name="description" content="ZendWind's">
-  
+    <meta charset="utf-8">
+<title>捐赠墙 - Zend Wind&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta name="og:type" content="website">
-  <meta name="og:site_name" content="ZendWind's Blog">
-  <meta name="og:image" content="http://zendwind.com/image/logo.png">
-  <meta name="og:title" content="捐赠墙">
-  <meta name="og:url" content="http://zendwind.com/donate/index.html">
-  <meta name="og:description" content="ZendWind's">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="ZendWind's Blog">
-  <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
-  <meta name="twitter:title" content="捐赠墙">
-  <meta name="twitter:creator" content="@JamlingLi">
-  <meta name="twitter:description" content="ZendWind's">
 
-  <!-- Canonical links -->
-  <link rel="canonical" href="http://zendwind.com/en/donate/index.html">
-  <!-- Alternative links -->
-  <!-- CSS and JS-->
-  <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/sidr/2.2.1/jquery.sidr.min.js"></script>
-<script src="/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
-<script src="/js/script.js"></script>
-<script src="/js/lang_select.js"></script>
-<link rel="stylesheet" href="//cdn.bootcss.com/sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.15.10/styles/github.min.css">
-<script src="//cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css">
-<script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.css">
-<script src="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-<link rel="stylesheet" href="/css/nova_font.css">
-<link rel="stylesheet" href="/css/bs/nova.css">
+<link href="/donate/index.html" rel="alternate" hreflang="zh-CN" />
+    
 
-  <!-- RSS -->
-  <link rel="alternate" href="/atom.xml" title="Zend Wind's Blog">
-  <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="捐赠墙">
+<meta property="og:url" content="http://zendwind.com/en/donate/index.html">
+<meta property="og:site_name" content="Zend Wind&#39;s Blog">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-26T02:03:08.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="捐赠墙">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
 </head>
 <body>
-  <!-- header -->
-  <header id="body-header">
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse_" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="/en/" id="logo"><img src="/image/logo.png" height="50" alt="logo"></a>
-      </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-        <li><a href="/en/" class="main-nav">Home</a></li><li><a href="/en/categories/" class="main-nav">Category</a></li><li><a href="/en/archives/" class="main-nav">Archive</a></li><li><a href="/en/about/" class="main-nav">About</a></li>
-        </ul>
-        <!-- search input -->
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/en">
+                
+                <img src="/images/logo.png" alt="" height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
         
-
-<!-- 百度站内搜索（已通过站点验证） -->
-<form class="navbar-form navbar-left" role="search"
-  action="//search.zendwind.com/cse/search">
-  <div class="form-group search">
-    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="Search">
-    <input type="hidden" name="s" value="11812712506721118476">
-    <input type="hidden" name="nsid" value="0">
-    <!-- 
-    <input name="tn" type="hidden" value="SE_zzsearchcode_shhzc78w">
-    <input name="cl" type="hidden" value="3">
-    <input name="ct" type="hidden" value="2097152">
-    <input name="si" type="hidden" value="ieclipse.cn">
-    <input name="ie" type="hidden" value="utf-8">
-    -->
-  </div>
-</form>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language <span class="caret"></span></a>
-            <ul class="dropdown-menu animated fadeInDown faster">
-              <li><a href="/donate/index.html">简体中文</a></li>
-              
-              <li><a href="/en/donate/index.html">English</a></li>
-              
-            </ul>
-          </li>
-        </ul>
-      </div>
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">Archives</a>
+            
+            <a class="navbar-item "
+               href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item "
+               href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item "
+               href="/tags">Tags</a>
+            
+            <a class="navbar-item "
+               href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="Search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+       
+            
+<div class="column is-narrow has-text-centered">
+    <div class="dropdown is-up is-right is-hoverable" style="margin-top: -0.2em;">
+        <div class="dropdown-trigger">
+            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+                <span class="icon">
+                    <i class="fas fa-globe"></i>
+                </span>
+                <span>English</span>
+                <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+            </button>
+        </div>
+        <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
+            <div class="dropdown-content">
+            
+                <a href="/donate/index.html" class="dropdown-item">
+                    简体中文
+                </a>
+            
+                <a href="/en/donate/index.html" class="dropdown-item">
+                    English
+                </a>
+            
+            </div>
+        </div>
     </div>
-  </nav>
-</header>
+</div>
 
-  <!-- main -->
-  
-<div class="container container-fluid">
-  <div class="row">
-    <div class="col-sx-12 col-sm-8 col-md-9 col-lg-9">
-      
-<article class="article page" itemscope="itemscope" itemtype="http://schema.org/Article">
-  <header class="article-header">
-    <h1 class="article-title" itemprop="name headline">
-      捐赠墙
+
+        </div>
+    </div>
+   
+
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            捐赠墙
+        
     </h1>
-    <meta content="2020-04-24T02:00:00.000Z" itemprop="datePublished">
-  </header>
-  <div class="article-content" itemprop="articleBody">
-  
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-04-24T02:00:00.000Z" itemprop="datePublished">Apr 24 2020</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            a few seconds read (About 0 words)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-  
-  </div>
-
-  <script src="/js/decrypt.min.js"></script>
-  <footer class="article-footer">
-    <time class="article-footer-updated" datetime="2020-04-26T02:03:08.796Z" itemprop="dateModified">
-    Last updated: 2020-04-26
-    </time>
-    <span itemprop="author publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
-      <meta content="http://zendwind.com" itemprop="url">
-      <meta content="ZendWind's Blog" itemprop="name">
-      <meta content="/image/logo.png" itemprop="logo">
-    </span>
+        
     
-
-  </footer>
+    </div>
+    
+    
 </article>
 
-<div class="page-footer">
-  <nav></nav>
-  
-<!-- Button trigger modal -->
-<blockquote class="donate"><!--
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#DonateModal">
-    Donate
-  </button>-->
-  <p>
-  <a href="#" role="button" data-toggle="modal" data-target="#DonateModal">
-  <img src="/image/donate_button.png" alt="donate">
-  <span>Dear reader, if you feel this good, could you rewark me a `bread` as awark? Thank you very much~</span></a>
-  </p>
-</blockquote>
-<!-- Modal -->
-<div class="modal fade" id="DonateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class="modal-title" id="myModalLabel">Donate</span>
-      </div>
-      <div class="modal-body"><!--
-        <table>
-        <thead>
-          <th class="text-center">AliPay</th>
-          <th class="text-center">WechatPay</th>
-        </thead>
-        <tr>
-          <td><img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="img-rounded donate" width="200" height="200"></td>
-          <td><img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="img-rounded donate" width="200" height="200"></td>
-        </tr>
-        </table>-->
-        <div class="container-fluid">
-        <div class="row">
-        <div class="col-md-6">
-          <div class="text-center">
-            <span style="display:block;">AliPay</span>
-            <img src="/image/donate_alipay.png" alt="使用支付宝扫码打赏" class="donate" />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="text-center">
-            <span style="display:block;">WechatPay</span>
-            <img src="/image/donate_wechat.png" alt="使用微信扫码打赏" class="donate" />
-          </div>
-        </div>
-        </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+
+<div class="sharebox">
+    
+<div class="notification is-danger">
+    You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.
+</div>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">Comments</h3>
+    
+<div id="disqus_thread">
+    
+    <div class="notification is-danger">
+        You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.
     </div>
-  </div>
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
 </div>
 
-  <a id="comment"></a>
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Wen Qiuliang&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
 
-<script src="//unpkg.com/valine/dist/Valine.min.js">
-</script>
-<!--PC和WAP自适应版-->
-<div id="vcomments" data-sid="3af4eada35e646d9c1d908a18d13b4f4" ></div>
-<script>
-    new Valine({
-        el: '#vcomments',
-        appId: 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
-        appKey: 'QdFr23RGUj3JYo0I4Yi8wuV3',
-        path: '3af4eada35e646d9c1d908a18d13b4f4',
-        recordIP: true
-    })
-</script>
-
-
-
-</div>
-
-
-    </div><!-- end main column -->
-    <div class="col-sx-12 col-sm-4 col-md-3 col-lg-3 hidden-xs">
-      <div id="navbar-toc">
-      <nav id="toc" class="hidden-print hidden-xs hidden-sm" data-spy="affix">
-        <div class="toc-title"><a role="button" data-toggle="collapse" href="#toc-body" aria-expanded="true">
-          Table Of Contents
-        </a></div>
-        <div id="toc-body" class="in">
-        
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
         </div>
-      </nav>
-</div>
-
-    </div><!-- end aside -->
-  </div><!--  end row -->
-</div>
-
-  <!-- footer -->
-  <footer id="body-footer">
-  <div class="divider"></div>
-  <div>&nbsp;</div>
-  <div class="inner text-center">
-    <div id="footer-copyright">
-      &copy; 2020 <a href="http://zendwind.com" target="_blank">Wen Qiuliang</a> powered by <a href="http://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Jamling/hexo-theme-nova" target="_blank">Nova</a><br>
-      <!-- Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>. -->
     </div>
-    <div>
-      <a href="http://www.beian.miit.gov.cn" target="_blank"></a>
-    </div>
-  </div>
 </footer>
 
-  <!-- fixed action bar -->
-  
-  <div class="fab hidden-print" style="bottom: 45px; right: 24px;">
-  <!--
-    <ul class="top-expand" id="top-expand">
-      <li><a class="fab-item large red" href="#top"><i class="icon nova-top"></i></a></li>
-      <li><a class="fab-item large yellow " href="//www.jiathis.com/share?uid=2064663" target="_blank"><i class="icon nova-share"></i></a></li>
-    </ul>
-    <a class="fab-item large red " onclick="$('#top-expand').toggle();">
-      <i class="icon nova-list-ul"></i>
-    </a>
-    -->
-    <a class="fab-item large red " href="#top">
-      <i class="icon nova-top"></i>
-    </a>
-  </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
-  <!-- after footer, some 3rd script place here -->
-    <script>
-    var hljs_labels = {
-        left: "Code",
-        right: ":",
-        copy: "Copy to clipboard"
-    }
-    </script>
-    <script src="/js/hljs.js"></script>
-    <script src="/js/script.js"></script>
-    
-    <!-- 安装自动推送JS代码的网页，在页面被访问时，页面URL将立即被推送给百度 -->
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
 </script>
 
-    <!-- 新建的搜索框代码，建立使用你自己的代码替换-->
 <script>
-(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=11812712506721118476' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("en-AU");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
 </script>
 
     
-
-<!-- LeanClound官方Javascript SDK -->
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
 <script>
-  var page_layout = 'false'
-  var lc_debug = false;
-  if(typeof AV === 'undefined') {
-    $.getScript('//cdn1.lncld.net/static/js/av-min-1.2.1.js',function() {
-      lc_debug && console.log('init AV after av.js loaded');
-        AV.init({
-          appId : 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
-          appKey : 'QdFr23RGUj3JYo0I4Yi8wuV3'
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
         });
-        if (page_layout === 'true') {
-          lc_index_views('.card-action', {
-            style : 'hidden-xs',
-            p : {
-              views : '.nova-eye .count'
-            }
-          })
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
         }
-        lc_page_views();
-    });
-  }
 
-  var lc_config = {
-    pageId : '3af4eada35e646d9c1d908a18d13b4f4',
-    url : 'en/donate/index.html' || 'http://zendwind.com/donate/index.html',
-    title : '捐赠墙'
-  };
-  lc_debug && console.log('lcconfig', lc_config);
-
-  var lc_table = 'Counter' || 'Counter';
-
-  function lc_page_views() {
-    var query = new AV.Query(lc_table);
-    query.select(['-ACL']);
-    query.equalTo('pageId', lc_config.pageId);
-    query.first({
-      success: function(results) {
-        // results is an array of AV.Object.
-        if (typeof results === 'undefined') {
-          insert(results);
-          return;
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
-        update(results);
-        show(results);
-      },
-      error: function(error) {
-        // error is an instance of AV.Error.
-        console.log(error);
-      }
-    });
 
-    function insert(data) {
-      if (!data) {
-        lc_debug && console.log('data is null new object');
-        var M = AV.Object.extend(lc_table);
-        data = new M();
-        data.set('views', 1);
-      }
-      for ( var key in lc_config) {
-        data.set(key, lc_config[key]);
-      }
-      data.save().then(function(data) {
-        lc_debug && console.log('created objectId is ' + data.id);
-      }, function(error) {
-        lc_debug && console.log("create object failed", error);
-      });
-    }
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
 
-    function update(data) {
-      for ( var key in lc_config) {
-        if (key !== 'pageId')
-        data.set(key, lc_config[key]);
-      }
-      lc_debug && console.log("after change,data", data);
-      data.increment('views', 1);
-      data.save().then(function(data) {
-        lc_debug && console.log("update to " + data.get('views'));
-      }, function(error) {
-        lc_debug && console.log("update object failed", error);
-      });
-    }
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
 
-    function show(data) {
-      $(".lc-count").html(data.get('views'));
-    }
-    function show_count(count) {
-      $(".lc-count").html(count);
-    }
-  };
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
 
-  function lc_index_views() {
-    // load views count from leanclound
-    // make sure you are created Counter table on leanclound
-    function lc_load_views(selector, options) {
-      var o = options || {};
-      var tkeys = [];
-      $(selector).each(function(i) {
-        var tkey = $(this).data('tkey');
-        tkeys.push(tkey);
-      });
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
 
-      var query = new AV.Query(lc_table);
-      query.select([ '-ACL', '-createdAt', '-updatedAt', '-url' ]);
-      query.containedIn('pageId', tkeys);
-      query.find().then(function(results) {
-        $(selector).each(function(i) {
-          var tkey = $(this).data('tkey');
-          for (var i = 0; i < results.length; i++) {
-            var t = results[i];
-            if (t.get('pageId') === tkey) {
-              var c = t.get('views') + '';
-              $(this).find(o.p.views).html(c);
-            }
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
           }
         });
-      }, function(error) {
-      });
-    }
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
 
-    lc_load_views('.card-action', {
-      style : 'hidden-xs',
-      p : {
-        views : '.nova-eye .count'
-      }
-    });
-  }
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.en.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
 </script>
-
+<script src="/js/insight.js"></script>
+    
 </body>
 </html>

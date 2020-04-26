@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zendwind.com/en/index.html</loc>
-    
-    <lastmod>2020-04-26T08:10:32.532Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zendwind.com/categories/index.html</loc>
     
     <lastmod>2020-04-26T07:52:22.532Z</lastmod>
@@ -16,16 +9,30 @@
   </url>
   
   <url>
-    <loc>http://zendwind.com/2017/10/08/hadoop-ha-qjm/</loc>
+    <loc>http://zendwind.com/zh-cn/categories/index.html</loc>
+    
+    <lastmod>2020-04-26T07:52:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2017/10/08/zh-cn/hadoop-ha-qjm/</loc>
     
     <lastmod>2020-04-26T07:26:26.916Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zendwind.com/2018/05/15/hadoop-small-file-storage/</loc>
+    <loc>http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/</loc>
     
     <lastmod>2020-04-26T07:26:09.900Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2020/04/23/serverless-deploy-vuepress/</loc>
+    
+    <lastmod>2020-04-26T05:25:04.000Z</lastmod>
     
   </url>
   
@@ -44,35 +51,56 @@
   </url>
   
   <url>
-    <loc>http://zendwind.com/en/about/index.html</loc>
+    <loc>http://zendwind.com/2020/03/28/dynamodb-migrate-s3/</loc>
     
-    <lastmod>2020-04-24T15:51:43.893Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2017/10/11/hbase-read-write-exception-summary/</loc>
-    
-    <lastmod>2020-04-24T02:51:25.984Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2017/11/11/phoenix-introduction/</loc>
-    
-    <lastmod>2020-04-24T02:50:58.434Z</lastmod>
+    <lastmod>2020-04-25T14:32:07.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://zendwind.com/about/index.html</loc>
     
-    <lastmod>2020-04-24T02:06:44.910Z</lastmod>
+    <lastmod>2020-04-24T15:51:43.893Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zendwind.com/2017/10/15/python-read-dump/</loc>
+    <loc>http://zendwind.com/2020/04/04/airflow-docker-install/</loc>
+    
+    <lastmod>2020-04-24T02:52:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2018/10/22/hbase-api/</loc>
+    
+    <lastmod>2020-04-24T02:51:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2017/10/11/zh-cn/hbase-read-write-exception-summary/</loc>
+    
+    <lastmod>2020-04-24T02:51:25.984Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2017/11/11/zh-cn/phoenix-introduction/</loc>
+    
+    <lastmod>2020-04-24T02:50:58.434Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/zh-cn/about/index.html</loc>
+    
+    <lastmod>2020-04-24T02:06:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2017/10/15/zh-cn/python-read-dump/</loc>
     
     <lastmod>2018-05-15T16:01:12.000Z</lastmod>
     

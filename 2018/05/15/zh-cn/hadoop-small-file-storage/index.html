@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>【原】Hadoop小文件存储方案 - Zend Wind&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+<link href="/en/2018/05/15/zh-cn/hadoop-small-file-storage/" rel="alternate" hreflang="en" />
+    
+
+
+
+
+
+
+    <meta name="description" content="&amp;#x8FD1;&amp;#x6765;&amp;#xFF0C;&amp;#x4E1A;&amp;#x52A1;&amp;#x90E8;&amp;#x95E8;&amp;#x56E0;&amp;#x5386;&amp;#x53F2;&amp;#x539F;&amp;#x56E0;&amp;#xFF0C;&amp;#x5E0C;&amp;#x671B;&amp;#x5BF9;&amp;#x73B0;&amp;#x5B58;&amp;#x7684;&amp;#x56FE;&amp;#x7247;&amp;#x3001;&amp;#x5BF9;&amp;#x8D26;&amp;#x7B49;">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【原】Hadoop小文件存储方案">
+<meta property="og:url" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/index.html">
+<meta property="og:site_name" content="Zend Wind&#39;s Blog">
+<meta property="og:description" content="&amp;#x8FD1;&amp;#x6765;&amp;#xFF0C;&amp;#x4E1A;&amp;#x52A1;&amp;#x90E8;&amp;#x95E8;&amp;#x56E0;&amp;#x5386;&amp;#x53F2;&amp;#x539F;&amp;#x56E0;&amp;#xFF0C;&amp;#x5E0C;&amp;#x671B;&amp;#x5BF9;&amp;#x73B0;&amp;#x5B58;&amp;#x7684;&amp;#x56FE;&amp;#x7247;&amp;#x3001;&amp;#x5BF9;&amp;#x8D26;&amp;#x7B49;">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hadoop_1x_structure.jpg">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_packet.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_write_process.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_packet_flow.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_read_process.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har_1.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har_2.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har_3.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_record.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_block.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_header.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_1.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_2.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_3.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_4.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hbase_sf_mob.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hbase_sf_mob_structure.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hbase_sf_tar.png">
+<meta property="og:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/sf_compare.png">
+<meta property="og:updated_time" content="2020-04-26T07:26:09.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【原】Hadoop小文件存储方案">
+<meta name="twitter:description" content="&amp;#x8FD1;&amp;#x6765;&amp;#xFF0C;&amp;#x4E1A;&amp;#x52A1;&amp;#x90E8;&amp;#x95E8;&amp;#x56E0;&amp;#x5386;&amp;#x53F2;&amp;#x539F;&amp;#x56E0;&amp;#xFF0C;&amp;#x5E0C;&amp;#x671B;&amp;#x5BF9;&amp;#x73B0;&amp;#x5B58;&amp;#x7684;&amp;#x56FE;&amp;#x7247;&amp;#x3001;&amp;#x5BF9;&amp;#x8D26;&amp;#x7B49;">
+<meta name="twitter:image" content="http://zendwind.com/2018/05/15/zh-cn/hadoop-small-file-storage/hadoop_1x_structure.jpg">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt="" height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/zh-cn/archives">归档</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/Technology">技术</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/LifeStyle">生活</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目录">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x603B;&amp;#x4F53;&amp;#x67B6;&amp;#x6784;">1&nbsp;&nbsp;<b>HDFS&amp;amp;#x603B;&amp;amp;#x4F53;&amp;amp;#x67B6;&amp;amp;#x6784;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x5199;&amp;#x6D41;&amp;#x7A0B;">2&nbsp;&nbsp;<b>HDFS&amp;amp;#x5199;&amp;amp;#x6D41;&amp;amp;#x7A0B;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x8BFB;&amp;#x6D41;&amp;#x7A0B;">3&nbsp;&nbsp;<b>HDFS&amp;amp;#x8BFB;&amp;amp;#x6D41;&amp;amp;#x7A0B;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x5757;&amp;#x4FE1;&amp;#x606F;&amp;#x4ECB;&amp;#x7ECD;">4&nbsp;&nbsp;<b>HDFS&amp;amp;#x5757;&amp;amp;#x4FE1;&amp;amp;#x606F;&amp;amp;#x4ECB;&amp;amp;#x7ECD;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x5757;&amp;#x8BBE;&amp;#x8BA1;&amp;#x539F;&amp;#x5219;">4.1&nbsp;&nbsp;HDFS&amp;amp;#x5757;&amp;amp;#x8BBE;&amp;amp;#x8BA1;&amp;amp;#x539F;&amp;amp;#x5219;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x5757;&amp;#x5B58;&amp;#x50A8;&amp;#x539F;&amp;#x5219;">4.2&nbsp;&nbsp;HDFS&amp;amp;#x5757;&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x539F;&amp;amp;#x5219;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x5757;&amp;#x5143;&amp;#x6570;&amp;#x636E;&amp;#x4FE1;&amp;#x606F;">4.3&nbsp;&nbsp;HDFS&amp;amp;#x5757;&amp;amp;#x5143;&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x4FE1;&amp;amp;#x606F;</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#HDFS&amp;#x5C0F;&amp;#x6587;&amp;#x4EF6;&amp;#x5B58;&amp;#x50A8;&amp;#x65B9;&amp;#x6848;">5&nbsp;&nbsp;<b>HDFS&amp;amp;#x5C0F;&amp;amp;#x6587;&amp;amp;#x4EF6;&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x65B9;&amp;amp;#x6848;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#HAR&amp;#x5B58;&amp;#x50A8;&amp;#x65B9;&amp;#x6848;">5.1&nbsp;&nbsp;HAR&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x65B9;&amp;amp;#x6848;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#SequenceFile&amp;#x5B58;&amp;#x50A8;&amp;#x65B9;&amp;#x6848;">5.2&nbsp;&nbsp;SequenceFile&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x65B9;&amp;amp;#x6848;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Record&amp;#x7EC4;&amp;#x7EC7;&amp;#x6A21;&amp;#x5F0F;">5.2.1&nbsp;&nbsp;Record&amp;amp;#x7EC4;&amp;amp;#x7EC7;&amp;amp;#x6A21;&amp;amp;#x5F0F;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Block&amp;#x7EC4;&amp;#x7EC7;&amp;#x6A21;&amp;#x5F0F;">5.2.2&nbsp;&nbsp;Block&amp;amp;#x7EC4;&amp;amp;#x7EC7;&amp;amp;#x6A21;&amp;amp;#x5F0F;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#SequenceFile&amp;#x793A;&amp;#x4F8B;">5.2.3&nbsp;&nbsp;SequenceFile&amp;amp;#x793A;&amp;amp;#x4F8B;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#SequenceFile&amp;#x4F18;&amp;#x7F3A;&amp;#x70B9;">5.2.4&nbsp;&nbsp;SequenceFile&amp;amp;#x4F18;&amp;amp;#x7F3A;&amp;amp;#x70B9;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#CombinedFile&amp;#x5B58;&amp;#x50A8;&amp;#x65B9;&amp;#x6848;">5.3&nbsp;&nbsp;CombinedFile&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x65B9;&amp;amp;#x6848;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x603B;&amp;#x7ED3;">5.4&nbsp;&nbsp;&amp;amp;#x603B;&amp;amp;#x7ED3;</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x5176;&amp;#x5B83;&amp;#x5C0F;&amp;#x6587;&amp;#x4EF6;&amp;#x5B58;&amp;#x50A8;&amp;#x65B9;&amp;#x6848;">6&nbsp;&nbsp;<b>&amp;amp;#x5176;&amp;amp;#x5B83;&amp;amp;#x5C0F;&amp;amp;#x6587;&amp;amp;#x4EF6;&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x65B9;&amp;amp;#x6848;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x57FA;&amp;#x4E8E;HBase&amp;#x7684;&amp;#x5C0F;&amp;#x6587;&amp;#x4EF6;&amp;#x5B58;&amp;#x50A8;&amp;#x65B9;&amp;#x6848;">6.1&nbsp;&nbsp;&amp;amp;#x57FA;&amp;amp;#x4E8E;HBase&amp;amp;#x7684;&amp;amp;#x5C0F;&amp;amp;#x6587;&amp;amp;#x4EF6;&amp;amp;#x5B58;&amp;amp;#x50A8;&amp;amp;#x65B9;&amp;amp;#x6848;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x57FA;&amp;#x4E8E;&amp;#x6253;&amp;#x5305;&amp;#x6784;&amp;#x5EFA;&amp;#x7D22;&amp;#x5F15;&amp;#x65B9;&amp;#x6848;">6.2&nbsp;&nbsp;&amp;amp;#x57FA;&amp;amp;#x4E8E;&amp;amp;#x6253;&amp;amp;#x5305;&amp;amp;#x6784;&amp;amp;#x5EFA;&amp;amp;#x7D22;&amp;amp;#x5F15;&amp;amp;#x65B9;&amp;amp;#x6848;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x5176;&amp;#x5B83;&amp;#x65B9;&amp;#x6848;&amp;#x5BF9;&amp;#x6BD4;">6.3&nbsp;&nbsp;&amp;amp;#x5176;&amp;amp;#x5B83;&amp;amp;#x65B9;&amp;amp;#x6848;&amp;amp;#x5BF9;&amp;amp;#x6BD4;</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x603B;&amp;#x7ED3;-1">7&nbsp;&nbsp;<b>&amp;amp;#x603B;&amp;amp;#x7ED3;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x53C2;&amp;#x8003;">8&nbsp;&nbsp;<b>&amp;amp;#x53C2;&amp;amp;#x8003;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#&amp;#x9644;&amp;#x4EF6;">9&nbsp;&nbsp;<b>&amp;amp;#x9644;&amp;amp;#x4EF6;</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+       
+            
+<div class="column is-narrow has-text-centered">
+    <div class="dropdown is-up is-right is-hoverable" style="margin-top: -0.2em;">
+        <div class="dropdown-trigger">
+            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+                <span class="icon">
+                    <i class="fas fa-globe"></i>
+                </span>
+                <span>简体中文</span>
+                <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+            </button>
+        </div>
+        <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
+            <div class="dropdown-content">
+            
+                <a href="/2018/05/15/zh-cn/hadoop-small-file-storage/" class="dropdown-item">
+                    简体中文
+                </a>
+            
+                <a href="/en/2018/05/15/zh-cn/hadoop-small-file-storage/" class="dropdown-item">
+                    English
+                </a>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+   
+
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            【原】Hadoop小文件存储方案
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-05-15T15:30:00.000Z" itemprop="datePublished">5月 15 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            42 分钟 读完 (约 6297 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x8FD1;&#x6765;&#xFF0C;&#x4E1A;&#x52A1;&#x90E8;&#x95E8;&#x56E0;&#x5386;&#x53F2;&#x539F;&#x56E0;&#xFF0C;&#x5E0C;&#x671B;&#x5BF9;&#x73B0;&#x5B58;&#x7684;&#x56FE;&#x7247;&#x3001;&#x5BF9;&#x8D26;&#x7B49;&#x5386;&#x53F2;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x6539;&#x9020;&#xFF0C;&#x7531;&#x539F;&#x5148;&#x7684;&#x5355;&#x673A;&#x5B58;&#x50A8;&#x6539;&#x6210;&#x5206;&#x5E03;&#x5F0F;&#x5B58;&#x50A8;&#x4FBF;&#x4E8E;&#x7BA1;&#x7406;&#x548C;&#x7EF4;&#x62A4;&#xFF0C;&#x76EE;&#x524D;&#x7EC4;&#x5185;&#x4E5F;&#x5728;&#x5927;&#x529B;&#x63A8;&#x5E7F;HDFS&#x5728;&#x90E8;&#x95E8;&#x7684;&#x5E94;&#x7528; &#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6B64;&#x80CC;&#x666F;&#x4E0B;&#xFF0C;&#x8C03;&#x7814;&#x4E86;&#x76EE;&#x524D;&#x5173;&#x4E8E;HDFS&#x7684;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#xFF0C;&#x672C;&#x6587;&#x4F1A;&#x7740;&#x91CD;&#x4ECE;&#x5C0F;&#x6587;&#x4EF6;&#x9700;&#x6C42;&#x5165;&#x624B;&#xFF0C;&#x5206;&#x6790;&#x76EE;&#x524D;&#x5404;&#x79CD;&#x73B0;&#x6709;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7684;&#x72B6;&#x51B5;&#x53CA;&#x5404;&#x81EA;&#x4F7F;&#x7528;&#x7684;&#x573A;&#x666F;&#x3002;<br><a id="more"></a></p>
+<h1 id="HDFS&#x603B;&#x4F53;&#x67B6;&#x6784;"><a href="#HDFS&#x603B;&#x4F53;&#x67B6;&#x6784;" class="headerlink" title="HDFS&#x603B;&#x4F53;&#x67B6;&#x6784;"></a>HDFS&#x603B;&#x4F53;&#x67B6;&#x6784;</h1><p>&#x5728;&#x4ECB;&#x7ECD;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x89C9;&#x5F97;&#x6709;&#x5FC5;&#x8981;&#x5148;&#x4ECB;&#x7ECD;&#x4E0B;&#x5173;&#x4E8E;HDFS&#x5B58;&#x50A8;&#x67B6;&#x6784;&#x65B9;&#x9762;&#x7684;&#x4E00;&#x4E9B;&#x77E5;&#x8BC6;&#xFF0C;&#x5728;&#x5BF9;&#x67B6;&#x6784;&#x6709;&#x521D;&#x6B65;&#x4E86;&#x89E3;&#x540E;&#xFF0C;&#x624D;&#x4F1A;&#x660E;&#x767D;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x5355;&#x72EC;&#x9488;&#x5BF9;&#x5C0F;&#x6587;&#x4EF6;&#x5C55;&#x5F00;&#x4ECB;&#x7ECD;&#xFF0C;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x548C;&#x5176;&#x5B83;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x533A;&#x522B;&#x5728;&#x4EC0;&#x4E48;&#x5730;&#x65B9;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x53EA;&#x662F;&#x5C31;Hadoop&#x751F;&#x6001;&#x4E2D;&#x7684;&#x5B58;&#x50A8;&#x5C42;&#x5C55;&#x5F00;&#x4ECB;&#x7ECD;&#xFF0C;&#x5BF9;&#x4E8E;&#x5176;&#x5B83;&#x90E8;&#x5206;&#x672C;&#x6587;&#x6682;&#x672A;&#x63CF;&#x8FF0;&#x3002;&#x4F17;&#x6240;&#x5468;&#x77E5;&#xFF0C;HDFS&#x662F;&#x76EE;&#x524D;&#x975E;&#x5E38;&#x6D41;&#x884C;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#xFF0C;&#x5176;&#x903B;&#x8F91;&#x67B6;&#x6784;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;<br><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hadoop_1x_structure.jpg" alt="HDFS&#x67B6;&#x6784;"></p>
+<p>HDFS&#x4E5F;&#x662F;&#x5178;&#x578B;&#x7684;Master/Slave&#x7ED3;&#x6784;&#xFF0C;&#x5176;&#x4E2D;&#xFF0C;Master&#x76F8;&#x5F53;&#x4E8E;Namenode&#xFF0C;Slave&#x76F8;&#x5F53;&#x4E8E;Datanode&#x3002;</p>
+<p>Namenode &#x8D1F;&#x8D23;&#x5143;&#x6570;&#x636E;&#x7BA1;&#x7406;&#xFF0C;&#x7EF4;&#x62A4;&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#x6811;&#xFF0C;&#x54CD;&#x5E94;Client&#x8BF7;&#x6C42;&#xFF1B;Datanode&#x8D1F;&#x8D23;&#x5B9E;&#x9645;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x3002;&#x81F3;&#x4E8E;&#x4EC0;&#x4E48;&#x662F;&#x5143;&#x6570;&#x636E;&#xFF0C;&#x662F;&#x600E;&#x4E48;&#x7BA1;&#x7406;&#x7684;&#xFF0C;&#x53EF;&#x53C2;&#x8003;&#x6211;&#x7684;&#x53E6;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;<a href="http://km.oa.com/group/11819/articles/show/319776" target="_blank" rel="external">Hadoop&#x7684;HA&#x673A;&#x5236;</a>&#x3002;</p>
+<p>Block&#x662F;&#x6587;&#x4EF6;&#x5757;&#xFF0C;HDFS&#x4E2D;&#x662F;&#x4EE5;Block&#x4E3A;&#x5355;&#x4F4D;&#x8FDB;&#x884C;&#x6587;&#x4EF6;&#x7684;&#x7BA1;&#x7406;&#x7684;&#xFF0C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x53EF;&#x80FD;&#x6709;&#x591A;&#x4E2A;&#x5757;&#xFF0C;&#x6BCF;&#x4E2A;&#x5757;&#x9ED8;&#x8BA4;&#x662F;3&#x4E2A;&#x526F;&#x672C;&#xFF0C;&#x8FD9;&#x4E9B;&#x5757;&#x5206;&#x522B;&#x5B58;&#x50A8;&#x5728;&#x4E0D;&#x540C;&#x673A;&#x5668;&#x4E0A;&#x3002;&#x5757;&#x4E0E;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x4F1A;&#x5B9A;&#x65F6;&#x4E0A;&#x62A5;Namenode&#x3002;HDFS&#x4E2D;&#x4E00;&#x4E2A;&#x5757;&#x7684;&#x9ED8;&#x8BA4;&#x5927;&#x5C0F;&#x662F;64M&#xFF0C;&#x5176;&#x5927;&#x5C0F;&#x7531;&#x53C2;&#x6570;<code>dfs.block.size</code>&#x63A7;&#x5236;&#x3002;&#x8FD9;&#x91CC;&#x9762;&#x5148;&#x5F15;&#x7533;&#x51E0;&#x4E2A;&#x95EE;&#x9898;&#x51FA;&#x6765;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li><p><strong>&#x95EE;&#x9898;1&#xFF1A;&#x5757;&#x5927;&#x5C0F;&#x8981;&#x600E;&#x4E48;&#x8BBE;&#x7F6E;&#x4E3A;&#x4E00;&#x4E2A;&#x5408;&#x7406;&#x503C;&#xFF0C;&#x8FC7;&#x5927;&#x8BBE;&#x7F6E;&#x548C;&#x8FC7;&#x5C0F;&#x8BBE;&#x7F6E;&#x6709;&#x4EC0;&#x4E48;&#x5F71;&#x54CD;&#xFF1F;</strong></p>
+</li>
+<li><p><strong>&#x95EE;&#x9898;2&#xFF1A;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5C0F;&#x4E8E;&#x6240;&#x8BBE;&#x7F6E;&#x7684;&#x5757;&#x5927;&#x5C0F;&#xFF0C;&#x5B9E;&#x9645;&#x5360;&#x7528;&#x7A7A;&#x95F4;&#x4F1A;&#x600E;&#x6837;&#xFF1F;</strong></p>
+</li>
+<li><p><strong>&#x95EE;&#x9898;3&#xFF1A;&#x4E00;&#x4E2A;Namenode&#x6700;&#x591A;&#x80FD;&#x7BA1;&#x7406;&#x591A;&#x5C11;&#x4E2A;&#x5757;&#xFF0C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x4F1A;&#x8FBE;&#x5230;&#x74F6;&#x9888;&#xFF1F;</strong></p>
+</li>
+</ul>
+</blockquote>
+<p>&#x9488;&#x5BF9;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x5C55;&#x5F00;&#x4ECB;&#x7ECD;&#xFF0C;&#x8FD9;&#x91CC;&#x8FD8;&#x662F;&#x5148;&#x5173;&#x6CE8;&#x4E0B;&#x67B6;&#x6784;&#x65B9;&#x9762;&#x3002;&#x9488;&#x5BF9;&#x5757;&#x65B9;&#x9762;&#xFF0C;&#x6709;&#x51E0;&#x4E2A;&#x5355;&#x4F4D;&#x6982;&#x5FF5;&#x9700;&#x8981;&#x5F04;&#x6E05;&#x695A;&#xFF1A; <strong>Block&#x3001;Packet&#x548C;Chunk</strong>&#x3002;Block&#x4E0A;&#x9762;&#x6709;&#x63CF;&#x8FF0;&#xFF0C;Packet&#x548C;Chunk&#x5982;&#x4E0B;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li><ol>
+<li><strong>Packet</strong>: &#x5176;&#x6BD4;&#x5757;&#x8981;&#x5C0F;&#x5F88;&#x591A;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;Linux&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x6700;&#x5C0F;&#x76D8;&#x5757;&#x6982;&#x5FF5;&#xFF0C;&#x4E00;&#x822C;&#x4E3A;64KB&#xFF0C;&#x7531;&#x53C2;&#x6570;<code>dfs.write.packet.size</code>&#x63A7;&#x5236;&#xFF0C;&#x662F;client&#x5411;Datanode&#x5199;&#x5165;&#x6570;&#x636E;&#x7684;&#x7C92;&#x5EA6;&#xFF0C;&#x5373;client&#x5411;Datanode&#x5199;&#x6570;&#x636E;&#x65F6;&#x4E0D;&#x662F;&#x4E00;&#x6B21;&#x4EE5;Block&#x4E3A;&#x5355;&#x4F4D;&#x5199;&#x7684;&#xFF0C;&#x800C;&#x662F;&#x88AB;&#x5206;&#x6210;&#x82E5;&#x5E72;Packet&#xFF0C;&#x653E;&#x5165;pipeline&#x987A;&#x5E8F;&#x8FFD;&#x52A0;&#x5199;&#x5165;&#x5230;Block&#x4E2D;&#xFF0C;&#x793A;&#x610F;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_packet.png" alt="packet"></p>
+<blockquote>
+<ul>
+<li><ol>
+<li><strong>Chunk</strong>: &#x6BD4;Packet&#x66F4;&#x5C0F;&#xFF0C;&#x662F;&#x9488;&#x5BF9;Packet&#x6570;&#x636E;&#x6821;&#x9A8C;&#x7C92;&#x5EA6;&#x6765;&#x8BBE;&#x8BA1;&#x7684;&#xFF0C;&#x4E00;&#x822C;&#x662F;512B,&#x7531;&#x53C2;&#x6570;<code>io.bytes.per.checksum</code>&#x63A7;&#x5236;&#xFF0C;&#x540C;&#x65F6;&#x8FD8;&#x5E26;&#x6709;&#x4E00;&#x4E2A;4B&#x7684;&#x6821;&#x9A8C;&#x503C;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#x4E00;&#x4E2A;Chunk&#x662F;516B</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p>&#x4E0A;&#x9762;&#x8BF4;&#x5230;Chunk&#x662F;&#x9488;&#x5BF9;&#x6570;&#x636E;&#x6821;&#x9A8C;&#x7684;&#xFF0C;&#x90A3;&#x4E00;&#x4E2A;Packet&#x6709;&#x591A;&#x5C11;&#x4E2A;chunk&#x6821;&#x9A8C;&#x5462;&#xFF0C;&#x5982;&#x679C;Packet&#x9ED8;&#x8BA4;&#x662F;64KB, &#x90A3;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x4E3A;&#xFF1A;<code>chunk&#x4E2A;&#x6570;=64KB/516B=128</code>&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;Packet&#x6765;&#x8BF4;&#xFF0C;&#x6570;&#x636E;&#x503C;&#x4E0E;&#x6821;&#x9A8C;&#x503C;&#x6BD4;&#x4F8B;&#x5927;&#x6982;&#x4E3A;<strong>128:1</strong>, &#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x5757;&#x6765;&#x8BF4;&#xFF0C;&#x5047;&#x8BBE;&#x662F;64M&#xFF0C;&#x4F1A;&#x5BF9;&#x5E94;512KB&#x7684;&#x6821;&#x9A8C;&#x6587;&#x4EF6;&#x3002;</p>
+<p>Packet&#x7684;&#x793A;&#x610F;&#x56FE;&#x4E2D;&#x8FD8;&#x4E00;&#x4E2A;Header&#x4FE1;&#x606F;&#xFF0C;&#x5B9E;&#x9645;&#x5B58;&#x50A8;&#x7684;&#x662F;Packet&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC;Packet&#x5728;block&#x4E2D;&#x7684;offset, &#x6570;&#x636E;&#x957F;&#x5EA6;&#xFF0C;&#x6821;&#x9A8C;&#x7F16;&#x7801;&#x7B49;&#x3002;</p>
+<h1 id="HDFS&#x5199;&#x6D41;&#x7A0B;"><a href="#HDFS&#x5199;&#x6D41;&#x7A0B;" class="headerlink" title="HDFS&#x5199;&#x6D41;&#x7A0B;"></a>HDFS&#x5199;&#x6D41;&#x7A0B;</h1><p>&#x4E86;&#x89E3;&#x5757;&#x76F8;&#x5173;&#x6982;&#x5FF5;&#x540E;&#xFF0C;&#x518D;&#x4ECB;&#x7ECD;&#x4E0B;HDFS&#x7684;&#x5199;&#x5165;&#x6D41;&#x7A0B;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_write_process.png" alt="HDFS&#x5199;&#x6D41;&#x7A0B;"></p>
+<blockquote>
+<ul>
+<li><ol>
+<li>client&#x5411;Namenode&#x53D1;&#x8D77;&#x5199;&#x6587;&#x4EF6;RPC&#x8BF7;&#x6C42;&#xFF1B;</li>
+</ol>
+</li>
+<li><ol>
+<li>Namenode&#x68C0;&#x67E5;&#x8981;&#x5199;&#x7684;&#x6587;&#x4EF6;&#x662F;&#x5426;&#x5DF2;&#x5B58;&#x5728;&#x5143;&#x6570;&#x636E;&#x4E2D;&#xFF0C;&#x5B58;&#x5728;&#x5219;&#x62D2;&#x7EDD;&#x5199;&#x5165;&#xFF1B;&#x540C;&#x65F6;&#x68C0;&#x67E5;&#x5199;&#x5165;&#x7528;&#x6237;&#x6743;&#x9650;&#xFF0C;&#x5982;&#x65E0;&#x6743;&#x9650;&#x4E5F;&#x62D2;&#x7EDD;&#x5199;&#x5165;&#xFF1B;&#x82E5;&#x6587;&#x4EF6;&#x4E0D;&#x5B58;&#x5728;&#x4E14;&#x6709;&#x6743;&#x9650;&#x5199;&#x5165;&#xFF0C;&#x5219;Namenode&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x6761;&#x6587;&#x4EF6;&#x8BB0;&#x5F55;&#xFF0C;&#x54CD;&#x5E94;client&#x7AEF;&#x5141;&#x8BB8;&#x5199;&#x5165;&#x6587;&#x4EF6;&#xFF1B;</li>
+</ol>
+</li>
+<li><ol>
+<li>client&#x6839;&#x636E;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x5206;&#x6210;&#x82E5;&#x5E72;&#x5757;&#xFF0C;&#x5E76;&#x5728;Namenode&#x4E2D;&#x7533;&#x8BF7;&#x5757;&#x6240;&#x5B58;&#x653E;&#x7684;Datanode&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x662F;3&#x526F;&#x672C;&#x5B58;&#x50A8;&#xFF0C;&#x5219;Namenode&#x4F1A;&#x9009;&#x62E9;3&#x53F0;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x7ED3;&#x70B9;&#x653E;&#x5230;&#x7ED3;&#x70B9;&#x961F;&#x5217;&#x4E2D;&#xFF1B;client&#x5B9E;&#x9645;&#x5411;Datanode&#x5199;&#x6570;&#x636E;&#x65F6;&#x662F;&#x4EE5;Packet&#x4E3A;&#x5355;&#x4F4D;&#x6765;&#x5199;&#x5230;Block&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x4F1A;&#x6D89;&#x53CA;&#x4E24;&#x4E2A;&#x961F;&#x5217;&#xFF0C;&#x5206;&#x522B;&#x4E3A;:<strong>data packet&#x961F;&#x5217;</strong>&#x548C;<strong>ack packet&#x961F;&#x5217;</strong>&#xFF0C;Packet&#x4F1A;&#x540C;&#x65F6;&#x5165;&#x6570;&#x636E;&#x961F;&#x5217;&#x548C;ack&#x961F;&#x5217;&#xFF1B;</li>
+</ol>
+</li>
+<li><ol>
+<li>&#x901A;&#x8FC7;DataStreamer&#x5BF9;&#x8C61;&#x5C06;&#x6570;&#x636E;&#x5199;&#x5165;pipeline&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;Datanode,&#x5E76;&#x4F9D;&#x6B21;&#x5199;&#x5165;&#x5230;&#x5176;&#x5B83;&#x4E24;&#x4E2A;&#x7ED3;&#x70B9;&#xFF1B;&#x5F53;&#x4E09;&#x4E2A;&#x7ED3;&#x70B9;packet&#x90FD;&#x5199;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x4F1A;&#x5C06;packets &#x4ECE;ack queue&#x4E2D;&#x5220;&#x9664;&#xFF1B;</li>
+</ol>
+</li>
+<li><ol>
+<li>&#x5199;&#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#x540E;&#xFF0C;client&#x8C03;&#x7528;close()&#x5173;&#x95ED;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x5E76;&#x901A;&#x77E5;Namenode&#x5173;&#x95ED;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x81F3;&#x6B64;&#xFF0C;&#x6574;&#x4E2A;&#x5199;&#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#x3002;</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p>packet&#x5199;&#x5165;&#x6D41;&#x793A;&#x610F;&#x56FE;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_packet_flow.png" alt="packet&#x6D41;&#x7A0B;&#x56FE;"></p>
+<h1 id="HDFS&#x8BFB;&#x6D41;&#x7A0B;"><a href="#HDFS&#x8BFB;&#x6D41;&#x7A0B;" class="headerlink" title="HDFS&#x8BFB;&#x6D41;&#x7A0B;"></a>HDFS&#x8BFB;&#x6D41;&#x7A0B;</h1><p>HDFS&#x7684;&#x8BFB;&#x6D41;&#x7A0B;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x6D41;&#x7A0B;&#x7A0B;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_read_process.png" alt="HDFS&#x8BFB;&#x6D41;&#x7A0B;"></p>
+<blockquote>
+<ul>
+<li><ol>
+<li>client &#x5411;Namenode&#x53D1;&#x8D77;&#x8BFB;&#x6587;&#x4EF6;RPC&#x8BF7;&#x6C42;&#xFF1B;</li>
+</ol>
+</li>
+<li><ol>
+<li>Namenode&#x8FD4;&#x56DE;&#x76F8;&#x5E94;block&#x6240;&#x5728;datanode&#x7684;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#xFF1B;</li>
+</ol>
+</li>
+<li><ol>
+<li>client&#x901A;&#x8FC7;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#x8C03;&#x7528;FSDataInputStream API&#x7684;Read&#x65B9;&#x6CD5;&#x4ECE;datanode&#x4E2D;&#x5E76;&#x884C;&#x8BFB;&#x53D6;block&#x4FE1;&#x606F;&#xFF0C;&#x5982;&#x56FE;&#x4E2D;4&#x548C;5&#x6240;&#x793A;&#xFF0C;&#x9009;&#x62E9;block&#x7684;&#x5176;&#x4E2D;&#x4E00;&#x526F;&#x672C;&#x8FD4;&#x56DE;client&#x3002;</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<h1 id="HDFS&#x5757;&#x4FE1;&#x606F;&#x4ECB;&#x7ECD;"><a href="#HDFS&#x5757;&#x4FE1;&#x606F;&#x4ECB;&#x7ECD;" class="headerlink" title="HDFS&#x5757;&#x4FE1;&#x606F;&#x4ECB;&#x7ECD;"></a>HDFS&#x5757;&#x4FE1;&#x606F;&#x4ECB;&#x7ECD;</h1><p>&#x5728;&#x5BF9;HDFS&#x7684;&#x8BFB;&#x5199;&#x6D41;&#x7A0B;&#x6709;&#x4E00;&#x4E2A;&#x57FA;&#x7840;&#x4E86;&#x89E3;&#x540E;&#xFF0C;&#x4E0B;&#x9762;&#x9488;&#x5BF9;&#x6587;&#x4EF6;&#x5757;&#x5B58;&#x50A8;&#x76F8;&#x5173;&#x5185;&#x5BB9;&#x5C55;&#x5F00;&#x4ECB;&#x7ECD;&#x3002;&#x4E86;&#x89E3;&#x5757;&#x7684;&#x8BBE;&#x8BA1;&#x3001;&#x5B58;&#x50A8;&#x548C;&#x5143;&#x6570;&#x636E;&#x76F8;&#x5173;&#x77E5;&#x8BC6;&#x5BF9;&#x4E8E;&#x8BBE;&#x8BA1;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#x4E5F;&#x81F3;&#x5173;&#x91CD;&#x8981;&#x3002;</p>
+<h2 id="HDFS&#x5757;&#x8BBE;&#x8BA1;&#x539F;&#x5219;"><a href="#HDFS&#x5757;&#x8BBE;&#x8BA1;&#x539F;&#x5219;" class="headerlink" title="HDFS&#x5757;&#x8BBE;&#x8BA1;&#x539F;&#x5219;"></a>HDFS&#x5757;&#x8BBE;&#x8BA1;&#x539F;&#x5219;</h2><p>&#x6709;&#x4EBA;&#x53EF;&#x80FD;&#x4F1A;&#x95EE;&#xFF0C;&#x96C6;&#x7FA4;&#x5B58;&#x50A8;&#x6709;&#x5927;&#x6587;&#x4EF6;&#x4E5F;&#x6709;&#x5C0F;&#x6587;&#x4EF6;&#xFF0C;&#x90A3;&#x5757;&#x5927;&#x5C0F;&#x8BE5;&#x5982;&#x4F55;&#x8BBE;&#x8BA1;&#x5462;&#xFF0C;&#x8FD9;&#x91CC;&#x5E94;&#x8BE5;&#x8981;&#x8003;&#x8651;2&#x4E2A;&#x51C6;&#x5219;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li><p>1.&#x51CF;&#x5C11;&#x5185;&#x5B58;&#x5360;&#x7528;&#xFF1A;&#x5BF9;&#x4E8E;Namenode&#x6765;&#x8BF4;&#xFF0C;&#x5355;&#x673A;&#x5185;&#x5B58;&#x6BD5;&#x7ADF;&#x6709;&#x9650;&#xFF0C;&#x6587;&#x4EF6;&#x5757;&#x8D8A;&#x591A;&#xFF0C;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x8D8A;&#x5927;&#xFF0C;&#x5360;&#x7528;&#x5185;&#x5B58;&#x8D8A;&#x591A;&#xFF0C;&#x5982;&#x679C;&#x6587;&#x4EF6;&#x6570;&#x91CF;&#x7EA7;&#x5F88;&#x5927;&#x7684;&#x8BDD;&#xFF0C;&#x5355;&#x673A;&#x5C06;&#x65E0;&#x6CD5;&#x7BA1;&#x7406;&#xFF1B;</p>
+</li>
+<li><p>2.&#x51CF;&#x5C11;&#x786C;&#x76D8;&#x5BFB;&#x9053;&#x65F6;&#x95F4;&#xFF1A; &#x6570;&#x636E;&#x5757;&#x5728;&#x786C;&#x76D8;&#x4E3A;&#x8FDE;&#x7EED;&#x5B58;&#x50A8;&#xFF0C;&#x5BF9;&#x4E8E;&#x666E;&#x901A;SATA&#x76D8;&#xFF0C;&#x968F;&#x673A;&#x5BFB;&#x5740;&#x8F83;&#x6162;&#xFF0C; &#x5982;&#x679C;&#x5757;&#x8BBE;&#x7F6E;&#x8FC7;&#x5C0F;&#xFF0C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x5757;&#x603B;&#x6570;&#x4F1A;&#x8D8A;&#x591A;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x786C;&#x76D8;&#x5BFB;&#x5740;&#x65F6;&#x95F4;&#x4F1A;&#x52A0;&#x957F;&#xFF0C;&#x81EA;&#x7136;&#x541E;&#x5410;&#x91CF;&#x65E0;&#x6CD5;&#x6EE1;&#x8DB3;&#x8981;&#x6C42;&#xFF1B;&#x5982;&#x679C;&#x5757;&#x8BBE;&#x7F6E;&#x8FC7;&#x5927;&#xFF0C;&#x4E00;&#x65B9;&#x9762;&#x5BF9;&#x4E8E;&#x666E;&#x901A;&#x76D8;&#x6765;&#x8BF4;IO&#x6027;&#x80FD;&#x4E5F;&#x6BD4;&#x8F83;&#x5DEE;&#xFF0C;&#x52A0;&#x8F7D;&#x65F6;&#x4F1A;&#x5F88;&#x6162;&#xFF0C;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;&#x5757;&#x8FC7;&#x5927;&#xFF0C;&#x5BF9;&#x4E8E;&#x591A;&#x526F;&#x672C;&#x6765;&#x8BF4;&#xFF0C;&#x5728;&#x526F;&#x672C;&#x51FA;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x7CFB;&#x7EDF;&#x6062;&#x590D;&#x65F6;&#x95F4;&#x8D8A;&#x957F;&#x3002;</p>
+</li>
+</ul>
+</blockquote>
+<p>&#x6240;&#x4EE5;&#x8BBE;&#x7F6E;&#x5408;&#x7406;&#x7684;&#x5757;&#x5927;&#x5C0F;&#x4E5F;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#x6839;&#x636E;&#x96C6;&#x7FA4;&#x7684;&#x9700;&#x6C42;&#x6765;&#x8BBE;&#x5B9A;&#xFF0C;&#x6BD4;&#x5982;&#x5BF9;&#x4E8E;&#x4F7F;&#x7528;&#x5230;HBase&#x7684;&#x573A;&#x666F;&#xFF0C;&#x4E00;&#x822C;&#x6570;&#x636E;&#x91CF;&#x4F1A;&#x6BD4;&#x8F83;&#x5927;&#xFF0C;&#x5757;&#x4E0D;&#x5B9C;&#x8BBE;&#x7F6E;&#x592A;&#x5C0F;&#xFF0C;&#x53C2;&#x8003;&#x503C;&#x4E00;&#x822C;&#x4E3A;128MB&#x6216;256MB&#xFF0C;&#x8FD9;&#x6837;&#x80FD;&#x5C3D;&#x91CF;&#x907F;&#x514D;&#x9891;&#x7E41;&#x5757;&#x5237;&#x5199;&#x548C;&#x5757;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x7684;&#x81A8;&#x80C0;&#xFF1B;&#x5BF9;&#x4E8E;&#x5B58;&#x50A8;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x5982;&#x56FE;&#x7247;&#xFF0C;&#x5757;&#x53EF;&#x8BBE;&#x7F6E;&#x6210;&#x9ED8;&#x8BA4;64MB&#x5927;&#x5C0F;&#xFF0C;&#x4E00;&#x4E2A;&#x5757;&#x4E2D;&#x5B58;&#x50A8;&#x591A;&#x4E2A;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x3002;</p>
+<h2 id="HDFS&#x5757;&#x5B58;&#x50A8;&#x539F;&#x5219;"><a href="#HDFS&#x5757;&#x5B58;&#x50A8;&#x539F;&#x5219;" class="headerlink" title="HDFS&#x5757;&#x5B58;&#x50A8;&#x539F;&#x5219;"></a>HDFS&#x5757;&#x5B58;&#x50A8;&#x539F;&#x5219;</h2><p>&#x5757;&#x5728;HDFS&#x4E2D;&#x662F;&#x600E;&#x4E48;&#x5B58;&#x50A8;&#x7684;&#x5462;&#xFF0C;&#x4E0A;&#x9762;&#x6709;&#x63D0;&#x5230;&#x591A;&#x526F;&#x672C;&#x673A;&#x5236;&#xFF0C;&#x5373;&#x4E00;&#x4E2A;&#x5757;&#x5728;HDFS&#x4E2D;&#x662F;&#x6839;&#x636E;<strong>dfs.replication</strong>&#x53C2;&#x6570;&#x6240;&#x8BBE;&#x7F6E;&#x7684;&#x503C;&#x6765;&#x786E;&#x5B9A;&#x526F;&#x672C;&#x6570;&#x7684;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;3&#x3002;&#x4E09;&#x4E2A;&#x526F;&#x672C;&#x662F;&#x968F;&#x673A;&#x5B58;&#x50A8;&#x4E09;&#x53F0;&#x6570;&#x636E;&#x7ED3;&#x70B9;Datanode&#x4E0A;&#xFF0C;&#x4E09;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x9009;&#x53D6;&#x9075;&#x5FAA;&#x673A;&#x67B6;&#x611F;&#x77E5;&#x7B56;&#x7565;&#xFF0C;&#x901A;&#x8FC7;<strong>topology.script.file.name</strong>&#x6765;&#x8BBE;&#x7F6E;&#xFF0C; &#x5982;&#x679C;&#x914D;&#x7F6E;&#x4E2D;&#x672A;&#x914D;&#x7F6E;&#x673A;&#x67B6;&#x611F;&#x77E5;&#xFF0C;Namenode&#x662F;&#x65E0;&#x6CD5;&#x77E5;&#x9053;&#x673A;&#x623F;&#x7F51;&#x7EDC;&#x62D3;&#x6251;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x968F;&#x673A;&#x9009;&#x53D6;3&#x53F0;&#x7ED3;&#x70B9;&#x8FDB;&#x884C;&#x5757;&#x5B58;&#x50A8;&#xFF0C;&#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E86;&#x673A;&#x67B6;&#x611F;&#x77E5;&#xFF0C;&#x5219;&#x5728;&#x5B58;&#x50A8;&#x65F6;&#x4F1A;&#x5728;&#x540C;&#x673A;&#x67B6;&#x5B58;&#x50A8;2&#x526F;&#x672C;&#xFF0C;&#x4E0D;&#x540C;&#x673A;&#x67B6;&#x653E;&#x7B2C;3&#x4E2A;&#x526F;&#x672C;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x65E6;&#x4E00;&#x4E2A;&#x673A;&#x67B6;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#xFF0C;&#x8FD8;&#x80FD;&#x4FDD;&#x8BC1;&#x4E00;&#x4E2A;&#x526F;&#x672C;&#x662F;&#x53EF;&#x7528;&#x7684;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x53EA;&#x6709;&#x51E0;K&#xFF0C;&#x4E14;&#x5C0F;&#x4E8E;HDFS&#x5757;&#x5927;&#x5C0F;&#xFF0C;&#x5B9E;&#x9645;&#x5728;HDFS&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x4F1A;&#x662F;&#x591A;&#x5C11;&#x5462;&#xFF1F;&#x7B54;&#x6848;&#x662F;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x5373;&#x4E3A;&#x5B9E;&#x9645;&#x5360;&#x7528;&#x7A7A;&#x95F4;&#xFF0C;&#x5BF9;&#x4E8E;&#x51E0;K&#x7684;&#x6587;&#x4EF6;&#x5B9E;&#x9645;&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x5927;&#x5C0F;&#x4E5F;&#x4E3A;&#x51E0;K&#xFF0C;&#x4E0D;&#x4F1A;&#x5360;&#x7528;&#x4E00;&#x4E2A;&#x5757;&#x7A7A;&#x95F4;&#x3002;</p>
+<h2 id="HDFS&#x5757;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;"><a href="#HDFS&#x5757;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;" class="headerlink" title="HDFS&#x5757;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;"></a>HDFS&#x5757;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;</h2><p>&#x4E0A;&#x9762;&#x63D0;&#x5230;&#xFF0C;&#x5728;&#x5B58;&#x50A8;&#x7684;&#x6587;&#x4EF6;&#x6570;&#x91CF;&#x7EA7;&#x5F88;&#x5927;&#x65F6;&#xFF0C;&#x5355;&#x673A;Namenode&#x5185;&#x5B58;&#x6D88;&#x8017;&#x4F1A;&#x6025;&#x5267;&#x589E;&#x5927;&#xFF0C;&#x6613;&#x89E6;&#x53D1;&#x5355;&#x673A;&#x74F6;&#x9888;&#xFF0C;&#x90A3;&#x4E48;&#x5230;&#x5E95;&#x4E00;&#x4E2A;Namenode&#x53EF;&#x4EE5;&#x7BA1;&#x7406;&#x591A;&#x5C11;&#x91CF;&#x7EA7;&#x7684;&#x5143;&#x6570;&#x636E;&#x5462;&#xFF0C;&#x5176;&#x5B9E;&#x8FD9;&#x4E2A;&#x53EF;&#x4EE5;&#x6709;&#x4E00;&#x4E2A;&#x516C;&#x5F0F;&#x6765;&#x521D;&#x7565;&#x4F30;&#x7B97;&#x3002;&#x8FD9;&#x91CC;&#x9996;&#x5148;&#x8981;&#x4E86;&#x89E3;&#x4E00;&#x4E2A;&#x6982;&#x5FF5;&#xFF0C;&#x5143;&#x6570;&#x636E;&#x5305;&#x62EC;&#x54EA;&#x4E9B;&#xFF0C;&#x6B63;&#x5E38;&#x5143;&#x6570;&#x636E;&#x5305;&#x62EC;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;<strong>&#x6587;&#x4EF6;&#x3001;&#x76EE;&#x5F55;&#x548C;&#x5757;</strong>&#x3002;&#x8FD9;&#x4E09;&#x90E8;&#x5206;&#x5728;&#x5143;&#x6570;&#x636E;&#x4E2D;&#x5404;&#x5360;&#x7528;&#x591A;&#x5C11;&#x7A7A;&#x95F4;&#x5462;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x521D;&#x7565;&#x7684;&#x8BA1;&#x7B97;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li><ol>
+<li>&#x5355;&#x6761;&#x5143;&#x6570;&#x636E;&#x5927;&#x5C0F;&#xFF1A;&#x6587;&#x4EF6;&#x7EA6;250B&#xFF0C;&#x76EE;&#x5F55;&#x7EA6;290B&#xFF0C;&#x5757;&#x7EA6;368B(152B+72*&#x526F;&#x672C;&#x6570;3)</li>
+</ol>
+</li>
+<li><ol>
+<li>&#x96C6;&#x7FA4;&#x5143;&#x6570;&#x636E;&#x603B;&#x6761;&#x6570;&#xFF1A;&#x6587;&#x4EF6;&#x6570;&#x7EA6;10000&#x4E2A;&#xFF0C;&#x76EE;&#x5F55;&#x7EA6;5000&#x4E2A;&#xFF0C;&#x5757;&#x7EA6;20000&#x4E2A;</li>
+</ol>
+</li>
+<li><ol>
+<li>&#x603B;&#x5360;&#x7528;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#xFF1A; 250B<em>10000+290B</em>5000+368B*20000=10.78M</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p>&#x5B9E;&#x9645;&#x5185;&#x5B58;&#x6D88;&#x8017;&#x4F1A;&#x6BD4;&#x8FD9;&#x591A;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD8;&#x6709;&#x5176;&#x5B83;&#x4E00;&#x4E9B;&#x4FE1;&#x606F;&#x9700;&#x8981;&#x5B58;&#x50A8;&#xFF0C;&#x603B;&#x4F53;&#x5185;&#x5B58;&#x6D88;&#x8017;&#x53EF;&#x6839;&#x636E;&#x4E0A;&#x8FF0;&#x516C;&#x5F0F;&#x6765;&#x4F30;&#x7B97;&#xFF0C;&#x8FD9;&#x6837;&#x4F60;&#x5C31;&#x77E5;&#x9053;&#x4F60;&#x96C6;&#x7FA4;Namenode&#x80FD;&#x627F;&#x53D7;&#x591A;&#x5C11;&#x6587;&#x4EF6;&#xFF0C;&#x76EE;&#x5F55;&#x548C;&#x5757;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x7684;&#x5B58;&#x50A8;&#x3002;&#x4E5F;&#x80FD;&#x53CA;&#x65F6;&#x53D1;&#x73B0;&#x5185;&#x5B58;&#x74F6;&#x9888;&#xFF0C;&#x505A;&#x5230;&#x7CBE;&#x7EC6;&#x5316;&#x76D1;&#x63A7;&#x8FD0;&#x8425;&#x7BA1;&#x7406;&#x3002;</p>
+<p>&#x4E0A;&#x8FF0;&#x4ECB;&#x7ECD;&#x7684;&#x4E09;&#x4E2A;&#x65B9;&#x9762;&#x4E5F;&#x5206;&#x522B;&#x89E3;&#x7B54;&#x4E86;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x4E09;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5177;&#x4F53;&#x7EC6;&#x8282;&#x8FD9;&#x91CC;&#x4E5F;&#x4E0D;&#x8FC7;&#x591A;&#x5C55;&#x5F00;&#x3002;&#x4E0B;&#x9762;&#x6B63;&#x5F0F;&#x5C55;&#x5F00;&#x5BF9;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x9762;&#x7684;&#x4ECB;&#x7ECD;</p>
+<h1 id="HDFS&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;"><a href="#HDFS&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;" class="headerlink" title="HDFS&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;"></a>HDFS&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;</h1><p>&#x9488;&#x5BF9;&#x5C0F;&#x6587;&#x4EF6;&#x95EE;&#x9898;&#xFF0C;HDFS&#x81EA;&#x8EAB;&#x4E5F;&#x6709;&#x8003;&#x8651;&#x8FD9;&#x79CD;&#x573A;&#x666F;&#xFF0C;&#x76EE;&#x524D;&#x5DF2;&#x77E5;&#x7684;&#x4E3B;&#x8981;&#x6709;&#x4E09;&#x79CD;&#x65B9;&#x6848;&#x6765;&#x5B9E;&#x73B0;&#x8FD9;&#x79CD;&#x5B58;&#x50A8;&#xFF0C;&#x5206;&#x522B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li>HAR</li>
+<li>SequenceFile</li>
+<li>CombinedFile</li>
+</ul>
+</blockquote>
+<h2 id="HAR&#x5B58;&#x50A8;&#x65B9;&#x6848;"><a href="#HAR&#x5B58;&#x50A8;&#x65B9;&#x6848;" class="headerlink" title="HAR&#x5B58;&#x50A8;&#x65B9;&#x6848;"></a>HAR&#x5B58;&#x50A8;&#x65B9;&#x6848;</h2><p>HAR&#x719F;&#x79F0;Hadoop&#x5F52;&#x6863;&#x6587;&#x4EF6;&#xFF0C;&#x6587;&#x4EF6;&#x4EE5;*.har&#x7ED3;&#x5C3E;&#x3002;&#x5F52;&#x6863;&#x7684;&#x610F;&#x601D;&#x5C31;&#x662F;&#x5C06;&#x591A;&#x4E2A;&#x5C0F;&#x6587;&#x4EF6;&#x5F52;&#x6863;&#x4E3A;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x4E2D;&#x5305;&#x542B;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x548C;&#x5C0F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#xFF0C;&#x5373;&#x4ECE;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x5C06;Namenode&#x7BA1;&#x7406;&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x4E0B;&#x6C89;&#x5230;Datanode&#x4E0A;&#x7684;&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x907F;&#x514D;&#x5143;&#x6570;&#x636E;&#x7684;&#x81A8;&#x80C0;&#x3002;</p>
+<p>&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x662F;&#x600E;&#x4E48;&#x751F;&#x6210;&#x7684;&#x5462;&#xFF0C;&#x4E3B;&#x8981;&#x8FD8;&#x662F;&#x4F9D;&#x8D56;&#x4E8E;MapReduce&#x539F;&#x7406;&#x5C06;&#x5C0F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x8FDB;&#x884C;&#x5F52;&#x5E76;&#x3002;&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x7684;&#x5927;&#x6982;&#x7EC4;&#x6210;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har.png" alt="HDFS HAR&#x7EC4;&#x6210;"></p>
+<p>&#x56FE;&#x4E2D;&#xFF0C;&#x5DE6;&#x8FB9;&#x662F;&#x539F;&#x59CB;&#x5C0F;&#x6587;&#x4EF6;&#xFF0C;&#x53F3;&#x8FB9;&#x662F;har&#x7EC4;&#x6210;&#x3002;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#xFF1A;<code>_masterindex</code>&#x3001;<code>_index</code>&#x3001;<code>part-0...part-n</code>&#x3002;&#x5176;&#x4E2D;_masterindex&#x548C;_index&#x5C31;&#x662F;&#x76F8;&#x5E94;&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#xFF0C;part-0&#x2026;part-n&#x5C31;&#x662F;&#x76F8;&#x5E94;&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x3002;&#x5B9E;&#x9645;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x5B58;&#x50A8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har_1.png" alt="HDFS HAR&#x539F;&#x6587;&#x4EF6;"></p>
+<p>&#x901A;&#x8FC7;<code>hadoop archive</code>&#x547D;&#x4EE4;&#x521B;&#x5EFA;&#x5F52;&#x6863;&#x6587;&#x4EF6;&#xFF0C;-archiveName&#x6307;&#x5B9A;&#x6587;&#x4EF6;&#x540D;, -p&#x6307;&#x5B9A;&#x539F;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF0C;-r&#x6307;&#x5B9A;&#x8981;&#x5F52;&#x6863;&#x7684;&#x5C0F;&#x6587;&#x4EF6;,&#x6700;&#x540E;&#x6307;&#x5B9A;hdfs&#x4E2D;&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x8DEF;&#x5F84;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har_2.png" alt="HAR&#x521B;&#x5EFA;"></p>
+<p>&#x521B;&#x5EFA;&#x540E;&#xFF0C;&#x4F1A;&#x5728;/usr/archive&#x76EE;&#x5F55;&#x4E0B;&#x751F;&#x6210;test.har&#x76EE;&#x5F55;&#xFF0C;&#x8FD9;&#x91CC;&#x5927;&#x5BB6;&#x53EF;&#x80FD;&#x4F1A;&#x6709;&#x7591;&#x60D1;&#xFF0C;&#x4E0A;&#x9762;&#x4E0D;&#x662F;&#x8BF4;Har&#x662F;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5417;&#xFF0C;&#x8FD9;&#x91CC;&#x600E;&#x4E48;&#x53C8;&#x662F;&#x76EE;&#x5F55;&#x4E86;&#x5462;&#xFF0C;&#x5176;&#x5B9E;&#x6211;&#x4EEC;&#x6240;&#x8BF4;&#x7684;&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x662F;&#x903B;&#x8F91;&#x4E0A;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x800C;&#x5B9E;&#x9645;&#x7684;har&#x662F;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x7269;&#x7406;&#x5B58;&#x50A8;&#x6982;&#x5FF5;&#xFF0C;&#x6240;&#x4EE5;&#x5927;&#x5BB6;&#x53EA;&#x8981;&#x8BB0;&#x4F4F;&#x5728;&#x5B9E;&#x9645;&#x5B58;&#x50A8;&#x65F6;&#x751F;&#x6210;&#x7684;Har&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x5C31;&#x884C;&#x4E86;&#x3002;&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x4E2D;&#x4F1A;&#x5B58;&#x653E;&#x5143;&#x6570;&#x636E;&#xFF0C;&#x5B9E;&#x9645;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;_index&#x6587;&#x4EF6;&#x7684;&#x6BCF;&#x4E00;&#x884C;&#x8868;&#x793A;&#x7684;&#x662F;&#x5C0F;&#x6587;&#x4EF6;&#x5728;part&#x5F00;&#x5934;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x5305;&#x62EC;&#x8D77;&#x59CB;&#x548C;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#xFF0C;&#x662F;&#x5728;&#x54EA;&#x4E2A;part&#x6587;&#x4EF6;&#x7B49;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x8BFB;&#x53D6;har&#x4E2D;&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x6839;&#x636E;offset&#x4F4D;&#x7F6E;&#x53EF;&#x76F4;&#x63A5;&#x5F97;&#x5230;&#x5C0F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#xFF0C;&#x5982;&#x56FE;part-0&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_har_3.png" alt="HAR&#x7ED3;&#x6784;"></p>
+<p>&#x8981;&#x4ECE;HAR&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x8BDD;&#xFF0C;&#x9700;&#x8981;&#x7528;distcp&#x65B9;&#x5F0F;&#xFF0C;&#x539F;&#x7406;&#x4E5F;&#x662F;mapreduce, &#x6307;&#x5B9A;har&#x8DEF;&#x5F84;&#x548C;&#x8F93;&#x51FA;&#x8DEF;&#x5F84;&#xFF0C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;<br><code>hadoop distcp har:///user/archive/test.har/file-1 /tmp/archive/output</code></p>
+<p>HAR&#x603B;&#x4F53;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x5B83;&#x6709;&#x4EC0;&#x4E48;&#x7F3A;&#x70B9;&#x5462;?</p>
+<blockquote>
+<ul>
+<li><p>1.archive&#x6587;&#x4EF6;&#x4E00;&#x65E6;&#x521B;&#x5EFA;&#x4E0D;&#x53EF;&#x4FEE;&#x6539;&#x5373;&#x4E0D;&#x80FD;append&#xFF0C;&#x5982;&#x679C;&#x5176;&#x4E2D;&#x67D0;&#x4E2A;&#x5C0F;&#x6587;&#x4EF6;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x5F97;&#x89E3;&#x538B;&#x5904;&#x7406;&#x5B8C;&#x5F02;&#x5E38;&#x6587;&#x4EF6;&#x540E;&#x91CD;&#x65B0;&#x751F;&#x6210;&#x65B0;&#x7684;archive&#x6587;&#x4EF6;;</p>
+</li>
+<li><p>2.&#x5BF9;&#x5C0F;&#x6587;&#x4EF6;&#x5F52;&#x6863;&#x540E;&#xFF0C;&#x539F;&#x6587;&#x4EF6;&#x5E76;&#x672A;&#x5220;&#x9664;&#xFF0C;&#x9700;&#x8981;&#x624B;&#x5DE5;&#x5220;&#x9664;;</p>
+</li>
+<li><p>3.&#x521B;&#x5EFA;HAR&#x548C;&#x89E3;&#x538B;HAR&#x4F9D;&#x8D56;MapReduce&#xFF0C;&#x67E5;&#x8BE2;&#x6587;&#x4EF6;&#x65F6;&#x8017;&#x5F88;&#x9AD8;;</p>
+</li>
+<li><p>4.&#x5F52;&#x6863;&#x6587;&#x4EF6;&#x4E0D;&#x652F;&#x6301;&#x538B;&#x7F29;&#x3002;</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="SequenceFile&#x5B58;&#x50A8;&#x65B9;&#x6848;"><a href="#SequenceFile&#x5B58;&#x50A8;&#x65B9;&#x6848;" class="headerlink" title="SequenceFile&#x5B58;&#x50A8;&#x65B9;&#x6848;"></a>SequenceFile&#x5B58;&#x50A8;&#x65B9;&#x6848;</h2><p>SequenceFile&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x4E00;&#x79CD;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#xFF0C;&#x7C7B;&#x4F3C;key-value&#x5B58;&#x50A8;&#xFF0C;&#x901A;&#x8FC7;map/reducer&#x7684;input/output format&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x3002;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x7531;Header&#x3001;Record/Block&#x3001;SYNC&#x6807;&#x8BB0;&#x7EC4;&#x6210;&#xFF0C;&#x6839;&#x636E;&#x538B;&#x7F29;&#x7684;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;&#xFF0C;&#x7EC4;&#x7EC7;&#x7ED3;&#x6784;&#x4E5F;&#x4E0D;&#x540C;&#xFF0C;&#x4E3B;&#x8981;&#x5206;&#x4E3A;Record&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;&#x548C;Block&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;&#x3002;</p>
+<h3 id="Record&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;"><a href="#Record&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;" class="headerlink" title="Record&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;"></a>Record&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;</h3><p>Record&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;&#x53C8;&#x5305;&#x542B;&#x4E24;&#x79CD;&#xFF1A;&#x672A;&#x538B;&#x7F29;&#x72B6;&#x6001;CompressionType.NONE, &#x548C;&#x538B;&#x7F29;&#x72B6;&#x6001;CompressionType.RECORD&#xFF0C;&#x672A;&#x538B;&#x7F29;&#x662F;&#x6307;&#x4E0D;&#x5BF9;&#x6570;&#x636E;&#x8BB0;&#x5F55;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x538B;&#x7F29;&#x6001;&#x662F;&#x6307;&#x5BF9;&#x6BCF;&#x6761;&#x8BB0;&#x5F55;&#x7684;value&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x5176;&#x903B;&#x8F91;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_record.png" alt="Record&#x6A21;&#x5F0F;"></p>
+<p>Record&#x7ED3;&#x6784;&#x4E2D;&#x5305;&#x542B;Record&#x957F;&#x5EA6;&#x3001;key&#x957F;&#x5EA6;&#x3001;key&#x503C;&#x548C;value&#x503C;&#x3002;Sync&#x5145;&#x65A5;&#x5728;Record&#x4E4B;&#x95F4;&#xFF0C;&#x5176;&#x4F5C;&#x7528;&#x4E3B;&#x8981;&#x662F;&#x7528;&#x4E8E;&#x6587;&#x4EF6;&#x4F4D;&#x7F6E;&#x5B9A;&#x4F4D;&#xFF0C;&#x5177;&#x4F53;&#x5B9A;&#x4F4D;&#x65B9;&#x5F0F;&#x662F;&#xFF1A;&#x5982;&#x679C;&#x63D0;&#x4F9B;&#x7684;&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x4F4D;&#x7F6E;&#x4E0D;&#x662F;&#x8BB0;&#x5F55;&#x7684;&#x8FB9;&#x754C;&#x53EF;&#x80FD;&#x5728;&#x4E00;&#x4E2A;Record&#x4E2D;&#x95F4;&#xFF0C;&#x5728;&#x5B9E;&#x9645;&#x5B9A;&#x4F4D;&#x65F6;&#x4F1A;&#x5B9A;&#x4F4D;&#x5230;&#x6240;&#x63D0;&#x4F9B;&#x4F4D;&#x7F6E;&#x5904;&#x4E4B;&#x540E;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;Sync&#x8FB9;&#x754C;&#x4F4D;&#x7F6E;&#xFF0C;&#x5E76;&#x4ECE;&#x8BE5;Sync&#x70B9;&#x5F80;&#x540E;&#x8BFB;&#x76F8;&#x5E94;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x63D0;&#x4F9B;&#x7684;&#x8BFB;&#x53D6;&#x4F4D;&#x7F6E;&#x5F80;&#x540E;&#x6CA1;&#x6709;Sync&#x8FB9;&#x754C;&#x70B9;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x8DF3;&#x8F6C;&#x6587;&#x4EF6;&#x672B;&#x5C3E;&#xFF1B;&#x5982;&#x679C;&#x63D0;&#x4F9B;&#x7684;&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x4F4D;&#x7F6E;&#x662F;Record&#x8FB9;&#x754C;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x4ECE;&#x8BE5;&#x4F4D;&#x7F6E;&#x5F00;&#x59CB;&#x8BFB;&#x53D6;&#x6307;&#x5B9A;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x636E;&#x3002;&#x53E6;&#x4E00;&#x79CD;&#x6587;&#x4EF6;&#x5B9A;&#x4F4D;&#x65B9;&#x5F0F;&#x662F;seek, &#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x5219;&#x8981;&#x6C42;&#x6240;&#x63D0;&#x4F9B;&#x7684;&#x8BFB;&#x53D6;&#x4F4D;&#x7F6E;&#x662F;record&#x7684;&#x8FB9;&#x754C;&#x4F4D;&#x7F6E;&#xFF0C;&#x4E0D;&#x7136;&#x5728;&#x8BFB;&#x53D6;&#x8FED;&#x4EE3;&#x8BFB;&#x53D6;&#x4E0B;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;&#x65F6;&#x4F1A;&#x51FA;&#x9519;&#x3002;</p>
+<h3 id="Block&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;"><a href="#Block&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;" class="headerlink" title="Block&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;"></a>Block&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;</h3><p>Block&#x7EC4;&#x7EC7;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x538B;&#x7F29;&#x6001;&#x4E3A;CompressionType.BLOCK&#x3002;&#x4E0E;Record&#x6A21;&#x5F0F;&#x4E0D;&#x540C;&#x7684;&#x65F6;&#xFF0C;Block&#x662F;&#x4EE5;&#x5757;&#x4E3A;&#x5355;&#x4F4D;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x5373;&#x5C06;&#x591A;&#x6761;Record&#x5199;&#x5230;&#x4E00;&#x4E2A;&#x5757;&#x4E2D;&#xFF0C;&#x5F53;&#x8FBE;&#x5230;&#x4E00;&#x5B9A;&#x5927;&#x5C0F;&#x65F6;&#xFF0C;&#x5BF9;&#x8BE5;&#x5757;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x5F88;&#x663E;&#x7136;&#xFF0C;&#x5757;&#x7684;&#x538B;&#x7F29;&#x6548;&#x7387;&#x4F1A;&#x6BD4;Record&#x8981;&#x9AD8;&#x5F88;&#x591A;&#xFF0C;&#x907F;&#x514D;&#x5927;&#x91CF;&#x6D88;&#x8D39;IO&#x548C;CPU&#x7B49;&#x8D44;&#x6E90;&#x3002;&#x5176;&#x903B;&#x8F91;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_block.png" alt="Block&#x6A21;&#x5F0F;"></p>
+<p>&#x4ECE;&#x4E0A;&#x56FE;&#x4E2D;&#x53EF;&#x770B;&#x51FA;&#xFF0C;&#x7EC4;&#x7EC7;&#x65B9;&#x5F0F;&#x53D8;&#x6210;&#x4E86;&#x5757;&#xFF0C;&#x4E00;&#x4E2A;&#x5757;&#x4E2D;&#x53C8;&#x5305;&#x542B;&#x4E86;&#x5757;&#x7684;&#x8BB0;&#x5F55;&#x6570;&#xFF0C;key&#x957F;&#x5EA6;&#xFF0C;key&#x503C;&#xFF0C;value&#x957F;&#x5EA6;&#xFF0C;value&#x503C;&#x3002;&#x6BCF;&#x4E2A;&#x5757;&#x4E4B;&#x95F4;&#x4E5F;&#x6709;Sync&#x6807;&#x8BB0;&#xFF0C;&#x4F5C;&#x7528;&#x540C;Record&#x65B9;&#x5F0F;&#x3002;</p>
+<p>&#x4E24;&#x4E2D;&#x6A21;&#x5F0F;&#x4E2D;&#xFF0C;&#x90FD;&#x6709;header&#x6807;&#x8BB0;&#xFF0C;&#x5305;&#x542B;&#x4E86;&#x4E9B;&#x5982;&#x7248;&#x672C;&#x4FE1;&#x606F;&#x3001;KEY&#x7C7B;&#x540D;&#x3001;VALUE&#x7C7B;&#x540D;&#x3001;&#x662F;&#x5426;&#x538B;&#x7F29;&#x6807;&#x8BB0;&#x3001;&#x662F;&#x5426;&#x5757;&#x538B;&#x7F29;&#x6807;&#x8BB0;&#x3001;&#x7F16;&#x7801;&#x7C7B;&#x3001;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x548C;Sync&#x6807;&#x8BB0;&#xFF0C;&#x5176;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_header.png" alt="header&#x7ED3;&#x6784;"></p>
+<h3 id="SequenceFile&#x793A;&#x4F8B;"><a href="#SequenceFile&#x793A;&#x4F8B;" class="headerlink" title="SequenceFile&#x793A;&#x4F8B;"></a>SequenceFile&#x793A;&#x4F8B;</h3><p>&#x8FD9;&#x91CC;&#x4EE5;&#x5B58;&#x50A8;5&#x4E2A;&#x5C0F;&#x7684;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x4E3A;&#x4F8B;&#xFF0C;&#x6F14;&#x793A;&#x4E0B;&#x5982;&#x4F55;&#x521B;&#x5EFA;SequenceFile&#x3002;&#x9996;&#x5148;&#x5C06;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x81F3;hdfs&#x7684;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x3002;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_1.png" alt="&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x793A;&#x4F8B;"></p>
+<p>&#x5176;&#x6B21;&#xFF0C;&#x7F16;&#x5199;&#x4E00;&#x4E2A;MR&#x7A0B;&#x5E8F;&#x6765;&#x5BF9;&#x4E0A;&#x8FF0;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#xFF0C;&#x5C06;&#x751F;&#x6210;&#x7684;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x5230;/tmp/sequencefile/seq&#x4E0B;&#xFF0C;MR&#x7A0B;&#x5E8F;&#x6E90;&#x7801;&#x5728;&#x9644;&#x4EF6;SmallFiles.zip&#x4E2D;&#xFF0C;&#x53EF;&#x81EA;&#x884C;&#x67E5;&#x770B;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_2.png" alt="MR&#x7A0B;&#x5E8F;&#x8F6C;&#x6362;"></p>
+<p>&#x8F6C;&#x6362;&#x540E;&#xFF0C;&#x4F1A;&#x5728;/tmp/sequencefile/seq&#x76EE;&#x5F55;&#x751F;&#x6210;&#x4E00;&#x4E2A;part-r-00000&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x91CC;&#x9762;&#x5C31;&#x5305;&#x542B;&#x4E86;&#x4E0A;&#x8FF0;5&#x4E2A;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_3.png" alt="SequenceFile&#x76EE;&#x5F55;&#x7ED3;&#x6784;"></p>
+<p>&#x5982;&#x679C;&#x8981;&#x4ECE;&#x8BE5;SequenceFile&#x4E2D;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#xFF0C;&#x518D;&#x901A;&#x8FC7;MR&#x7A0B;&#x5E8F;&#x4ECE;&#x6587;&#x4EF6;&#x4E2D;&#x5C06;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x53D6;&#x51FA;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hdfs_sf_ex_4.png" alt="SequenceFile&#x53D6;&#x6587;&#x4EF6;"></p>
+<h3 id="SequenceFile&#x4F18;&#x7F3A;&#x70B9;"><a href="#SequenceFile&#x4F18;&#x7F3A;&#x70B9;" class="headerlink" title="SequenceFile&#x4F18;&#x7F3A;&#x70B9;"></a>SequenceFile&#x4F18;&#x7F3A;&#x70B9;</h3><h4 id="&#x4F18;&#x70B9;"><a href="#&#x4F18;&#x70B9;" class="headerlink" title="&#x4F18;&#x70B9;"></a>&#x4F18;&#x70B9;</h4><blockquote>
+<ul>
+<li>A.&#x652F;&#x6301;&#x57FA;&#x4E8E;&#x8BB0;&#x5F55;&#x6216;&#x5757;&#x7684;&#x6570;&#x636E;&#x538B;&#x7F29;;</li>
+<li>B. &#x652F;&#x6301;splitable,&#x80FD;&#x591F;&#x4F5C;&#x4E3A;mr &#x7684;&#x8F93;&#x5165;&#x5206;&#x7247;;</li>
+<li>C. &#x4E0D;&#x7528;&#x8003;&#x8651;&#x5177;&#x4F53;&#x5B58;&#x50A8;&#x683C;&#x5F0F;&#xFF0C;&#x5199;&#x5165;&#x8BFB;&#x53D6;&#x8F83;&#x7B80;&#x5355;.</li>
+</ul>
+</blockquote>
+<h4 id="&#x7F3A;&#x70B9;"><a href="#&#x7F3A;&#x70B9;" class="headerlink" title="&#x7F3A;&#x70B9;"></a>&#x7F3A;&#x70B9;</h4><blockquote>
+<ul>
+<li>A. &#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5408;&#x5E76;&#x6587;&#x4EF6;&#x7684;&#x8FC7;&#x7A0B;</li>
+<li>B. &#x4F9D;&#x8D56;&#x4E8E;MapReduce</li>
+<li>C. &#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF0C;&#x5408;&#x5E76;&#x540E;&#x4E0D;&#x65B9;&#x4FBF;&#x67E5;&#x770B;</li>
+</ul>
+</blockquote>
+<h2 id="CombinedFile&#x5B58;&#x50A8;&#x65B9;&#x6848;"><a href="#CombinedFile&#x5B58;&#x50A8;&#x65B9;&#x6848;" class="headerlink" title="CombinedFile&#x5B58;&#x50A8;&#x65B9;&#x6848;"></a>CombinedFile&#x5B58;&#x50A8;&#x65B9;&#x6848;</h2><p>&#x5176;&#x539F;&#x7406;&#x4E5F;&#x662F;&#x57FA;&#x4E8E;Map/Reduce&#x5C06;&#x539F;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#xFF0C;&#x901A;&#x8FC7;CombineFileInputFormat&#x7C7B;&#x5C06;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x5206;&#x522B;&#x6253;&#x5305;&#x5230;&#x4E00;&#x4E2A;split&#x4E2D;&#xFF0C;&#x6BCF;&#x4E2A;mapper&#x5904;&#x7406;&#x4E00;&#x4E2A;split, &#x63D0;&#x9AD8;&#x5E76;&#x53D1;&#x5904;&#x7406;&#x6548;&#x7387;&#xFF0C;&#x5BF9;&#x4E8E;&#x6709;&#x5927;&#x91CF;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x80FD;&#x5FEB;&#x901F;&#x5C06;&#x5C0F;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x6574;&#x5408;&#x3002;&#x6700;&#x7EC8;&#x7684;&#x5408;&#x5E76;&#x6587;&#x4EF6;&#x662F;&#x5C06;&#x591A;&#x4E2A;&#x5C0F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x6574;&#x5408;&#x5230;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E00;&#x884C;&#x5F00;&#x59CB;&#x5305;&#x542B;&#x6BCF;&#x4E2A;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x5B8C;&#x6574;hdfs&#x8DEF;&#x5F84;&#x540D;&#xFF0C;&#x8FD9;&#x5C31;&#x4F1A;&#x51FA;&#x73B0;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x5408;&#x5E76;&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x5F88;&#x591A;&#xFF0C;&#x90A3;&#x4E48;&#x6700;&#x7EC8;&#x5408;&#x5E76;&#x7684;&#x6587;&#x4EF6;&#x4F1A;&#x5305;&#x542B;&#x8FC7;&#x591A;&#x7684;&#x989D;&#x5916;&#x4FE1;&#x606F;&#xFF0C;&#x6D6A;&#x8D39;&#x8FC7;&#x591A;&#x7684;&#x7A7A;&#x95F4;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x79CD;&#x65B9;&#x6848;&#x76EE;&#x524D;&#x76F8;&#x5BF9;&#x7528;&#x5F97;&#x6BD4;&#x8F83;&#x5C11;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x4F7F;&#x7528;CombineFile&#x7684;&#x793A;&#x4F8B;&#xFF1A;</p>
+<p>```hbaseadmin@10-163-161-229:~/program/mr/input&gt; ls<br>hbaseadmin@10-163-161-229:~/program/mr/input&gt; touch file-1 file-2 file-3<br>hbaseadmin@10-163-161-229:~/program/mr/input&gt; echo &#x201C;this is file-1&#x201D; &gt;file-1<br>hbaseadmin@10-163-161-229:~/program/mr/input&gt; echo &#x201C;this is file-2&#x201D; &gt;file-2<br>hbaseadmin@10-163-161-229:~/program/mr/input&gt; echo &#x201C;this is file-3&#x201D; &gt;file-3<br>hbaseadmin@10-163-161-229:~/program/mr&gt; hadoop fs -put input /tmp/combinefile/</p>
+<p>hbaseadmin@10-163-161-229:~/program/mr&gt; hadoop jar SmallFiles.jar  com.fit.dba.mr.util.CombineFileTest /tmp/combinefile/input/ /tmp/combinefile/output</p>
+<p>hbaseadmin@10-163-161-229:~/program/mr&gt; hadoop fs -ls /tmp/combinefile/output<br>Found 2 items<br>-rw-r&#x2013;r&#x2013;   1 hbaseadmin supergroup          0 2018-03-25 17:26 /tmp/combinefile/output/_SUCCESS<br>-rw-r&#x2013;r&#x2013;   1 hbaseadmin supergroup        213 2018-03-25 17:26 /tmp/combinefile/output/part-r-00000<br>hbaseadmin@10-163-161-229:~/program/mr&gt; hadoop fs -ls /tmp/combinefile/output/part-r-00000<br>Found 1 items<br>-rw-r&#x2013;r&#x2013;   1 hbaseadmin supergroup        213 2018-03-25 17:26 /tmp/combinefile/output/part-r-00000<br>hbaseadmin@10-163-161-229:~/program/mr&gt; hadoop fs -cat /tmp/combinefile/output/part-r-00000<br>hdfs://10-163-161-229:9000/tmp/combinefile/input/file-1 this is file-1<br>hdfs://10-163-161-229:9000/tmp/combinefile/input/file-2 this is file-2<br>hdfs://10-163-161-229:9000/tmp/combinefile/input/file-3 this is file-3<br>```</p>
+<p>&#x4E0A;&#x8FF0;&#x7528;&#x5230;&#x7684;&#x8F6C;&#x6362;&#x7A0B;&#x5E8F;&#x4E5F;&#x5728;&#x9644;&#x4EF6;CombineFileTest.java&#x4E2D;&#x3002;&#x5176;&#x4F18;&#x70B9;&#x662F;&#x9002;&#x7528;&#x4E8E;&#x5904;&#x7406;&#x5927;&#x91CF;&#x6BD4;block&#x5C0F;&#x7684;&#x6587;&#x4EF6;&#x548C;&#x5185;&#x5BB9;&#x6BD4;&#x8F83;&#x5C11;&#x7684;&#x6587;&#x4EF6;&#x5408;&#x5E76;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x6587;&#x672C;&#x7C7B;&#x578B;/sequencefile&#x7B49;&#x6587;&#x4EF6;&#x5408;&#x5E76;&#xFF0C;&#x5176;&#x7F3A;&#x70B9;&#x662F;&#xFF1A;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5408;&#x7406;&#x7684;&#x8BBE;&#x7F6E;maxSplitSize&#xFF0C;minSizeNode&#xFF0C;minSizeRack&#xFF0C;&#x5219;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x4E2A;map&#x4EFB;&#x52A1;&#x9700;&#x8981;&#x5927;&#x91CF;&#x8BBF;&#x95EE;&#x975E;&#x672C;&#x5730;&#x7684;Block&#x9020;&#x6210;&#x7F51;&#x7EDC;&#x5F00;&#x9500;&#xFF0C;&#x53CD;&#x800C;&#x6BD4;&#x6B63;&#x5E38;&#x7684;&#x975E;&#x5408;&#x5E76;&#x65B9;&#x5F0F;&#x66F4;&#x6162;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>&#x4E0A;&#x9762;&#x4ECB;&#x7ECD;&#x4E86;&#x4E09;&#x79CD;&#x57FA;&#x4E8E;HDFS&#x81EA;&#x8EAB;&#x7684;&#x4E00;&#x4E9B;&#x65B9;&#x6848;&#xFF0C;&#x6BCF;&#x79CD;&#x65B9;&#x6848;&#x5404;&#x6709;&#x4F18;&#x7F3A;&#x70B9;&#xFF0C;&#x5176;&#x6838;&#x5FC3;&#x601D;&#x60F3;&#x90FD;&#x662F;&#x57FA;&#x4E8E;map/reduce&#x7684;&#x65B9;&#x5F0F;&#x5C06;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x5408;&#x5E76;&#x6210;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x3002;&#x5728;&#x5B9E;&#x9645;&#x4F7F;&#x7528;&#x4E2D;&#xFF0C;&#x5355;&#x7EAF;&#x7528;&#x4E0A;&#x8FF0;&#x65B9;&#x6848;&#x8FD8;&#x662F;&#x4E0D;&#x592A;&#x65B9;&#x4FBF;&#xFF0C;&#x4E0B;&#x9762;&#x7B80;&#x8981;&#x4ECB;&#x7ECD;&#x4E0B;&#x76EE;&#x524D;&#x5176;&#x5B83;&#x7684;&#x4E00;&#x4E9B;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#x3002;</p>
+<h1 id="&#x5176;&#x5B83;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;"><a href="#&#x5176;&#x5B83;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;" class="headerlink" title="&#x5176;&#x5B83;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;"></a>&#x5176;&#x5B83;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;</h1><h2 id="&#x57FA;&#x4E8E;HBase&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;"><a href="#&#x57FA;&#x4E8E;HBase&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;" class="headerlink" title="&#x57FA;&#x4E8E;HBase&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;"></a>&#x57FA;&#x4E8E;HBase&#x7684;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;</h2><p>HBase&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x4E3B;&#x8981;&#x662F;key/value&#x5B58;&#x50A8;&#x7ED3;&#x6784;&#xFF0C;&#x4E00;&#x4E2A;key&#x5BF9;&#x5E94;&#x591A;&#x4E2A;&#x5217;&#x65CF;&#x7684;&#x591A;&#x4E2A;&#x5217;&#x503C;&#x3002;&#x4ECE;2.0&#x7248;&#x672C;&#x5F00;&#x59CB;&#xFF0C;HBase&#x591A;&#x4E86;&#x4E00;&#x4E2A;MOB&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x5177;&#x4F53;&#x53C2;&#x8003;HBase-11339&#x3002;&#x5177;&#x4F53;&#x662F;&#x4EC0;&#x4E48;&#x6982;&#x5FF5;&#x5462;&#xFF0C;&#x5148;&#x6765;&#x770B;&#x4E0B;&#x793A;&#x610F;&#x56FE;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hbase_sf_mob.png" alt="hbase&#x67B6;&#x6784;"></p>
+<p>&#x4E0A;&#x56FE;&#x662F;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;HBase&#x7684;&#x67B6;&#x6784;&#x56FE;&#xFF0C;&#x5305;&#x542B;HBase&#x7684;&#x51E0;&#x4E2A;&#x7EC4;&#x4EF6;master&#x3001;regionserver&#x3001;hdfs&#x3001;hfile&#x7B49;&#x3002;MOB FILE&#x7C7B;&#x4F3C;StoreFile, &#x5B83;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5355;&#x72EC;&#x7684;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#x5C0F;&#x6587;&#x4EF6;&#x3002;MOB&#x5177;&#x4F53;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hbase_sf_mob_structure.png" alt="mob&#x7ED3;&#x6784;"></p>
+<p>MOB&#x662F;&#x7531;StoreFile&#x548C;MOB File&#x5171;&#x540C;&#x7EC4;&#x6210;&#x3002;&#x5176;&#x4E2D;&#xFF0C;StoreFile&#x5B58;&#x653E;&#x7684;&#x6570;&#x636E;&#x548C;HBase&#x6B63;&#x5E38;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x4E00;&#x6837;&#xFF0C;key/value&#x7ED3;&#x6784;&#xFF0C;&#x4E0D;&#x8FC7;value&#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x662F;&#x5173;&#x4E8E;MOB&#x6587;&#x4EF6;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x5B58;&#x653E;&#x8DEF;&#x5F84;&#x7B49;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#xFF0C;&#x5728;MOB File&#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x662F;&#x5177;&#x4F53;&#x7684;MOB&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#xFF0C;&#x8FD9;&#x6837;&#x901A;&#x8FC7;StoreFile&#x4E2D;&#x7684;key/value&#x53EF;&#x4EE5;&#x627E;&#x5230;MOB&#x6240;&#x5B58;&#x653E;&#x7684;&#x6587;&#x4EF6;&#x5177;&#x4F53;&#x4F4D;&#x7F6E;&#x548C;&#x5927;&#x5C0F;&#xFF0C;&#x6700;&#x7EC8;&#x5F97;&#x5230;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x3002;</p>
+<p>MOB&#x662F;&#x600E;&#x4E48;&#x8BBE;&#x7F6E;&#x5462;&#xFF0C;&#x5728;&#x521B;&#x5EFA;&#x8868;&#x65F6;&#x6211;&#x4EEC;&#x6307;&#x5B9A;&#x8868;&#x7684;MOB&#x5C5E;&#x6027;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;<br><code>create &apos;t1&apos;, {NAME =&gt; &apos;f1&apos;, IS_MOB =&gt; true, MOB_THRESHOLD =&gt; 102400}</code></p>
+<p>&#x5176;&#x4E2D;&#xFF0C;MOB_THRESHOLD&#x8868;&#x793A;MOB&#x5BF9;&#x8C61;&#x6240;&#x80FD;&#x5B58;&#x50A8;&#x7684;&#x6587;&#x4EF6;&#x5BF9;&#x8C61;&#x4E0A;&#x9650;&#x9608;&#x503C;&#xFF0C;&#x63A8;&#x8350;&#x662F;&#x5B58;&#x50A8;&#x5C0F;&#x4E8E;10M&#x7684;&#x6587;&#x4EF6;&#x3002;&#x5BF9;&#x4E8E;MOB&#x7684;&#x8868;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x624B;&#x52A8;&#x89E6;&#x53D1;&#x538B;&#x7F29;&#xFF0C;&#x6709;<strong>compact_mob</strong>&#x548C;<strong>major_compact_mob</strong>&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;<br><code>compact_mob &apos;t1&apos;
+compact_mob &apos;t1&apos;,&apos;cf1&apos;
+major_compact_mob &apos;t1&apos;
+major_compact_mob &apos;t1&apos;,&apos;cf1&apos;</code></p>
+<p>MOB&#x7684;&#x51FA;&#x73B0;&#x5927;&#x5927;&#x63D0;&#x9AD8;&#x4E86;&#x6211;&#x4EEC;&#x4F7F;&#x7528;HBase&#x5B58;&#x50A8;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x6548;&#x7387;&#xFF0C;&#x8FD9;&#x6837;&#x65E0;&#x987B;&#x5173;&#x6CE8;&#x5E95;&#x5C42;HDFS&#x662F;&#x600E;&#x4E48;&#x5B58;&#x50A8;&#x7684;&#xFF0C;&#x53EA;&#x8981;&#x5173;&#x6CE8;&#x4E0A;&#x5C42;&#x903B;&#x8F91;&#x5373;&#x53EF;&#xFF0C;HBase&#x7684;&#x5F3A;&#x5927;&#x4F18;&#x52BF;&#x4E5F;&#x80FD;&#x4FDD;&#x8BC1;&#x5B58;&#x50A8;&#x7684;&#x9AD8;&#x53EF;&#x9760;&#x548C;&#x7A33;&#x5B9A;&#x6027;&#xFF0C;&#x7BA1;&#x7406;&#x4E5F;&#x65B9;&#x4FBF;&#x3002;</p>
+<h2 id="&#x57FA;&#x4E8E;&#x6253;&#x5305;&#x6784;&#x5EFA;&#x7D22;&#x5F15;&#x65B9;&#x6848;"><a href="#&#x57FA;&#x4E8E;&#x6253;&#x5305;&#x6784;&#x5EFA;&#x7D22;&#x5F15;&#x65B9;&#x6848;" class="headerlink" title="&#x57FA;&#x4E8E;&#x6253;&#x5305;&#x6784;&#x5EFA;&#x7D22;&#x5F15;&#x65B9;&#x6848;"></a>&#x57FA;&#x4E8E;&#x6253;&#x5305;&#x6784;&#x5EFA;&#x7D22;&#x5F15;&#x65B9;&#x6848;</h2><p>&#x8FD9;&#x79CD;&#x65B9;&#x6848;&#x662F;&#x76EE;&#x524D;&#x5144;&#x5F1F;&#x90E8;&#x95E8;&#x6B63;&#x5728;&#x4F7F;&#x7528;&#x7684;&#x4E00;&#x4E2A;&#x5C0F;&#x56FE;&#x7247;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#xFF0C;&#x4E5F;&#x662F;&#x57FA;&#x4E8E;HDFS&#x5B58;&#x50A8;&#x5B9E;&#x9645;&#x56FE;&#x7247;&#xFF0C;&#x57FA;&#x4E8E;HBase&#x5B58;&#x50A8;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x3002;&#x8FD9;&#x4E2A;&#x65B9;&#x6848;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x4E5F;&#x662F;&#x57FA;&#x4E8E;&#x538B;&#x7F29;&#x7684;&#x601D;&#x8DEF;&#xFF0C;&#x5C06;&#x591A;&#x4E2A;&#x5C0F;&#x56FE;&#x4E0A;&#x7247;&#x538B;&#x7F29;&#x6210;&#x4E00;&#x4E2A;tar&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x81F3;HDFS&#x4E0A;&#xFF0C;&#x901A;&#x8FC7;HBASE&#x8BB0;&#x5F55;&#x6587;&#x4EF6;&#x540D;&#x548C;HDFS&#x6587;&#x4EF6;&#x7684;&#x4F4D;&#x7F6E;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x67B6;&#x6784;&#x793A;&#x610F;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/hbase_sf_tar.png" alt="&#x67B6;&#x6784;&#x793A;&#x610F;&#x56FE;"></p>
+<p>&#x5176;&#x5177;&#x4F53;&#x601D;&#x8DEF;&#x662F;&#xFF1A;</p>
+<blockquote>
+<ul>
+<li>1.&#x4E1A;&#x52A1;&#x90E8;&#x95E8;&#x5C06;&#x56FE;&#x7247;&#x4E0A;&#x4F20;&#x81F3;&#x4E00;&#x4E2A;&#x4E2D;&#x8F6C;&#x673A;&#xFF0C;&#x56FE;&#x7247;&#x6309;&#x65E5;&#x671F;&#x76EE;&#x5F55;&#x5B58;&#x50A8;&#xFF0C;&#x4E0D;&#x540C;&#x65E5;&#x671F;&#x4E0A;&#x4F20;&#x7684;&#x56FE;&#x7247;&#x653E;&#x5230;&#x76F8;&#x5E94;&#x65E5;&#x671F;&#x76EE;&#x5F55;&#xFF1B;</li>
+<li>2.&#x5B9A;&#x671F;&#x7528;&#x811A;&#x672C;&#x53BB;&#x5C06;&#x65E5;&#x671F;&#x76EE;&#x5F55;&#x6253;&#x5305;&#x6210;tar&#xFF0C;&#x4E00;&#x5929;&#x7684;&#x56FE;&#x7247;&#x6253;&#x5305;&#x6210;&#x4E00;&#x4E2A;&#x4EE5;&#x65E5;&#x671F;&#x547D;&#x540D;&#x7684;tar, tar&#x6587;&#x4EF6;&#x89E3;&#x538B;&#x540E;&#x662F;&#x76F4;&#x63A5;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#xFF0C;&#x5373;&#x4E0D;&#x5E26;&#x65E5;&#x671F;&#x90A3;&#x5C42;&#x76EE;&#x5F55;&#xFF0C;&#x4E0A;&#x4F20;&#x81F3;HDFS&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#xFF1B;</li>
+<li>3.&#x901A;&#x8FC7;tar&#x6587;&#x4EF6;&#x89E3;&#x6790;&#x7A0B;&#x5E8F;&#x83B7;&#x53D6;tar&#x6587;&#x4EF6;&#x4E2D;&#x5404;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x5728;tar&#x4E2D;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x548C;&#x957F;&#x5EA6;&#xFF0C;&#x8FD9;&#x4E2A;&#x89E3;&#x6790;&#x7A0B;&#x5E8F;&#x6700;&#x5F00;&#x59CB;&#x662F;&#x7531;&#x56FD;&#x5916;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x5458;Tom Wallroth&#x5199;&#x7684;&#x5DE5;&#x5177;,&#x5177;&#x4F53;&#x5730;&#x5740;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;:<a href="http://github.com/devsnd/tarindexer&#x3002;" target="_blank" rel="external">http://github.com/devsnd/tarindexer&#x3002;</a> &#x8FD9;&#x4E2A;&#x5DE5;&#x5177;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;tar&#x6587;&#x4EF6;&#x4E0A;&#x89E3;&#x6790;tar&#x4E2D;&#x5404;&#x6587;&#x4EF6;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x548C;&#x957F;&#x5EA6;&#xFF0C;&#x5F88;&#x65B9;&#x4FBF;&#x3002;</li>
+<li>4.&#x5F97;&#x5230;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x5728;tar&#x7684;&#x504F;&#x79FB;&#x91CF;&#x548C;&#x957F;&#x5EA6;&#x540E;&#xFF0C;&#x8BBE;&#x8BA1;HBase rowkey, &#x5C06;&#x56FE;&#x7247;&#x540D;&#x548C;tar&#x8DEF;&#x5F84;&#x8BBE;&#x8BA1;&#x5230;rowkey&#x4E2D;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x5728;rowkey&#x524D;&#x7F00;&#x52A0;&#x76D0;&#x65B9;&#x5F0F;&#x4F7F;rowkey&#x968F;&#x673A;&#x6563;&#x5217;&#x5206;&#x5E03;&#x5728;HBase&#x4E2D;&#xFF0C;&#x907F;&#x514D;&#x70ED;&#x70B9;&#x73B0;&#x8C61;&#xFF1B;HBase&#x7684;value&#x5B58;&#x50A8;&#x7684;&#x662F;&#x6587;&#x4EF6;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x548C;&#x957F;&#x5EA6;&#x3002;&#x8FD9;&#x6837;HBase&#x4E2D;&#x5C31;&#x4FDD;&#x5B58;&#x4E86;&#x6587;&#x4EF6;&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#xFF1B;</li>
+<li><ol>
+<li>&#x4E1A;&#x52A1;&#x65B9;&#x67E5;&#x8BE2;&#x5177;&#x4F53;&#x67D0;&#x4E2A;&#x56FE;&#x7247;&#x65F6;&#xFF0C;&#x6839;&#x636E;&#x56FE;&#x7247;&#x7684;&#x65E5;&#x671F;&#x548C;&#x56FE;&#x7247;&#x540D;&#xFF0C;&#x5148;&#x8BA1;&#x7B97;&#x51FA;HBase rowkey,&#x518D;&#x53BB;HBase&#x83B7;&#x53D6;&#x8BE5;&#x56FE;&#x7247;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x548C;&#x957F;&#x5EA6;&#xFF1B;&#x901A;&#x8FC7;&#x504F;&#x79FB;&#x91CF;&#x548C;&#x957F;&#x5EA6;&#x901A;&#x8FC7;HDFS&#x7684;API&#x53BB;&#x8BFB;&#x53D6;HDFS&#x7684;&#x6587;&#x4EF6;&#x3002;</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<h2 id="&#x5176;&#x5B83;&#x65B9;&#x6848;&#x5BF9;&#x6BD4;"><a href="#&#x5176;&#x5B83;&#x65B9;&#x6848;&#x5BF9;&#x6BD4;" class="headerlink" title="&#x5176;&#x5B83;&#x65B9;&#x6848;&#x5BF9;&#x6BD4;"></a>&#x5176;&#x5B83;&#x65B9;&#x6848;&#x5BF9;&#x6BD4;</h2><p>&#x4E0B;&#x9762;&#x9488;&#x5BF9;&#x76EE;&#x524D;&#x884C;&#x4E1A;&#x5185;&#x7528;&#x5230;&#x7684;&#x5176;&#x5B83;&#x4E00;&#x4E9B;&#x65B9;&#x6848;&#x4F5C;&#x4E0B;&#x5BF9;&#x6BD4;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<p><img src="/2018/05/15/zh-cn/hadoop-small-file-storage/sf_compare.png" alt="&#x65B9;&#x6848;&#x5BF9;&#x6BD4;"> </p>
+<p>&#x603B;&#x4F53;&#x6765;&#x8BF4;&#xFF0C;&#x6DD8;&#x5B9D;&#x7684;TFS&#x662F;&#x529F;&#x80FD;&#x6700;&#x5168;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x652F;&#x6301;&#x5927;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x5B58;&#x50A8;&#xFF1B;Ceph&#x4E5F;&#x662F;&#x4E00;&#x79CD;&#x6D41;&#x884C;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#xFF0C;&#x7EC4;&#x5185;&#x5BF9;&#x5176;&#x8C03;&#x7814;&#x540E;&#x611F;&#x89C9;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#xFF0C;&#x4E0D;&#x592A;&#x597D;&#x7BA1;&#x7406;&#xFF0C;&#x4E0D;&#x592A;&#x7A33;&#x5B9A;&#xFF1B;FastDFS&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x9002;&#x5408;&#x5B58;&#x50A8;&#x4E00;&#x4E9B;&#x4F7F;&#x7528;&#x573A;&#x666F;&#x7B80;&#x5355;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4E0D;&#x592A;&#x7075;&#x6D3B;&#xFF1B;&#x5176;&#x5B83;&#x51E0;&#x79CD;&#x6CA1;&#x7528;&#x8FC7;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x81EA;&#x884C;&#x4E0A;&#x7F51;&#x53C2;&#x9605;&#x76F8;&#x5173;&#x8D44;&#x6599;&#x3002;</p>
+<h1 id="&#x603B;&#x7ED3;-1"><a href="#&#x603B;&#x7ED3;-1" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h1><p>&#x672C;&#x6587;&#x4ECB;&#x7ECD;&#x4E86;&#x5173;&#x4E8E;HDFS&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7684;&#x65B9;&#x6848;&#xFF0C;&#x4E0D;&#x540C;&#x65B9;&#x6848;&#x5404;&#x5177;&#x7279;&#x70B9;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x65F6;&#x8981;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#x8FDB;&#x884C;&#x8BBE;&#x8BA1;&#xFF0C;&#x5BF9;&#x4E8E;&#x65E2;&#x8981;&#x5B58;&#x50A8;&#x5927;&#x6587;&#x4EF6;&#x53C8;&#x8981;&#x5B58;&#x50A8;&#x5C0F;&#x6587;&#x4EF6;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x6211;&#x5EFA;&#x8BAE;&#x5728;&#x4E0A;&#x5C42;&#x4F5C;&#x4E00;&#x4E2A;&#x903B;&#x8F91;&#x5904;&#x7406;&#x5C42;&#xFF0C;&#x5728;&#x5B58;&#x50A8;&#x65F6;&#x5148;&#x5224;&#x65AD;&#x662F;&#x5927;&#x6587;&#x4EF6;&#x8FD8;&#x662F;&#x5C0F;&#x6587;&#x4EF6;&#xFF0C;&#x518D;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x7528;&#x6253;&#x5305;&#x538B;&#x7F29;&#x8FD8;&#x662F;&#x76F4;&#x63A5;&#x4E0A;&#x4F20;&#x81F3;HDFS&#xFF0C;&#x53EF;&#x501F;&#x9274;TFS&#x65B9;&#x6848;&#x3002;</p>
+<h1 id="&#x53C2;&#x8003;"><a href="#&#x53C2;&#x8003;" class="headerlink" title="&#x53C2;&#x8003;"></a>&#x53C2;&#x8003;</h1><p><a href="hadoop-small-file-storage/hadoop_1x_structure.jpg">1</a> <a href="http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html" target="_blank" rel="external">http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html</a></p>
+<h1 id="&#x9644;&#x4EF6;"><a href="#&#x9644;&#x4EF6;" class="headerlink" title="&#x9644;&#x4EF6;"></a>&#x9644;&#x4EF6;</h1><p>&#x5173;&#x4E8E;&#x6587;&#x7AE0;&#x4E2D;&#x7528;&#x7684;MR&#x8F6C;&#x6362;&#x7A0B;&#x5E8F;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;<br><a href="https://github.com/ballwql/common-tool/tree/master/java" target="_blank" rel="external">https://github.com/ballwql/common-tool/tree/master/java</a></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Hadoop/">#Hadoop</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/11/11/zh-cn/phoenix-introduction/">【原】浅谈Phoenix在HBase中的应用</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="notification is-danger">
+    You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.
+</div>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="disqus_thread">
+    
+    <div class="notification is-danger">
+        You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.
+    </div>
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 ballen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

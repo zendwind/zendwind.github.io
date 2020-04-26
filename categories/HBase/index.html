@@ -1,404 +1,486 @@
 <!DOCTYPE html>
-<html lang="zh" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<html class="has-navbar-fixed-top">
 <head>
-  <meta charset="utf-8">
-  <title>分类－HBase</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="keywords" content="">
-  <meta name="description" content="ZendWind's 技术文章博客.">
-  
+    <meta charset="utf-8">
+<title>分类: HBase - Zend Wind&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta name="og:type" content="website">
-  <meta name="og:site_name" content="ZendWind的博客">
-  <meta name="og:image" content="http://zendwind.com/image/logo.png">
-  <meta name="og:title" content="分类－HBase">
-  <meta name="og:url" content="http://zendwind.com/categories/HBase/index.html">
-  <meta name="og:description" content="ZendWind's 技术文章博客.">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="ZendWind的博客">
-  <meta name="twitter:image" content="http://zendwind.com/image/logo.png">
-  <meta name="twitter:title" content="分类－HBase">
-  <meta name="twitter:creator" content="@JamlingLi">
-  <meta name="twitter:description" content="ZendWind's 技术文章博客.">
 
-  <!-- Canonical links -->
-  <link rel="canonical" href="http://zendwind.com/categories/HBase/index.html">
-  <!-- Alternative links -->
-  <!-- CSS and JS-->
-  <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/sidr/2.2.1/jquery.sidr.min.js"></script>
-<script src="/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
-<script src="/js/script.js"></script>
-<script src="/js/lang_select.js"></script>
-<link rel="stylesheet" href="//cdn.bootcss.com/sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.15.10/styles/github.min.css">
-<script src="//cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css">
-<script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.css">
-<script src="//cdn.bootcss.com/fancybox/2.1.5/helpers/jquery.fancybox-buttons.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-<link rel="stylesheet" href="/css/nova_font.css">
-<link rel="stylesheet" href="/css/bs/nova.css">
+<link href="/en/categories/HBase/index.html" rel="alternate" hreflang="en" />
+    
 
-  <!-- RSS -->
-  <link rel="alternate" href="/atom.xml" title="Zend Wind's Blog">
-  <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Zend Wind&#39;s Blog">
+<meta property="og:url" content="http://zendwind.com/categories/HBase/index.html">
+<meta property="og:site_name" content="Zend Wind&#39;s Blog">
+<meta property="og:locale" content="zh-cn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zend Wind&#39;s Blog">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
 </head>
 <body>
-  <!-- header -->
-  <header id="body-header">
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse_" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="/" id="logo"><img src="/image/logo.png" height="50" alt="logo"></a>
-      </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-        <li><a href="/" class="main-nav">首页</a></li><li><a href="/categories/" class="main-nav">分类</a></li><li><a href="/archives/" class="main-nav">归档</a></li><li><a href="/about/" class="main-nav">关于</a></li>
-        </ul>
-        <!-- search input -->
-        
-
-<!-- 百度站内搜索（已通过站点验证） -->
-<form class="navbar-form navbar-left" role="search"
-  action="//search.zendwind.com/cse/search">
-  <div class="form-group search">
-    <input type="text" name="q" id="bdcsMain" class="form-control primary" aria-label="..." placeholder="搜索">
-    <input type="hidden" name="s" value="11812712506721118476">
-    <input type="hidden" name="nsid" value="0">
-    <!-- 
-    <input name="tn" type="hidden" value="SE_zzsearchcode_shhzc78w">
-    <input name="cl" type="hidden" value="3">
-    <input name="ct" type="hidden" value="2097152">
-    <input name="si" type="hidden" value="ieclipse.cn">
-    <input name="ie" type="hidden" value="utf-8">
-    -->
-  </div>
-</form>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">语言 <span class="caret"></span></a>
-            <ul class="dropdown-menu animated fadeInDown faster">
-              <li><a href="/categories/HBase/index.html">简体中文</a></li>
-              
-              <li><a href="/en/categories/HBase/index.html">English</a></li>
-              
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-
-  <!-- main -->
-  
-<div class="container container-fluid">
-<div class="row">
-  <div class="col-sx-12 col-sm-8 col-md-9 col-lg-9">
     
-<section class="archive-wrap">
-<div class="archive-heading">
-<h1><a class="archive-heading-link" href="/archives/2017/">2017</a></h1><hr></div>
-<div class="archive-body">
-<article class="archive-article archive-type-post">
-<header class="archive-article-header">
-<h3><a href="/2017/11/11/phoenix-introduction/">【原】浅谈Phoenix在HBase中的应用 <small>2017-11-11</small></a></h3>
-</header>
-</article>
-<article class="archive-article archive-type-post">
-<header class="archive-article-header">
-<h3><a href="/2017/10/11/hbase-read-write-exception-summary/">【原】HBase读写异常问题总结 <small>2017-10-11</small></a></h3>
-</header>
-</article>
-</div>
-</section>
-
-
-<nav>  </nav>
-
-    
-  </div> <!-- end main column  -->
-  <!-- aside -->
-  <div class="col-sx-12 col-sm-4 col-md-3 col-lg-3">
-    <aside>
-
-
-    <div class="panel panel-primary animated slideInUp faster">
-      <div class="panel-heading">
-        <h3 class="panel-title">公告</h3>
-      </div>
-      <div class="panel-body" id="widget_announce">
-      Welcome to ZendWind's blog
-
-      </div>
-    </div>
-
-
-    <div class="panel panel-primary animated slideInUp faster">
-      <div class="panel-heading">
-        <h3 class="panel-title">关于</h3>
-      </div>
-      <div class="panel-body text-center">
-        <div></div>
-        <div id="widget-about" class="h3 text-center">
-          <a class="icon-item github" href="https://github.com/zendwind" title="ZendWind on Github" target="_blank">
-            <i class="icon nova-github-alt icon-font"></i>
-          </a>
-          <a class="icon-item email" href="mailto:zendwind@gmail.com" title="mail to ZendWind" target="_blank">
-            <i class="icon nova-email icon-font" style="font-size: 22px"></i>
-          </a>
-          <!-- 剩下的自己加 -->
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt="" height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/zh-cn/archives">归档</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/Technology">技术</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories/LifeStyle">生活</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+       
+            
+<div class="column is-narrow has-text-centered">
+    <div class="dropdown is-up is-right is-hoverable" style="margin-top: -0.2em;">
+        <div class="dropdown-trigger">
+            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+                <span class="icon">
+                    <i class="fas fa-globe"></i>
+                </span>
+                <span>简体中文</span>
+                <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+            </button>
+        </div>
+        <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
+            <div class="dropdown-content">
+            
+                <a href="/categories/HBase/index.html" class="dropdown-item">
+                    简体中文
+                </a>
+            
+                <a href="/en/categories/HBase/index.html" class="dropdown-item">
+                    English
+                </a>
+            
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="panel panel-primary hidden-xs animated slideInUp faster" id="category">
-      <div class="panel-heading">
-        <h3 class="panel-title">分类</h3>
-      </div>
-      
-      <!-- use category tree -->
-      <ul class="list-group"><li class="list-group-item"><a class="list-group-link" href="/categories/HBase/">HBase</a><span class="badge">2</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/Hadoop/">Hadoop</a><span class="badge">2</span></li><li class="list-group-item"><a class="list-group-link" href="/categories/Python/">Python</a><span class="badge">1</span></li></ul>
+
+        </div>
+    </div>
+   
+
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5><i class="far fa-folder"></i>HBase</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/22/hbase-api/" itemprop="url">An Introduction to HBase Native API</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-22T13:17:00.000Z" itemprop="datePublished">10月 22 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/HBase/">HBase</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 532 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>HBase is a distributed database, this article will introduce HBase Native API to help everyone have a preliminary understanding of HBase API.<br></p>
+        <p class="article-more-link">
+            <a href="/2018/10/22/hbase-api/#more">阅读更多</a>
+        </p>
+    
     </div>
     
+    
+</article>
 
-    <div class="panel panel-primary animated slideInUp faster">
-      <div class="panel-heading">
-        <h3 class="panel-title">标签</h3>
-      </div>
-      
-      <div class="panel-body">
-      <a href="/tags/HBase/" style="font-size: 20px; color: #212121">HBase</a> <a href="/tags/Hadoop/" style="font-size: 20px; color: #212121">Hadoop</a> <a href="/tags/python/" style="font-size: 10px; color: #795548">python</a>
-      </div>
-    </div>
 
-    <div class="panel panel-primary animated slideInUp faster">
-      <div class="panel-heading">
-        <h3 class="panel-title">友情链接</h3>
-      </div>
-      <div class="list-group" id="widget-links">
-      <a class="list-group-item has-icon" href="http://zendwind.com" title="ZendWind's Blog" target="_blank"><img src="/image/logo.png" alt="ZendWind's Blog">ZendWind's Blog</a><a class="list-group-item has-icon" href="http://www.cnblogs.com/ballwql" title="Cnblogs" target="_blank"><img src="/image/logo.png" alt="Cnblogs">Cnblogs</a>
-      </div>
-    </div>
 
-    </aside>
-  </div> <!-- end aside column  -->
-</div> <!-- end row -->
-</div> <!-- end container -->
 
-  <!-- footer -->
-  <footer id="body-footer">
-  <div class="divider"></div>
-  <div>&nbsp;</div>
-  <div class="inner text-center">
-    <div id="footer-copyright">
-      &copy; 2020 <a href="http://zendwind.com" target="_blank">Wen Qiuliang</a> powered by <a href="http://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Jamling/hexo-theme-nova" target="_blank">Nova</a><br>
-      <!-- Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>. -->
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2017/11/11/zh-cn/phoenix-introduction/" itemprop="url">【原】浅谈Phoenix在HBase中的应用</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-11-11T13:00:00.000Z" itemprop="datePublished">11月 11 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/HBase/">HBase</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            27 分钟 读完 (约 4124 字)
+        </span>
+        
     </div>
-    <div>
-      <a href="http://www.beian.miit.gov.cn" target="_blank"></a>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x4E1A;&#x52A1;&#x4F7F;&#x7528;HBase&#x5DF2;&#x7ECF;&#x6709;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x4E86;&#xFF0C;&#x671F;&#x95F4;&#x4E5F;&#x53CD;&#x9988;&#x4E86;&#x5F88;&#x591A;&#x95EE;&#x9898;&#xFF0C;&#x5176;&#x4E2D;&#x53CD;&#x9988;&#x6700;&#x591A;&#x7684;&#x662F;HBase&#x662F;&#x5426;&#x652F;&#x6301;SQL&#x67E5;&#x8BE2;&#x548C;&#x4E8C;&#x7EA7;&#x7D22;&#x5F15;&#xFF0C;&#x7531;&#x4E8E;HBase&#x5728;&#x8FD9;&#x4E24;&#x5757;&#x4E0A;&#x76EE;&#x524D;&#x6682;&#x4E0D;&#x652F;&#x6301;&#xFF0C;&#x5BFC;&#x81F4;&#x4E1A;&#x52A1;&#x5728;&#x4F7F;&#x7528;&#x65F6;&#x65E0;&#x6CD5;&#x66F4;&#x597D;&#x7684;&#x5229;&#x7528;&#x73B0;&#x6709;&#x7684;&#x7ECF;&#x9A8C;&#x6765;&#x67E5;&#x8BE2;HBase&#x3002;&#x867D;&#x7136;HBase&#x672C;&#x8EAB;&#x4E0D;&#x652F;&#x6301;SQL&#xFF0C;&#x4F46;&#x4E1A;&#x754C;&#x8FD8;&#x662F;&#x6709;&#x73B0;&#x6210;&#x7684;&#x65B9;&#x6848;&#x6765;&#x652F;&#x6301;&#xFF0C;&#x5982;Hive&#x3001;Impala&#x3001;Phoenix&#x7B49;&#x3002;&#x4F17;&#x591A;&#x65B9;&#x6848;&#x5404;&#x6709;&#x5404;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x5BF9;Phoenix&#x4F5C;&#x4E00;&#x4E2A;&#x5927;&#x6982;&#x7684;&#x4ECB;&#x7ECD;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/2017/11/11/zh-cn/phoenix-introduction/#more">阅读更多</a>
+        </p>
+    
     </div>
-  </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2017/10/11/zh-cn/hbase-read-write-exception-summary/" itemprop="url">【原】HBase读写异常问题总结</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-10-11T01:26:00.000Z" itemprop="datePublished">10月 11 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/HBase/">HBase</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            19 分钟 读完 (约 2922 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x56FD;&#x5E86;&#x671F;&#x95F4;&#xFF0C;HBase&#x96C6;&#x7FA4;&#x51FA;&#x73B0;&#x4E00;&#x6B21;&#x6BD4;&#x8F83;&#x4E25;&#x91CD;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6545;&#x969C;&#x671F;&#x95F4;&#xFF0C;&#x4E1A;&#x52A1;&#x65B9;&#x53CD;&#x9988;&#x67E5;&#x8BE2;&#x5927;&#x91CF;&#x8D85;&#x65F6;&#xFF0C;&#x7531;&#x4E8E;&#x6D89;&#x53CA;&#x91CD;&#x70B9;&#x4E1A;&#x52A1;&#x67E5;&#x8BE2;&#xFF0C;&#x5F71;&#x54CD;&#x4E5F;&#x662F;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x590D;&#x76D8;&#x4E00;&#x4E0B;&#x95EE;&#x9898;&#x53D1;&#x751F;&#x8FC7;&#x7A0B;&#x5E76;&#x4F5C;&#x76F8;&#x5E94;&#x5206;&#x6790;<br></p>
+        <p class="article-more-link">
+            <a href="/2017/10/11/zh-cn/hbase-read-write-exception-summary/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Wen Qiuliang&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </footer>
 
-  <!-- fixed action bar -->
-  
-  <div class="fab hidden-print" style="bottom: 45px; right: 24px;">
-  <!--
-    <ul class="top-expand" id="top-expand">
-      <li><a class="fab-item large red" href="#top"><i class="icon nova-top"></i></a></li>
-      <li><a class="fab-item large yellow " href="//www.jiathis.com/share?uid=2064663" target="_blank"><i class="icon nova-share"></i></a></li>
-    </ul>
-    <a class="fab-item large red " onclick="$('#top-expand').toggle();">
-      <i class="icon nova-list-ul"></i>
-    </a>
-    -->
-    <a class="fab-item large red " href="#top">
-      <i class="icon nova-top"></i>
-    </a>
-  </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
-  <!-- after footer, some 3rd script place here -->
-    <script>
-    var hljs_labels = {
-        left: "代码",
-        right: "如下：",
-        copy: "复制"
-    }
-    </script>
-    <script src="/js/hljs.js"></script>
-    <script src="/js/script.js"></script>
-    
-    <!-- 安装自动推送JS代码的网页，在页面被访问时，页面URL将立即被推送给百度 -->
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
 </script>
 
-    <!-- 新建的搜索框代码，建立使用你自己的代码替换-->
 <script>
-(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=11812712506721118476' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
 </script>
 
     
-
-<!-- LeanClound官方Javascript SDK -->
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
 <script>
-  var page_layout = 'false'
-  var lc_debug = false;
-  if(typeof AV === 'undefined') {
-    $.getScript('//cdn1.lncld.net/static/js/av-min-1.2.1.js',function() {
-      lc_debug && console.log('init AV after av.js loaded');
-        AV.init({
-          appId : 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
-          appKey : 'QdFr23RGUj3JYo0I4Yi8wuV3'
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
         });
-        if (page_layout === 'true') {
-          lc_index_views('.card-action', {
-            style : 'hidden-xs',
-            p : {
-              views : '.nova-eye .count'
-            }
-          })
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
         }
-        lc_page_views();
-    });
-  }
 
-  var lc_config = {
-    pageId : 'f718f43bf700fbeb5cf8dcc9da2aa823',
-    url : 'categories/HBase/index.html' || '',
-    title : '分类－HBase'
-  };
-  lc_debug && console.log('lcconfig', lc_config);
-
-  var lc_table = 'Counter' || 'Counter';
-
-  function lc_page_views() {
-    var query = new AV.Query(lc_table);
-    query.select(['-ACL']);
-    query.equalTo('pageId', lc_config.pageId);
-    query.first({
-      success: function(results) {
-        // results is an array of AV.Object.
-        if (typeof results === 'undefined') {
-          insert(results);
-          return;
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
-        update(results);
-        show(results);
-      },
-      error: function(error) {
-        // error is an instance of AV.Error.
-        console.log(error);
-      }
-    });
 
-    function insert(data) {
-      if (!data) {
-        lc_debug && console.log('data is null new object');
-        var M = AV.Object.extend(lc_table);
-        data = new M();
-        data.set('views', 1);
-      }
-      for ( var key in lc_config) {
-        data.set(key, lc_config[key]);
-      }
-      data.save().then(function(data) {
-        lc_debug && console.log('created objectId is ' + data.id);
-      }, function(error) {
-        lc_debug && console.log("create object failed", error);
-      });
-    }
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
 
-    function update(data) {
-      for ( var key in lc_config) {
-        if (key !== 'pageId')
-        data.set(key, lc_config[key]);
-      }
-      lc_debug && console.log("after change,data", data);
-      data.increment('views', 1);
-      data.save().then(function(data) {
-        lc_debug && console.log("update to " + data.get('views'));
-      }, function(error) {
-        lc_debug && console.log("update object failed", error);
-      });
-    }
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
 
-    function show(data) {
-      $(".lc-count").html(data.get('views'));
-    }
-    function show_count(count) {
-      $(".lc-count").html(count);
-    }
-  };
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
 
-  function lc_index_views() {
-    // load views count from leanclound
-    // make sure you are created Counter table on leanclound
-    function lc_load_views(selector, options) {
-      var o = options || {};
-      var tkeys = [];
-      $(selector).each(function(i) {
-        var tkey = $(this).data('tkey');
-        tkeys.push(tkey);
-      });
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
 
-      var query = new AV.Query(lc_table);
-      query.select([ '-ACL', '-createdAt', '-updatedAt', '-url' ]);
-      query.containedIn('pageId', tkeys);
-      query.find().then(function(results) {
-        $(selector).each(function(i) {
-          var tkey = $(this).data('tkey');
-          for (var i = 0; i < results.length; i++) {
-            var t = results[i];
-            if (t.get('pageId') === tkey) {
-              var c = t.get('views') + '';
-              $(this).find(o.p.views).html(c);
-            }
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
           }
         });
-      }, function(error) {
-      });
-    }
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
 
-    lc_load_views('.card-action', {
-      style : 'hidden-xs',
-      p : {
-        views : '.nova-eye .count'
-      }
-    });
-  }
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
 </script>
-
+<script src="/js/insight.js"></script>
+    
 </body>
 </html>
