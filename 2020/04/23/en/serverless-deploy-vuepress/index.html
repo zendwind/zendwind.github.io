@@ -208,23 +208,34 @@ TENCENT_TOKEN=xxx # access token</code></pre></p>
 <p>Meanwhile, we can integrate this command in config.js as below:</p>
 <h3 id="Step6-Check-Deployment"><a href="#Step6-Check-Deployment" class="headerlink" title="Step6. Check Deployment"></a>Step6. Check Deployment</h3><p>Open the COS http url on browser to see the index.html.</p>
 <h2 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h2><p>If you want to build a documentation system, the Vuepress will be your choice. The detail description can refer to  <a href="https://snipcart.com/blog/vuepress-tutorial-vuejs-documentation" target="_blank" rel="external">In-Depth VuePress Tutorial: Vue-Powered Docs &amp; Blog</a>.</p>
-<h3 id="Add-a-config-file"><a href="#Add-a-config-file" class="headerlink" title="Add a config file"></a>Add a config file</h3><p>Add a <code>config.js</code> in <code>vuepress_blog/docs/.vuepress</code> directory, for example:<br>```js config.js<br>module.exports = {<br> title: ‘Welcome to TcaplusDB World’,<br> description: ‘Just playing around’,<br> themeConfig: {<br>       nav: [<br>         { text: ‘Home’, link: ‘/‘ },<br>         { text: ‘Blog’, link: ‘/blog/‘ },<br>         { text: ‘External’, link: ‘<a href="https://cloud.tencent.com/product/tcaplusdb" target="_blank" rel="external">https://cloud.tencent.com/product/tcaplusdb</a>‘ },<br>       ],<br>       sidebar: [<br>               ‘/‘,<br>               ‘/blog/‘<br>       ]</p>
-<p> }<br>}</p>
-<pre><code>### Add Subdirectory
-Create `blog` subdirectory in `vuepress_blog/docs`, then touch a README.md and first-post.md in blog directory.
+<h3 id="Add-a-config-file"><a href="#Add-a-config-file" class="headerlink" title="Add a config file"></a>Add a config file</h3><p>Add a <code>config.js</code> in <code>vuepress_blog/docs/.vuepress</code> directory, for example:</p>
+<pre><code>module.exports = {
+ title: &#39;Welcome to TcaplusDB World&#39;,
+ description: &#39;Just playing around&#39;,
+ themeConfig: {
+       nav: [
+         { text: &#39;Home&#39;, link: &#39;/&#39; },
+         { text: &#39;Blog&#39;, link: &#39;/blog/&#39; },
+         { text: &#39;External&#39;, link: &#39;https://cloud.tencent.com/product/tcaplusdb&#39; },
+       ],
+       sidebar: [
+               &#39;/&#39;,
+               &#39;/blog/&#39;
+       ]
 
-### Config Vue Support
-Vuepress supports flexible vue component config. Take blog for example.
-__First, add `component` directory in `vuepress_blog/docs/.vuepress`__
-```bash
-cd vuepress_blog/docs/.vuepress
+ }
+}
+</code></pre><h3 id="Add-Subdirectory"><a href="#Add-Subdirectory" class="headerlink" title="Add Subdirectory"></a>Add Subdirectory</h3><p>Create <code>blog</code> subdirectory in <code>vuepress_blog/docs</code>, then touch a README.md and first-post.md in blog directory.</p>
+<h3 id="Config-Vue-Support"><a href="#Config-Vue-Support" class="headerlink" title="Config Vue Support"></a>Config Vue Support</h3><p>Vuepress supports flexible vue component config. Take blog for example.<br><strong>First, add <code>component</code> directory in <code>vuepress_blog/docs/.vuepress</code></strong></p>
+<pre><code class="bash">cd vuepress_blog/docs/.vuepress
 
 mkdir component
 
 cd component 
 
 touch BlogIndex.vue
-</code></pre><p>The BlogIndex.vue is as follows:</p>
+</code></pre>
+<p>The BlogIndex.vue is as follows:</p>
 <pre><code class="bash">&lt;template&gt;
 &lt;div&gt;
     &lt;div v-for=&quot;post in posts&quot;&gt;
@@ -293,8 +304,8 @@ npm run docs:deploy
 
   <script src="/js/decrypt.min.js"></script>
   <footer class="article-footer">
-    <time class="article-footer-updated" datetime="2020-04-24T02:50:46.201Z" itemprop="dateModified">
-    最后更新：2020-04-24
+    <time class="article-footer-updated" datetime="2020-04-26T05:25:04.014Z" itemprop="dateModified">
+    最后更新：2020-04-26
     </time>
     <span itemprop="author publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
       <meta content="http://zendwind.com" itemprop="url">
@@ -401,7 +412,7 @@ with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElemen
           目录
         </a></div>
         <div id="toc-body" class="in">
-        <ul class="nav toc-ul"><li><a href="#Prerequisites">Prerequisites</a><ul class="nav toc-ul"><li><a href="#NodeJS-and-NPM-Install">NodeJS and NPM Install</a></li><li><a href="#Serverless-Install">Serverless Install</a></li><li><a href="#Vuepress-Install">Vuepress Install</a></li><li><a href="#COS-Bucket-Create">COS Bucket Create</a></li></ul></li><li><a href="#Introduction">Introduction</a><ul class="nav toc-ul"><li><a href="#Serverless-Framework">Serverless Framework</a></li><li><a href="#Vuepress">Vuepress</a></li></ul></li><li><a href="#Best-Practice">Best Practice</a><ul class="nav toc-ul"><li><a href="#Operation-Steps">Operation Steps</a><ul class="nav toc-ul"><li><a href="#Step1-Project-Preparation">Step1.Project Preparation</a></li><li><a href="#Step2-Run-Dev-Mode">Step2. Run Dev Mode</a></li><li><a href="#Step3-Build-Static-Site">Step3. Build Static Site</a></li><li><a href="#Step4-Config-serverless-yml">Step4. Config serverless.yml</a></li><li><a href="#Step5-Serverless-Deploy">Step5. Serverless Deploy</a></li><li><a href="#Step6-Check-Deployment">Step6. Check Deployment</a></li></ul></li><li><a href="#Extension">Extension</a><ul class="nav toc-ul"><li><a href="#Add-a-config-file">Add a config file</a></li></ul></li></ul></li><li><a href="#Summary">Summary</a></li></ul>
+        <ul class="nav toc-ul"><li><a href="#Prerequisites">Prerequisites</a><ul class="nav toc-ul"><li><a href="#NodeJS-and-NPM-Install">NodeJS and NPM Install</a></li><li><a href="#Serverless-Install">Serverless Install</a></li><li><a href="#Vuepress-Install">Vuepress Install</a></li><li><a href="#COS-Bucket-Create">COS Bucket Create</a></li></ul></li><li><a href="#Introduction">Introduction</a><ul class="nav toc-ul"><li><a href="#Serverless-Framework">Serverless Framework</a></li><li><a href="#Vuepress">Vuepress</a></li></ul></li><li><a href="#Best-Practice">Best Practice</a><ul class="nav toc-ul"><li><a href="#Operation-Steps">Operation Steps</a><ul class="nav toc-ul"><li><a href="#Step1-Project-Preparation">Step1.Project Preparation</a></li><li><a href="#Step2-Run-Dev-Mode">Step2. Run Dev Mode</a></li><li><a href="#Step3-Build-Static-Site">Step3. Build Static Site</a></li><li><a href="#Step4-Config-serverless-yml">Step4. Config serverless.yml</a></li><li><a href="#Step5-Serverless-Deploy">Step5. Serverless Deploy</a></li><li><a href="#Step6-Check-Deployment">Step6. Check Deployment</a></li></ul></li><li><a href="#Extension">Extension</a><ul class="nav toc-ul"><li><a href="#Add-a-config-file">Add a config file</a></li><li><a href="#Add-Subdirectory">Add Subdirectory</a></li><li><a href="#Config-Vue-Support">Config Vue Support</a></li></ul></li></ul></li><li><a href="#Summary">Summary</a></li></ul>
         </div>
       </nav>
 </div>

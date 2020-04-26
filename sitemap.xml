@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zendwind.com/2020/04/23/en/serverless-deploy-vuepress/</loc>
+    
+    <lastmod>2020-04-26T05:25:04.014Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zendwind.com/donate/index.html</loc>
     
     <lastmod>2020-04-26T02:03:08.796Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>http://zendwind.com/2017/11/11/phoenix-introduction/</loc>
     
     <lastmod>2020-04-24T02:50:58.434Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2020/04/23/en/serverless-deploy-vuepress/</loc>
-    
-    <lastmod>2020-04-24T02:50:46.201Z</lastmod>
     
   </url>
   
