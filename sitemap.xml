@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zendwind.com/about/index.html</loc>
+    
+    <lastmod>2020-04-26T11:00:36.604Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/zh-cn/archives/index.html</loc>
+    
+    <lastmod>2020-04-26T11:00:12.522Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/zh-cn/about/index.html</loc>
+    
+    <lastmod>2020-04-26T10:59:26.416Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zendwind.com/2017/10/08/zh-cn/hadoop-ha-qjm/</loc>
     
     <lastmod>2020-04-26T07:26:26.916Z</lastmod>
@@ -30,13 +51,6 @@
   </url>
   
   <url>
-    <loc>http://zendwind.com/about/index.html</loc>
-    
-    <lastmod>2020-04-24T15:51:43.893Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zendwind.com/2020/04/04/airflow-docker-install/</loc>
     
     <lastmod>2020-04-24T02:52:17.000Z</lastmod>
@@ -61,13 +75,6 @@
     <loc>http://zendwind.com/2017/11/11/zh-cn/phoenix-introduction/</loc>
     
     <lastmod>2020-04-24T02:50:58.434Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/zh-cn/about/index.html</loc>
-    
-    <lastmod>2020-04-24T02:06:44.000Z</lastmod>
     
   </url>
   
