@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zendwind.com/2017/10/08/hadoop-ha-qjm/</loc>
+    
+    <lastmod>2020-04-26T07:26:26.916Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2018/05/15/hadoop-small-file-storage/</loc>
+    
+    <lastmod>2020-04-26T07:26:09.900Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zendwind.com/donate/index.html</loc>
     
     <lastmod>2020-04-26T02:03:08.796Z</lastmod>
@@ -19,20 +33,6 @@
     <loc>http://zendwind.com/en/about/index.html</loc>
     
     <lastmod>2020-04-24T15:51:43.893Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2017/10/08/hadoop-ha-qjm/</loc>
-    
-    <lastmod>2020-04-24T02:51:53.482Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/2018/05/15/hadoop-small-file-storage/</loc>
-    
-    <lastmod>2020-04-24T02:51:43.090Z</lastmod>
     
   </url>
   
