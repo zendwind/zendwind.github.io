@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zendwind.com/2020/04/26/zh-cn/hexo-multi-lang-deploy/</loc>
+    
+    <lastmod>2020-04-26T15:47:27.980Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zendwind.com/about/index.html</loc>
     
     <lastmod>2020-04-26T11:00:36.604Z</lastmod>
