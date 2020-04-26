@@ -139,43 +139,152 @@
   
     <p>Serverless Framework is very popular all over the world, and has 30,000+ stars in Github. It is friendly for many cloud platforms, such as AWS, GCP, Azure, TencentCloud, AliCloud,etc.This post will present how to deploy vuepress (a simple static site generator) with Serverless Framework on TencentCloud.<br><a id="more"></a></p>
 <h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><h2 id="NodeJS-and-NPM-Install"><a href="#NodeJS-and-NPM-Install" class="headerlink" title="NodeJS and NPM Install"></a>NodeJS and NPM Install</h2><p>The installation can refer to <a href="https://blog.teamtreehouse.com/install-node-js-npm-mac" target="_blank" rel="external">How to Install Node.js and NPM on a Mac</a>.</p>
-<h2 id="Serverless-Install"><a href="#Serverless-Install" class="headerlink" title="Serverless Install"></a>Serverless Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g serverless</div></pre></td></tr></table></figure>
-<h2 id="Vuepress-Install"><a href="#Vuepress-Install" class="headerlink" title="Vuepress Install"></a>Vuepress Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g vuepress</div></pre></td></tr></table></figure>
+<h2 id="Serverless-Install"><a href="#Serverless-Install" class="headerlink" title="Serverless Install"></a>Serverless Install</h2><pre><code>npm install -g serverless</code></pre>
+<h2 id="Vuepress-Install"><a href="#Vuepress-Install" class="headerlink" title="Vuepress Install"></a>Vuepress Install</h2><pre><code>npm install -g vuepress</code></pre>
 <h2 id="COS-Bucket-Create"><a href="#COS-Bucket-Create" class="headerlink" title="COS Bucket Create"></a>COS Bucket Create</h2><ul>
 <li>Apply for TencentCloud account</li>
 <li>Check out the <a href="https://intl.cloud.tencent.com/document/product/436/11365" target="_blank" rel="external">COS documentation</a> page for an example of creating a COS bucket in relevant region.</li>
 </ul>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="Serverless-Framework"><a href="#Serverless-Framework" class="headerlink" title="Serverless Framework"></a>Serverless Framework</h2><p>The introduction about serverless can refer to <a href="https://serverless.com" target="_blank" rel="external">official website</a>.</p>
 <h2 id="Vuepress"><a href="#Vuepress" class="headerlink" title="Vuepress"></a>Vuepress</h2><p>Vuepress includes two parts: one is minimalistic static site generator, the other is theme. The detail informations can refer to <a href="https://vuepress.vuejs.org" target="_blank" rel="external">official website</a>.</p>
-<h1 id="Best-Practice"><a href="#Best-Practice" class="headerlink" title="Best Practice"></a>Best Practice</h1><h2 id="Operation-Steps"><a href="#Operation-Steps" class="headerlink" title="Operation Steps"></a>Operation Steps</h2><h3 id="Step1-Project-Preparation"><a href="#Step1-Project-Preparation" class="headerlink" title="Step1.Project Preparation"></a>Step1.Project Preparation</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir -p vuepress_blog/docs </div><div class="line"><span class="built_in">cd</span> vuepress_blog</div><div class="line">touch package.json</div><div class="line">touch docs/README.md</div><div class="line"><span class="built_in">echo</span> <span class="string">"Hello, My first Vuepress Blog"</span> &gt;&gt;README.md</div></pre></td></tr></table></figure>
-<p>The package.json is as below:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"docs:dev"</span>: <span class="string">"vuepress dev docs"</span>,</div><div class="line">    <span class="string">"docs:build"</span>: <span class="string">"vuepress build docs"</span>,</div><div class="line">    <span class="string">"docs:deploy"</span>: <span class="string">"cd docs/.vuepress &amp;&amp; sls"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="Best-Practice"><a href="#Best-Practice" class="headerlink" title="Best Practice"></a>Best Practice</h1><h2 id="Operation-Steps"><a href="#Operation-Steps" class="headerlink" title="Operation Steps"></a>Operation Steps</h2><h3 id="Step1-Project-Preparation"><a href="#Step1-Project-Preparation" class="headerlink" title="Step1.Project Preparation"></a>Step1.Project Preparation</h3><pre><code>mkdir -p vuepress_blog&#x2F;docs 
+cd vuepress_blog
+touch package.json
+touch docs&#x2F;README.md
+echo &quot;Hello, My first Vuepress Blog&quot; &gt;&gt;README.md</code></pre>
+<p>The package.json is as below:<br><pre><code>{
+  &quot;scripts&quot;: {
+    &quot;docs:dev&quot;: &quot;vuepress dev docs&quot;,
+    &quot;docs:build&quot;: &quot;vuepress build docs&quot;,
+    &quot;docs:deploy&quot;: &quot;cd docs&#x2F;.vuepress &amp;&amp; sls&quot;
+  }
+}</code></pre></p>
 <ul>
 <li><strong>docs:dev</strong> : start a dev environment</li>
 <li><strong>docs:build</strong> : build a static site</li>
 <li><strong>docs:deploy</strong> : deploy the static site to cos with Serverless Framework</li>
 </ul>
 <p><strong>Note</strong>: With package.json, you can integrate your project with CI service easily. </p>
-<p>The final directory structure is as follows:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">|-- docs</div><div class="line">|   |--.vuepress</div><div class="line">|   |   |--dist</div><div class="line">|   |   |  |--index.html</div><div class="line">|   |   |  |--404.html</div><div class="line">|   |   |  |--assets</div><div class="line">|   |   |  |  |--css</div><div class="line">|   |   |  |  |--js</div><div class="line">|   |   |  |  |--img</div><div class="line">|   |--README.md</div><div class="line">|-- package.json</div></pre></td></tr></table></figure></p>
-<h3 id="Step2-Run-Dev-Mode"><a href="#Step2-Run-Dev-Mode" class="headerlink" title="Step2. Run Dev Mode"></a>Step2. Run Dev Mode</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run docs:dev  <span class="comment"># or vuepress dev docs/</span></div></pre></td></tr></table></figure>
+<p>The final directory structure is as follows:<br><pre><code>.
+|-- docs
+|   |--.vuepress
+|   |   |--dist
+|   |   |  |--index.html
+|   |   |  |--404.html
+|   |   |  |--assets
+|   |   |  |  |--css
+|   |   |  |  |--js
+|   |   |  |  |--img
+|   |--README.md
+|-- package.json</code></pre></p>
+<h3 id="Step2-Run-Dev-Mode"><a href="#Step2-Run-Dev-Mode" class="headerlink" title="Step2. Run Dev Mode"></a>Step2. Run Dev Mode</h3><pre><code>npm run docs:dev  # or vuepress dev docs&#x2F;</code></pre>
 <p>This command will start a dev environment, and you can browse the static site with <code>localhost:8080</code> </p>
-<h3 id="Step3-Build-Static-Site"><a href="#Step3-Build-Static-Site" class="headerlink" title="Step3. Build Static Site"></a>Step3. Build Static Site</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run docs:build</div></pre></td></tr></table></figure>
+<h3 id="Step3-Build-Static-Site"><a href="#Step3-Build-Static-Site" class="headerlink" title="Step3. Build Static Site"></a>Step3. Build Static Site</h3><pre><code>npm run docs:build</code></pre>
 <p>This command will generate static files in <code>vuepress_blog/docs/.vuepress/dist</code>, such as:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">drwxr-xr-x  5 xxx  staff   160B Apr 23 11:29 assets</div><div class="line">-rw-r--r--  1 xxx  staff   1.2K Apr 23 11:29 404.html</div><div class="line">-rw-r--r--  1 xxx  staff   2.1K Apr 23 11:29 index.html</div></pre></td></tr></table></figure>
-<h3 id="Step4-Config-serverless-yml"><a href="#Step4-Config-serverless-yml" class="headerlink" title="Step4. Config serverless.yml"></a>Step4. Config serverless.yml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> vuepress_blog/docs/.vuepress</div><div class="line"></div><div class="line">touch serverless.yml</div></pre></td></tr></table></figure>
-<p>The serverless.yml is as below:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">name: myblog</div><div class="line">myblog:</div><div class="line">  component: <span class="string">"@serverless/tencent-website"</span></div><div class="line">  inputs:</div><div class="line">    code:</div><div class="line">      src: ./dist <span class="comment"># Upload static files</span></div><div class="line">      index: index.html</div><div class="line">      error: 404.html</div><div class="line">    region: ap-hongkong</div><div class="line">    bucketName: your cos bucket name</div></pre></td></tr></table></figure><br><strong>Note</strong>: The component <code>@serverless/tencent-website</code> is suitable for tencent cloud, you can see details in <a href="https://github.com/serverless-components/tencent-website" target="_blank" rel="external">github project</a></p>
-<h3 id="Step5-Serverless-Deploy"><a href="#Step5-Serverless-Deploy" class="headerlink" title="Step5. Serverless Deploy"></a>Step5. Serverless Deploy</h3><p>Config the <code>.env</code> file for authorization of TencentCloud<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> vuepress_blog/docs/.vuepress</div><div class="line">vim .env </div><div class="line"><span class="comment"># replace your secret_id and secret_key of tencent cloud</span></div><div class="line">TENCENT_APP_ID=xxx <span class="comment"># your account id </span></div><div class="line">TENCENT_SECRET_ID=xxx <span class="comment"># secret id</span></div><div class="line">TENCENT_SECRET_KEY=xxx <span class="comment"># secret key</span></div><div class="line">TENCENT_TOKEN=xxx <span class="comment"># access token</span></div></pre></td></tr></table></figure></p>
-<p>Then execute <code>sls</code> to deploy static site to COS:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run docs:deploy</div></pre></td></tr></table></figure></p>
+<pre><code>drwxr-xr-x  5 xxx  staff   160B Apr 23 11:29 assets
+-rw-r--r--  1 xxx  staff   1.2K Apr 23 11:29 404.html
+-rw-r--r--  1 xxx  staff   2.1K Apr 23 11:29 index.html</code></pre>
+<h3 id="Step4-Config-serverless-yml"><a href="#Step4-Config-serverless-yml" class="headerlink" title="Step4. Config serverless.yml"></a>Step4. Config serverless.yml</h3><pre><code>cd vuepress_blog&#x2F;docs&#x2F;.vuepress
+
+touch serverless.yml</code></pre>
+<p>The serverless.yml is as below:<br><pre><code>name: myblog
+myblog:
+  component: &quot;@serverless&#x2F;tencent-website&quot;
+  inputs:
+    code:
+      src: .&#x2F;dist # Upload static files
+      index: index.html
+      error: 404.html
+    region: ap-hongkong
+    bucketName: your cos bucket name</code></pre><br><strong>Note</strong>: The component <code>@serverless/tencent-website</code> is suitable for tencent cloud, you can see details in <a href="https://github.com/serverless-components/tencent-website" target="_blank" rel="external">github project</a></p>
+<h3 id="Step5-Serverless-Deploy"><a href="#Step5-Serverless-Deploy" class="headerlink" title="Step5. Serverless Deploy"></a>Step5. Serverless Deploy</h3><p>Config the <code>.env</code> file for authorization of TencentCloud<br><pre><code>cd vuepress_blog&#x2F;docs&#x2F;.vuepress
+vim .env 
+# replace your secret_id and secret_key of tencent cloud
+TENCENT_APP_ID=xxx # your account id 
+TENCENT_SECRET_ID=xxx # secret id
+TENCENT_SECRET_KEY=xxx # secret key
+TENCENT_TOKEN=xxx # access token</code></pre></p>
+<p>Then execute <code>sls</code> to deploy static site to COS:<br><pre><code>npm run docs:deploy</code></pre></p>
 <p>Meanwhile, we can integrate this command in config.js as below:</p>
 <h3 id="Step6-Check-Deployment"><a href="#Step6-Check-Deployment" class="headerlink" title="Step6. Check Deployment"></a>Step6. Check Deployment</h3><p>Open the COS http url on browser to see the index.html.</p>
 <h2 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h2><p>If you want to build a documentation system, the Vuepress will be your choice. The detail description can refer to  <a href="https://snipcart.com/blog/vuepress-tutorial-vuejs-documentation" target="_blank" rel="external">In-Depth VuePress Tutorial: Vue-Powered Docs &amp; Blog</a>.</p>
-<h3 id="Add-a-config-file"><a href="#Add-a-config-file" class="headerlink" title="Add a config file"></a>Add a config file</h3><p>Add a <code>config.js</code> in <code>vuepress_blog/docs/.vuepress</code> directory, for example:<br><figure class="highlight js"><figcaption><span>config.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line"> title: <span class="string">'Welcome to TcaplusDB World'</span>,</div><div class="line"> description: <span class="string">'Just playing around'</span>,</div><div class="line"> themeConfig: &#123;</div><div class="line">       nav: [</div><div class="line">         &#123; <span class="attr">text</span>: <span class="string">'Home'</span>, <span class="attr">link</span>: <span class="string">'/'</span> &#125;,</div><div class="line">         &#123; <span class="attr">text</span>: <span class="string">'Blog'</span>, <span class="attr">link</span>: <span class="string">'/blog/'</span> &#125;,</div><div class="line">         &#123; <span class="attr">text</span>: <span class="string">'External'</span>, <span class="attr">link</span>: <span class="string">'https://cloud.tencent.com/product/tcaplusdb'</span> &#125;,</div><div class="line">       ],</div><div class="line">       sidebar: [</div><div class="line">               <span class="string">'/'</span>,</div><div class="line">               <span class="string">'/blog/'</span></div><div class="line">       ]</div><div class="line"></div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="Add-Subdirectory"><a href="#Add-Subdirectory" class="headerlink" title="Add Subdirectory"></a>Add Subdirectory</h3><p>Create <code>blog</code> subdirectory in <code>vuepress_blog/docs</code>, then touch a README.md and first-post.md in blog directory.</p>
-<h3 id="Config-Vue-Support"><a href="#Config-Vue-Support" class="headerlink" title="Config Vue Support"></a>Config Vue Support</h3><p>Vuepress supports flexible vue component config. Take blog for example.<br><strong>First, add <code>component</code> directory in <code>vuepress_blog/docs/.vuepress</code></strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> vuepress_blog/docs/.vuepress</div><div class="line"></div><div class="line">mkdir component</div><div class="line"></div><div class="line"><span class="built_in">cd</span> component </div><div class="line"></div><div class="line">touch BlogIndex.vue</div></pre></td></tr></table></figure></p>
-<p>The BlogIndex.vue is as follows:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">&lt;div&gt;</div><div class="line">    &lt;div v-for=<span class="string">"post in posts"</span>&gt;</div><div class="line">        &lt;h2&gt;</div><div class="line">            &lt;router-link :to=<span class="string">"post.path"</span>&gt;&#123;&#123; post.frontmatter.title &#125;&#125;&lt;/router-link&gt;</div><div class="line">        &lt;/h2&gt;</div><div class="line"></div><div class="line">        &lt;p&gt;&#123;&#123; post.frontmatter.description &#125;&#125;&lt;/p&gt;</div><div class="line"></div><div class="line">        &lt;p&gt;&lt;router-link :to=<span class="string">"post.path"</span>&gt;Read more&lt;/router-link&gt;&lt;/p&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line"><span class="built_in">export</span> default &#123;</div><div class="line">    computed: &#123;</div><div class="line">        <span class="function"><span class="title">posts</span></span>() &#123;</div><div class="line">            <span class="built_in">return</span> this.<span class="variable">$site</span>.pages</div><div class="line">                .filter(x =&gt; x.path.startsWith(<span class="string">'/blog/'</span>) &amp;&amp; !x.frontmatter.blog_index)</div><div class="line">                .sort((a, b) =&gt; new Date(b.frontmatter.date) - new Date(a.frontmatter.date));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
-<p><strong>Second, config README.md in blog directory</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">blog_index: <span class="literal">true</span></div><div class="line">---</div><div class="line"></div><div class="line"><span class="comment"># Blog</span></div><div class="line"></div><div class="line">Welcome to TcaplusDB blog</div><div class="line"></div><div class="line">&lt;BlogIndex /&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="Add-a-config-file"><a href="#Add-a-config-file" class="headerlink" title="Add a config file"></a>Add a config file</h3><p>Add a <code>config.js</code> in <code>vuepress_blog/docs/.vuepress</code> directory, for example:<br>```js config.js<br>module.exports = {<br> title: ‘Welcome to TcaplusDB World’,<br> description: ‘Just playing around’,<br> themeConfig: {<br>       nav: [<br>         { text: ‘Home’, link: ‘/‘ },<br>         { text: ‘Blog’, link: ‘/blog/‘ },<br>         { text: ‘External’, link: ‘<a href="https://cloud.tencent.com/product/tcaplusdb" target="_blank" rel="external">https://cloud.tencent.com/product/tcaplusdb</a>‘ },<br>       ],<br>       sidebar: [<br>               ‘/‘,<br>               ‘/blog/‘<br>       ]</p>
+<p> }<br>}</p>
+<pre><code>### Add Subdirectory
+Create `blog` subdirectory in `vuepress_blog/docs`, then touch a README.md and first-post.md in blog directory.
+
+### Config Vue Support
+Vuepress supports flexible vue component config. Take blog for example.
+__First, add `component` directory in `vuepress_blog/docs/.vuepress`__
+```bash
+cd vuepress_blog/docs/.vuepress
+
+mkdir component
+
+cd component 
+
+touch BlogIndex.vue
+</code></pre><p>The BlogIndex.vue is as follows:</p>
+<pre><code class="bash">&lt;template&gt;
+&lt;div&gt;
+    &lt;div v-for=&quot;post in posts&quot;&gt;
+        &lt;h2&gt;
+            &lt;router-link :to=&quot;post.path&quot;&gt;{{ post.frontmatter.title }}&lt;/router-link&gt;
+        &lt;/h2&gt;
+
+        &lt;p&gt;{{ post.frontmatter.description }}&lt;/p&gt;
+
+        &lt;p&gt;&lt;router-link :to=&quot;post.path&quot;&gt;Read more&lt;/router-link&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+    computed: {
+        posts() {
+            return this.$site.pages
+                .filter(x =&gt; x.path.startsWith(&#39;/blog/&#39;) &amp;&amp; !x.frontmatter.blog_index)
+                .sort((a, b) =&gt; new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+        }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+<p><strong>Second, config README.md in blog directory</strong></p>
+<pre><code class="bash">---
+blog_index: true
+---
+
+# Blog
+
+Welcome to TcaplusDB blog
+
+&lt;BlogIndex /&gt;
+</code></pre>
 <p>The <code>blog_index</code> is used to make sure that the blog index isn’t listed in the posts. When filtering the posts in the posts computed property of the BlogIndex component.</p>
-<p>The final directory structure is as below:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── docs</div><div class="line">│   ├── .vuepress</div><div class="line">│   │   ├── .env</div><div class="line">│   │   ├── components</div><div class="line">│   │   │   └── BlogIndex.vue</div><div class="line">│   │   ├── config.js</div><div class="line">│   │   └── serverless.yml</div><div class="line">│   ├── README.md</div><div class="line">│   ├── blog</div><div class="line">│   │   ├── README.md</div><div class="line">│   │   └── first-post.md</div><div class="line">│   └── guide</div><div class="line">│       └── README.md</div><div class="line">├── package-lock.json</div><div class="line">└── package.json</div></pre></td></tr></table></figure></p>
-<p><strong>Third, rebuild and deploy static site</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm run docs:build</div><div class="line">npm run docs:deploy</div></pre></td></tr></table></figure></p>
+<p>The final directory structure is as below:</p>
+<pre><code class="bash">.
+├── docs
+│   ├── .vuepress
+│   │   ├── .env
+│   │   ├── components
+│   │   │   └── BlogIndex.vue
+│   │   ├── config.js
+│   │   └── serverless.yml
+│   ├── README.md
+│   ├── blog
+│   │   ├── README.md
+│   │   └── first-post.md
+│   └── guide
+│       └── README.md
+├── package-lock.json
+└── package.json
+</code></pre>
+<p><strong>Third, rebuild and deploy static site</strong></p>
+<pre><code class="bash">npm run docs:build
+npm run docs:deploy
+</code></pre>
 <p>The demo is shown as below picture:<br><img src="/2020/04/23/en/serverless-deploy-vuepress/vuepress-home.jpg" alt="vuepress-demo"></p>
 <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>This post introduces how to deploy a Vuepress static site with Serverless Framework to COS of TencentCloud. It is convient for users to have their simple documentation system quickly. </p>
 
@@ -292,7 +401,7 @@ with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElemen
           目录
         </a></div>
         <div id="toc-body" class="in">
-        <ul class="nav toc-ul"><li><a href="#Prerequisites">Prerequisites</a><ul class="nav toc-ul"><li><a href="#NodeJS-and-NPM-Install">NodeJS and NPM Install</a></li><li><a href="#Serverless-Install">Serverless Install</a></li><li><a href="#Vuepress-Install">Vuepress Install</a></li><li><a href="#COS-Bucket-Create">COS Bucket Create</a></li></ul></li><li><a href="#Introduction">Introduction</a><ul class="nav toc-ul"><li><a href="#Serverless-Framework">Serverless Framework</a></li><li><a href="#Vuepress">Vuepress</a></li></ul></li><li><a href="#Best-Practice">Best Practice</a><ul class="nav toc-ul"><li><a href="#Operation-Steps">Operation Steps</a><ul class="nav toc-ul"><li><a href="#Step1-Project-Preparation">Step1.Project Preparation</a></li><li><a href="#Step2-Run-Dev-Mode">Step2. Run Dev Mode</a></li><li><a href="#Step3-Build-Static-Site">Step3. Build Static Site</a></li><li><a href="#Step4-Config-serverless-yml">Step4. Config serverless.yml</a></li><li><a href="#Step5-Serverless-Deploy">Step5. Serverless Deploy</a></li><li><a href="#Step6-Check-Deployment">Step6. Check Deployment</a></li></ul></li><li><a href="#Extension">Extension</a><ul class="nav toc-ul"><li><a href="#Add-a-config-file">Add a config file</a></li><li><a href="#Add-Subdirectory">Add Subdirectory</a></li><li><a href="#Config-Vue-Support">Config Vue Support</a></li></ul></li></ul></li><li><a href="#Summary">Summary</a></li></ul>
+        <ul class="nav toc-ul"><li><a href="#Prerequisites">Prerequisites</a><ul class="nav toc-ul"><li><a href="#NodeJS-and-NPM-Install">NodeJS and NPM Install</a></li><li><a href="#Serverless-Install">Serverless Install</a></li><li><a href="#Vuepress-Install">Vuepress Install</a></li><li><a href="#COS-Bucket-Create">COS Bucket Create</a></li></ul></li><li><a href="#Introduction">Introduction</a><ul class="nav toc-ul"><li><a href="#Serverless-Framework">Serverless Framework</a></li><li><a href="#Vuepress">Vuepress</a></li></ul></li><li><a href="#Best-Practice">Best Practice</a><ul class="nav toc-ul"><li><a href="#Operation-Steps">Operation Steps</a><ul class="nav toc-ul"><li><a href="#Step1-Project-Preparation">Step1.Project Preparation</a></li><li><a href="#Step2-Run-Dev-Mode">Step2. Run Dev Mode</a></li><li><a href="#Step3-Build-Static-Site">Step3. Build Static Site</a></li><li><a href="#Step4-Config-serverless-yml">Step4. Config serverless.yml</a></li><li><a href="#Step5-Serverless-Deploy">Step5. Serverless Deploy</a></li><li><a href="#Step6-Check-Deployment">Step6. Check Deployment</a></li></ul></li><li><a href="#Extension">Extension</a><ul class="nav toc-ul"><li><a href="#Add-a-config-file">Add a config file</a></li></ul></li></ul></li><li><a href="#Summary">Summary</a></li></ul>
         </div>
       </nav>
 </div>
