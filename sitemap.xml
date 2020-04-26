@@ -2,20 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zendwind.com/categories/index.html</loc>
-    
-    <lastmod>2020-04-26T07:52:22.532Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/zh-cn/categories/index.html</loc>
-    
-    <lastmod>2020-04-26T07:52:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zendwind.com/2017/10/08/zh-cn/hadoop-ha-qjm/</loc>
     
     <lastmod>2020-04-26T07:26:26.916Z</lastmod>
@@ -33,20 +19,6 @@
     <loc>http://zendwind.com/2020/04/23/serverless-deploy-vuepress/</loc>
     
     <lastmod>2020-04-26T05:25:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/donate/index.html</loc>
-    
-    <lastmod>2020-04-26T02:03:08.796Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zendwind.com/other/announce.html</loc>
-    
-    <lastmod>2020-04-25T16:08:26.790Z</lastmod>
     
   </url>
   
