@@ -182,126 +182,7 @@
 
     <section class="section">
     <div class="container">
-    <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            How to Migrate DynamoDB to Another Platform
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time class="is-text-small" datetime="2020-03-28T15:11:00.000Z" itemprop="datePublished">
-                        3月 28 2020</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/TencentCloud/">TencentCloud</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            3 分钟 读完 (约 421 字)
-        </span>
-        
-        <i class="far fa-eye"></i>
-        <span>&nbsp;</span>
-        <span id="busuanzi_container_page_pv" style="display: inline;">
-            <span id="busuanzi_value_page_pv">0</span>
-        </span>
-    </div>
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <p>This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include three subtopics as below:</p>
-<ul>
-<li><strong>Part One: Export DynamoDB Data to S3 with AWS Data Pipeline</strong></li>
-<li><strong>Part Two: Import S3 Data to Tencent TcaplusDB</strong></li>
-<li><strong>Part Three: Principles of Design A Migration System</strong><a id="more"></a>
-</li>
-</ul>
-<h1 id="Why-Migrate"><a href="#Why-Migrate" class="headerlink" title="Why Migrate?"></a>Why Migrate?</h1><p>Different customers have different cases.  As for DynamoDB, it is a popular NoSQL product around the world, and holds most of the market share. So why need to migrate data from DynamoDB to other Platforms. I think the leading causes are as below:</p>
-<ul>
-<li><p><strong>Price</strong><br>As we known, DynamoDB has two pricing mode: <code>on-demand</code> and <code>provisioned</code>. Both of them are cost-expensive, if your business has large traffic in read/write, the DynamoDB will occupy a large proportion.</p>
-</li>
-<li><p><strong>Integration</strong><br>The DynamoDB is strongly bound with AWS, which means you must use AWS other products to work with DynamoDB. I think it is not a good news for most of customers who are unwilling to  be tied on one boat.</p>
-</li>
-</ul>
-<h1 id="Export-Mode"><a href="#Export-Mode" class="headerlink" title="Export Mode"></a>Export Mode</h1><p>There are three approaches for exporting DynamoDB data:</p>
-<ul>
-<li><p><strong>Export to .csv from  DynamoDB Portal</strong><br>This mode is the most easiest way to export data, however it is just available for those small tables. If table has massive data,  this way will be heavy workload, because only 100 items can be exported each time.</p>
-</li>
-<li><p><strong>Export with Scan</strong><br>This mode is the most popular way to export all of DynamoDB data, however, it is cost-expensive and will exhaust a large number of RCU. Meanwhile, if you use <code>Scan</code> to export data , you must consider how to avoid impacting online business, such as traffic control, bandwidth control, maybe the third-party tool need to be introduced to limit the migrating rate (<a href="https://aws.amazon.com/blogs/developer/rate-limited-scans-in-amazon-dynamodb/" target="_blank" rel="external">Google Guava RateLimit</a>).</p>
-</li>
-<li><p><strong>Export with Data Pipeline</strong><br>This mode is the most cost-effective way to export all of DynamoDB data. It uses <code>AWS EMR</code> to process off-line data parallelly, and its core concept is Map/Reduce. With this offline mode, the scope of business impact is small. In next post, we will use this approach to finish the migrating work.</p>
-</li>
-</ul>
-<h1 id="Migrate-Issues"><a href="#Migrate-Issues" class="headerlink" title="Migrate Issues"></a>Migrate Issues</h1><ul>
-<li><strong>Data Change</strong><br>The business produces massive real-time data, how to solve the conflict problem in new platform.  I think the <code>Incremental Migration</code> is essential and must be built before <code>Full Migration</code>.  In accordance with the characteristics of data change, data streaming pipeline is important for capturing the changed data (e.g, update, delete).</li>
-</ul>
-
-    
-    </div>
-    
-    <div class="columns is-variable is-1 is-multiline is-mobile">
-    
-        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/DynamoDB-COS/">#DynamoDB,COS</a></span>
-    
-    </div>
-    
-    
-    <div class="columns is-mobile is-multiline article-nav">
-        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
-            
-            <a href="/2020/04/04/airflow-docker-install/">How to Deploy Airflow with Docker</a>
-            
-        </span>
-        <span class="column is-12-mobile is-half-desktop  article-nav-next">
-            
-            <a href="/2018/10/22/hbase-api/">An Introduction to HBase Native API</a>
-            
-        </span>
-    </div>
-    
-</article>
-
-
-<div class="sharebox">
-    
-<div class="sharethis-inline-share-buttons"></div>
-<script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5ea559fc6ee5a0001d8b95db&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
-
-</div>
-
-
-
-<div class="comments">
-    <h3 class="title is-4">评论</h3>
-    
-<div id="valine-thread"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script>
-    new Valine({
-        el: '#valine-thread',
-        appId: 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
-        appKey: 'QdFr23RGUj3JYo0I4Yi8wuV3',
-        notify: false,
-        verify: false,
-        avatar: '',
-        placeholder: 'Say something...',
-        meta: ['nick', 'mail'],
-        visitor: true,
-        lang: ''
-    })
-</script>
-
-
-</div>
-
-
     </div>
 </section>
     <footer class="footer">
@@ -313,13 +194,12 @@
                         href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
                 <br />
                 <span id="busuanzi_container_site_uv">
-	    	❤️ 感谢
-	    	<span id="busuanzi_value_site_uv">0</span>
-	    	位小伙伴的
+	    	UV:
+                <span id="busuanzi_value_site_uv">0</span>
 		</span>
 		<span id="busuanzi_container_site_pv">
-	    	<span id="busuanzi_value_site_pv">0</span>
-	    	次陪伴
+	    	PV:
+                <span id="busuanzi_value_site_pv">0</span>
 		</span>
             </div>
             <div class="column is-hidden-mobile"></div>
