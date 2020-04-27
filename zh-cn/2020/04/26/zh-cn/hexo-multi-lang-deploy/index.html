@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
 <meta property="og:description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x4E24;&amp;#x5929;&amp;#x6298;&amp;#x817E;&amp;#x4E86;&amp;#x5173;&amp;#x4E8E;Hexo&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x535A;&amp;#x5BA2;&amp;#x642D;&amp;#x5EFA;&amp;#x7684;&amp;#x4E8B;&amp;#x9879;&amp;#xFF0C;&amp;#x7F51;&amp;#x4E0A;&amp;#x6709;&amp;#x5F88;&amp;#x5">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-27T16:31:44.413Z">
+<meta property="og:updated_time" content="2020-04-27T16:39:44.822Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="　如何实现Hexo多语系博客搭建">
 <meta name="twitter:description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x4E24;&amp;#x5929;&amp;#x6298;&amp;#x817E;&amp;#x4E86;&amp;#x5173;&amp;#x4E8E;Hexo&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x535A;&amp;#x5BA2;&amp;#x642D;&amp;#x5EFA;&amp;#x7684;&amp;#x4E8B;&amp;#x9879;&amp;#xFF0C;&amp;#x7F51;&amp;#x4E0A;&amp;#x6709;&amp;#x5F88;&amp;#x5">
@@ -126,6 +126,22 @@
                     <a class="navbar-item" href="#2-&amp;#x524D;&amp;#x7F6E;&amp;#x6761;&amp;#x4EF6;">2&nbsp;&nbsp;<b>2.&amp;amp;#x524D;&amp;amp;#x7F6E;&amp;amp;#x6761;&amp;amp;#x4EF6;</b></a>
                     
                     
+                    
+                    <a class="navbar-item" href="#2-1-&amp;#x73AF;&amp;#x5883;&amp;#x51C6;&amp;#x5907;">2.1&nbsp;&nbsp;2.1 &amp;amp;#x73AF;&amp;amp;#x5883;&amp;amp;#x51C6;&amp;amp;#x5907;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-2-&amp;#x8F6F;&amp;#x4EF6;&amp;#x5B89;&amp;#x88C5;">2.2&nbsp;&nbsp;2.2 &amp;amp;#x8F6F;&amp;amp;#x4EF6;&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-3-hexo&amp;#x4F9D;&amp;#x8D56;">2.3&nbsp;&nbsp;2.3 hexo&amp;amp;#x4F9D;&amp;amp;#x8D56;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-4-npm&amp;#x4F9D;&amp;#x8D56;">2.4&nbsp;&nbsp;2.4 npm&amp;amp;#x4F9D;&amp;amp;#x8D56;</a>
+                    
+                    
                     <hr class="navbar-divider">
                     
                     
@@ -137,7 +153,31 @@
                     
                     
                     
+                    <a class="navbar-item" href="#3-1-1-&amp;#x8BED;&amp;#x7CFB;&amp;#x914D;&amp;#x7F6E;">3.1.1&nbsp;&nbsp;3.1.1 &amp;amp;#x8BED;&amp;amp;#x7CFB;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-1-2-&amp;#x4E3B;&amp;#x9898;&amp;#x914D;&amp;#x7F6E;">3.1.2&nbsp;&nbsp;3.1.2 &amp;amp;#x4E3B;&amp;amp;#x9898;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-1-3-url&amp;#x914D;&amp;#x7F6E;">3.1.3&nbsp;&nbsp;3.1.3 url&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-1-4-deploy&amp;#x914D;&amp;#x7F6E;">3.1.4&nbsp;&nbsp;3.1.4 deploy&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
                     <a class="navbar-item" href="#3-2-&amp;#x4E3B;&amp;#x9898;&amp;#x914D;&amp;#x7F6E;">3.2&nbsp;&nbsp;3.2 &amp;amp;#x4E3B;&amp;amp;#x9898;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-1-&amp;#x4E3B;&amp;#x9898;&amp;#x914D;&amp;#x7F6E;&amp;#x751F;&amp;#x6210;">3.2.1&nbsp;&nbsp;3.2.1 &amp;amp;#x4E3B;&amp;amp;#x9898;&amp;amp;#x914D;&amp;amp;#x7F6E;&amp;amp;#x751F;&amp;amp;#x6210;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-2-&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x914D;&amp;#x7F6E;">3.2.2&nbsp;&nbsp;3.2.2 &amp;amp;#x591A;&amp;amp;#x8BED;&amp;amp;#x7CFB;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
                     
                     
                     
@@ -145,35 +185,53 @@
                     
                     
                     
+                    <a class="navbar-item" href="#3-3-1-source-post&amp;#x76EE;&amp;#x5F55;&amp;#x6587;&amp;#x6863;&amp;#x914D;&amp;#x7F6E;">3.3.1&nbsp;&nbsp;3.3.1 source/_post&amp;amp;#x76EE;&amp;amp;#x5F55;&amp;amp;#x6587;&amp;amp;#x6863;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-3-2-source&amp;#x76EE;&amp;#x5F55;&amp;#x6587;&amp;#x6863;&amp;#x914D;&amp;#x7F6E;">3.3.2&nbsp;&nbsp;3.3.2 source&amp;amp;#x76EE;&amp;amp;#x5F55;&amp;amp;#x6587;&amp;amp;#x6863;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
                     <a class="navbar-item" href="#date-2020-04-24-10-00-00">3.4&nbsp;&nbsp;date: 2020-04-24 10:00:00</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-4-&amp;#x67E5;&amp;#x770B;&amp;#x6548;&amp;#x679C;">3.5&nbsp;&nbsp;3.4 &amp;amp;#x67E5;&amp;amp;#x770B;&amp;amp;#x6548;&amp;amp;#x679C;</a>
+                    <a class="navbar-item" href="#date-2020-04-26-10-00-00">3.5&nbsp;&nbsp;date: 2020-04-26 10:00:00</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-5-&amp;#x90E8;&amp;#x7F72;&amp;#x5230;github">3.6&nbsp;&nbsp;3.5 &amp;amp;#x90E8;&amp;amp;#x7F72;&amp;amp;#x5230;github</a>
+                    <a class="navbar-item" href="#4-1-4-&amp;#x6587;&amp;#x7AE0;&amp;#x5F00;&amp;#x542F;comment&amp;#x6216;&amp;#x5173;&amp;#x95ED;comment">3.5.1&nbsp;&nbsp;4.1.4 &amp;amp;#x6587;&amp;amp;#x7AE0;&amp;amp;#x5F00;&amp;amp;#x542F;comment&amp;amp;#x6216;&amp;amp;#x5173;&amp;amp;#x95ED;comment</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-&amp;#x6DFB;&amp;#x52A0;&amp;#x6587;&amp;#x7AE0;&amp;#x8BBF;&amp;#x95EE;&amp;#x91CF;&amp;#x53CA;&amp;#x7AD9;&amp;#x70B9;&amp;#x8BBF;&amp;#x95EE;&amp;#x7EDF;&amp;#x8BA1;&amp;#x529F;&amp;#x80FD;">3.6&nbsp;&nbsp;4.2 &amp;amp;#x6DFB;&amp;amp;#x52A0;&amp;amp;#x6587;&amp;amp;#x7AE0;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x91CF;&amp;amp;#x53CA;&amp;amp;#x7AD9;&amp;amp;#x70B9;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x7EDF;&amp;amp;#x8BA1;&amp;amp;#x529F;&amp;amp;#x80FD;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-1-&amp;#x4FEE;&amp;#x6539;&amp;#x4E3B;&amp;#x9898;&amp;#x914D;&amp;#x7F6E;-config-en-yml&amp;#x548C;-config-zh-cn-yml">3.6.1&nbsp;&nbsp;4.2.1 &amp;amp;#x4FEE;&amp;amp;#x6539;&amp;amp;#x4E3B;&amp;amp;#x9898;&amp;amp;#x914D;&amp;amp;#x7F6E;: _config.en.yml&amp;amp;#x548C;_config.zh-cn.yml</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-2-&amp;#x589E;&amp;#x52A0;busuanzi&amp;#x811A;&amp;#x672C;">3.6.2&nbsp;&nbsp;4.2.2 &amp;amp;#x589E;&amp;amp;#x52A0;busuanzi&amp;amp;#x811A;&amp;amp;#x672C;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-3-&amp;#x589E;&amp;#x52A0;&amp;#x8BBF;&amp;#x95EE;&amp;#x91CF;&amp;#x7EDF;&amp;#x8BA1;">3.6.3&nbsp;&nbsp;4.2.3 &amp;amp;#x589E;&amp;amp;#x52A0;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x91CF;&amp;amp;#x7EDF;&amp;amp;#x8BA1;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-4-&amp;#x4FEE;&amp;#x6539;&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x914D;&amp;#x7F6E;">3.6.4&nbsp;&nbsp;4.2.4 &amp;amp;#x4FEE;&amp;amp;#x6539;&amp;amp;#x591A;&amp;amp;#x8BED;&amp;amp;#x7CFB;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-5-&amp;#x67E5;&amp;#x770B;&amp;#x6548;&amp;#x679C;">3.6.5&nbsp;&nbsp;4.2.5 &amp;amp;#x67E5;&amp;amp;#x770B;&amp;amp;#x6548;&amp;amp;#x679C;</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#4-&amp;#x5176;&amp;#x5B83;&amp;#x529F;&amp;#x80FD;">4&nbsp;&nbsp;<b>4. &amp;amp;#x5176;&amp;amp;#x5B83;&amp;amp;#x529F;&amp;amp;#x80FD;</b></a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#4-1-&amp;#x6DFB;&amp;#x52A0;&amp;#x8BC4;&amp;#x8BBA;&amp;#x529F;&amp;#x80FD;">4.1&nbsp;&nbsp;4.1 &amp;amp;#x6DFB;&amp;amp;#x52A0;&amp;amp;#x8BC4;&amp;amp;#x8BBA;&amp;amp;#x529F;&amp;amp;#x80FD;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#4-2-&amp;#x6DFB;&amp;#x52A0;&amp;#x6587;&amp;#x7AE0;&amp;#x8BBF;&amp;#x95EE;&amp;#x91CF;&amp;#x53CA;&amp;#x7AD9;&amp;#x70B9;&amp;#x8BBF;&amp;#x95EE;&amp;#x7EDF;&amp;#x8BA1;&amp;#x529F;&amp;#x80FD;">4.2&nbsp;&nbsp;4.2 &amp;amp;#x6DFB;&amp;amp;#x52A0;&amp;amp;#x6587;&amp;amp;#x7AE0;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x91CF;&amp;amp;#x53CA;&amp;amp;#x7AD9;&amp;amp;#x70B9;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x7EDF;&amp;amp;#x8BA1;&amp;amp;#x529F;&amp;amp;#x80FD;</a>
-                    
-                    
-                    <hr class="navbar-divider">
-                    
-                    
-                    <a class="navbar-item" href="#5-&amp;#x603B;&amp;#x7ED3;">5&nbsp;&nbsp;<b>5.&amp;amp;#x603B;&amp;amp;#x7ED3;</b></a>
+                    <a class="navbar-item" href="#5-&amp;#x603B;&amp;#x7ED3;">4&nbsp;&nbsp;<b>5.&amp;amp;#x603B;&amp;amp;#x7ED3;</b></a>
                     
                 </div>
             </div>
@@ -265,36 +323,22 @@
 <li><strong>nova</strong>: &#x5C1D;&#x8BD5;&#x7684;&#x53E6;&#x4E00;&#x6B3E;&#xFF0C;&#x4F5C;&#x8005;&#x5F88;&#x7528;&#x5FC3;&#xFF0C;&#x628A;&#x7C7B;&#x4F3C;&#x4E8E;&#x535A;&#x5BA2;&#x56ED;&#x7684;&#x98CE;&#x683C;&#x501F;&#x9274;&#x5230;&#x4E86;hexo&#xFF0C;&#x53F7;&#x79F0;&#x652F;&#x6301;&#x53CC;&#x8BED;&#x7CFB;&#xFF0C;&#x4E0D;&#x8FC7;&#x5C1D;&#x8BD5;&#x8FC7;&#x7A0B;&#x4E2D;&#x53D1;&#x73B0;&#x5207;&#x6362;&#x8BED;&#x7CFB;&#x65E0;&#x6CD5;&#x5207;&#x6362;&#x4E2D;&#x82F1;&#x535A;&#x5BA2;&#xFF0C;&#x4E14;&#x4E24;&#x79CD;&#x8BED;&#x7CFB;&#x535A;&#x5BA2;&#x65E0;&#x8BBA;&#x600E;&#x4E48;&#x8BBE;&#x7F6E;&#xFF0C;&#x90FD;&#x53EA;&#x80FD;&#x663E;&#x793A;&#x5728;&#x4E00;&#x4E2A;&#x5217;&#x8868;&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x4E5F;&#x4E0D;&#x6EE1;&#x8DB3;&#x9700;&#x6C42;;</li>
 <li><strong>minos</strong>: &#x98CE;&#x683C;&#x7C7B;&#x4F3C;&#x4E8E;maupassant, &#x6BD4;&#x5B83;&#x5F3A;&#x7684;&#x662F;&#x591A;&#x8BED;&#x7CFB;&#x652F;&#x6301;&#x8FD9;&#x5757;&#x6BD4;&#x8F83;&#x5B8C;&#x5584;&#xFF0C;&#x5728;&#x5C1D;&#x8BD5;&#x8FC7;&#x540E;&#xFF0C;&#x6B63;&#x7B26;&#x5408;&#x591A;&#x8BED;&#x7CFB;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x9042;&#x91C7;&#x7EB3;&#x3002;</li>
 </ul>
-<h1 id="2-&#x524D;&#x7F6E;&#x6761;&#x4EF6;"><a href="#2-&#x524D;&#x7F6E;&#x6761;&#x4EF6;" class="headerlink" title="2.&#x524D;&#x7F6E;&#x6761;&#x4EF6;"></a>2.&#x524D;&#x7F6E;&#x6761;&#x4EF6;</h1><ul>
-<li>1.&#x73AF;&#x5883;&#x51C6;&#x5907;<ul>
-<li><strong>OS</strong>: Darwin MacBook-Pro-2.local 17.7.0</li>
-<li><strong>NodeJS</strong>: v10.10.0</li>
-<li><strong>Hexo</strong>: 3.3.9</li>
-<li><strong>Github page</strong>: &#x5F00;&#x901A;github&#x8D26;&#x53F7;</li>
-</ul>
-</li>
-<li><p>2.&#x8F6F;&#x4EF6;&#x5B89;&#x88C5;<br>&#x6B64;&#x6B65;&#x7565;&#xFF0C;&#x53C2;&#x8003;&#x7F51;&#x4E0A;&#x6559;&#x7A0B;&#x3002;&#x5B89;&#x88C5;&#x597D;&#x540E;&#xFF0C;&#x6267;&#x884C;Hexo&#x547D;&#x4EE4;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x9759;&#x6001;&#x7F51;&#x7AD9;&#x76EE;&#x5F55;:</p>
+<h1 id="2-&#x524D;&#x7F6E;&#x6761;&#x4EF6;"><a href="#2-&#x524D;&#x7F6E;&#x6761;&#x4EF6;" class="headerlink" title="2.&#x524D;&#x7F6E;&#x6761;&#x4EF6;"></a>2.&#x524D;&#x7F6E;&#x6761;&#x4EF6;</h1><h2 id="2-1-&#x73AF;&#x5883;&#x51C6;&#x5907;"><a href="#2-1-&#x73AF;&#x5883;&#x51C6;&#x5907;" class="headerlink" title="2.1 &#x73AF;&#x5883;&#x51C6;&#x5907;"></a>2.1 &#x73AF;&#x5883;&#x51C6;&#x5907;</h2><pre><code>+ __OS__: Darwin MacBook-Pro-2.local 17.7.0
++ __NodeJS__: v10.10.0
++ __Hexo__: 3.3.9
++ __Github page__: &#x5F00;&#x901A;github&#x8D26;&#x53F7;
+</code></pre><h2 id="2-2-&#x8F6F;&#x4EF6;&#x5B89;&#x88C5;"><a href="#2-2-&#x8F6F;&#x4EF6;&#x5B89;&#x88C5;" class="headerlink" title="2.2 &#x8F6F;&#x4EF6;&#x5B89;&#x88C5;"></a>2.2 &#x8F6F;&#x4EF6;&#x5B89;&#x88C5;</h2><p>&#x6B64;&#x6B65;&#x7565;&#xFF0C;&#x53C2;&#x8003;&#x7F51;&#x4E0A;&#x6559;&#x7A0B;&#x3002;&#x5B89;&#x88C5;&#x597D;&#x540E;&#xFF0C;&#x6267;&#x884C;Hexo&#x547D;&#x4EE4;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x9759;&#x6001;&#x7F51;&#x7AD9;&#x76EE;&#x5F55;:</p>
 <pre><code>hexo init hexo_blog
-</code></pre></li>
-<li><p>3.hexo&#x4F9D;&#x8D56;</p>
-<ul>
-<li><strong>minos</strong>: &#x4ECE;&#x5B98;&#x65B9;Github&#x4E0B;&#x4E0B;&#x8F7D;<pre><code>cd hexo_blog
+</code></pre><h2 id="2-3-hexo&#x4F9D;&#x8D56;"><a href="#2-3-hexo&#x4F9D;&#x8D56;" class="headerlink" title="2.3 hexo&#x4F9D;&#x8D56;"></a>2.3 hexo&#x4F9D;&#x8D56;</h2><pre><code>+ __minos__: &#x4ECE;&#x5B98;&#x65B9;Github&#x4E0B;&#x4E0B;&#x8F7D;
+</code></pre><pre><code>cd hexo_blog
 git clone https://github.com/ppoffice/hexo-theme-minos.git themes/minos
-</code></pre></li>
-</ul>
-</li>
-<li><ol>
-<li>npm&#x4F9D;&#x8D56;<ul>
+</code></pre><h2 id="2-4-npm&#x4F9D;&#x8D56;"><a href="#2-4-npm&#x4F9D;&#x8D56;" class="headerlink" title="2.4 npm&#x4F9D;&#x8D56;"></a>2.4 npm&#x4F9D;&#x8D56;</h2><ul>
 <li><strong>hexo-renderer-sass</strong><pre><code>cd hexo_blog
 npm install hexo-renderer-sass --save
 </code></pre></li>
 <li><strong>cheerio</strong><pre><code>cd hexo_blog
 npm install cheerio --save
 </code></pre></li>
-</ul>
-</li>
-</ol>
-</li>
 </ul>
 <h1 id="3-&#x6298;&#x817E;&#x8FC7;&#x7A0B;"><a href="#3-&#x6298;&#x817E;&#x8FC7;&#x7A0B;" class="headerlink" title="3.&#x6298;&#x817E;&#x8FC7;&#x7A0B;"></a>3.&#x6298;&#x817E;&#x8FC7;&#x7A0B;</h1><p>&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x5206;&#x4E3A;&#x51E0;&#x4E2A;&#x90E8;&#x5206;:</p>
 <ul>
@@ -303,47 +347,33 @@ npm install cheerio --save
 <li><strong>&#x8BED;&#x7CFB;&#x914D;&#x7F6E;</strong>: &#x914D;&#x7F6E;&#x5207;&#x6362;&#x8BED;&#x7CFB;</li>
 </ul>
 <h2 id="3-1-&#x5168;&#x7AD9;&#x914D;&#x7F6E;"><a href="#3-1-&#x5168;&#x7AD9;&#x914D;&#x7F6E;" class="headerlink" title="3.1 &#x5168;&#x7AD9;&#x914D;&#x7F6E;"></a>3.1 &#x5168;&#x7AD9;&#x914D;&#x7F6E;</h2><p>&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x8003;&#x8651;&#x548C;&#x8BED;&#x7CFB;&#x6709;&#x5173;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x5176;&#x5B83;&#x914D;&#x7F6E;&#x4E0D;&#x5728;&#x672C;&#x6587;&#x8BA8;&#x8BBA;&#x8303;&#x7574;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x53C2;&#x7167;&#x7F51;&#x4E0A;&#x914D;&#x7F6E;&#x81EA;&#x7531;&#x8BBE;&#x5B9A;&#x3002;&#x5168;&#x7AD9;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E3A;<code>hexo_blog/_config.yml</code>&#x3002;&#x914D;&#x7F6E;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
-<ul>
-<li>1.&#x8BED;&#x7CFB;&#x914D;&#x7F6E;<pre><code>#&#x914D;&#x7F6E;&#x9ED8;&#x8BA4;&#x4EE5;English&#x4E3A;&#x4E3B;&#xFF0C;&#x4E2D;&#x6587;&#x4E3A;&#x8F85;
+<h3 id="3-1-1-&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"><a href="#3-1-1-&#x8BED;&#x7CFB;&#x914D;&#x7F6E;" class="headerlink" title="3.1.1 &#x8BED;&#x7CFB;&#x914D;&#x7F6E;"></a>3.1.1 &#x8BED;&#x7CFB;&#x914D;&#x7F6E;</h3><pre><code>#&#x914D;&#x7F6E;&#x9ED8;&#x8BA4;&#x4EE5;English&#x4E3A;&#x4E3B;&#xFF0C;&#x4E2D;&#x6587;&#x4E3A;&#x8F85;
 language: [en,zh-cn]
-</code></pre></li>
-<li>2.&#x4E3B;&#x9898;&#x914D;&#x7F6E;<pre><code>#&#x914D;&#x7F6E;&#x4E3B;&#x9898;&#x4E3A;minos
+</code></pre><h3 id="3-1-2-&#x4E3B;&#x9898;&#x914D;&#x7F6E;"><a href="#3-1-2-&#x4E3B;&#x9898;&#x914D;&#x7F6E;" class="headerlink" title="3.1.2 &#x4E3B;&#x9898;&#x914D;&#x7F6E;"></a>3.1.2 &#x4E3B;&#x9898;&#x914D;&#x7F6E;</h3><pre><code>#&#x914D;&#x7F6E;&#x4E3B;&#x9898;&#x4E3A;minos
 theme: minos
-</code></pre></li>
-<li><p>3.url&#x914D;&#x7F6E;</p>
-<pre><code>#&#x914D;&#x7F6E;&#x81EA;&#x5DF1;&#x7684;&#x9759;&#x6001;&#x7F51;&#x7AD9;&#x90E8;&#x7F72;&#x5730;&#x5740;
+</code></pre><h3 id="3-1-3-url&#x914D;&#x7F6E;"><a href="#3-1-3-url&#x914D;&#x7F6E;" class="headerlink" title="3.1.3 url&#x914D;&#x7F6E;"></a>3.1.3 url&#x914D;&#x7F6E;</h3><pre><code>#&#x914D;&#x7F6E;&#x81EA;&#x5DF1;&#x7684;&#x9759;&#x6001;&#x7F51;&#x7AD9;&#x90E8;&#x7F72;&#x5730;&#x5740;
 url: https://zendwind.github.io
-</code></pre></li>
-<li><p>4.deploy&#x914D;&#x7F6E;</p>
-<pre><code>deploy:
-#&#x914D;&#x7F6E;git&#x90E8;&#x7F72;&#x6A21;&#x5F0F;
-type: git
-repo: https://github.com/zendwind/zendwind.github.io.git
-branch: master
-</code></pre></li>
-</ul>
-<h2 id="3-2-&#x4E3B;&#x9898;&#x914D;&#x7F6E;"><a href="#3-2-&#x4E3B;&#x9898;&#x914D;&#x7F6E;" class="headerlink" title="3.2 &#x4E3B;&#x9898;&#x914D;&#x7F6E;"></a>3.2 &#x4E3B;&#x9898;&#x914D;&#x7F6E;</h2><p>&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x8BED;&#x7CFB;&#x65B9;&#x9762;&#xFF0C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;:</p>
-<ul>
-<li>1.&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x751F;&#x6210;<pre><code>cd test/themes/minos
+</code></pre><h3 id="3-1-4-deploy&#x914D;&#x7F6E;"><a href="#3-1-4-deploy&#x914D;&#x7F6E;" class="headerlink" title="3.1.4 deploy&#x914D;&#x7F6E;"></a>3.1.4 deploy&#x914D;&#x7F6E;</h3><pre><code>deploy:
+  #&#x914D;&#x7F6E;git&#x90E8;&#x7F72;&#x6A21;&#x5F0F;
+  type: git
+  repo: https://github.com/zendwind/zendwind.github.io.git
+  branch: master
+</code></pre><h2 id="3-2-&#x4E3B;&#x9898;&#x914D;&#x7F6E;"><a href="#3-2-&#x4E3B;&#x9898;&#x914D;&#x7F6E;" class="headerlink" title="3.2 &#x4E3B;&#x9898;&#x914D;&#x7F6E;"></a>3.2 &#x4E3B;&#x9898;&#x914D;&#x7F6E;</h2><p>&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x8BED;&#x7CFB;&#x65B9;&#x9762;&#xFF0C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;:</p>
+<h3 id="3-2-1-&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x751F;&#x6210;"><a href="#3-2-1-&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x751F;&#x6210;" class="headerlink" title="3.2.1 &#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x751F;&#x6210;"></a>3.2.1 &#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x751F;&#x6210;</h3><pre><code>cd test/themes/minos
 #&#x9ED8;&#x8BA4;&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x540D;&#x79F0;&#x4E3A;_config.yml.example
 rsync -av _config.yml.example _config.yml
 #&#x751F;&#x6210;&#x82F1;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;
 rsync -av _config.yml.example _config.en.yml
 #&#x751F;&#x6210;&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;
 rsync -av _config.yml.example _config.zh-cn.yml
-</code></pre></li>
-<li>2.&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;<ul>
-<li>&#x82F1;&#x6587;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;: _config.en.yml<pre><code>menu:
+</code></pre><h3 id="3-2-2-&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"><a href="#3-2-2-&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;" class="headerlink" title="3.2.2 &#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"></a>3.2.2 &#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;</h3><ul>
+<li><strong>&#x82F1;&#x6587;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;: _config.en.yml</strong><pre><code>menu:
 Archives: /archives
 Categories: /categories
 Tags: /tags
 About: /about
-</code></pre><ul>
-<li>&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;: _config.zh-cn.yml</li>
-</ul>
-</li>
-</ul>
-</li>
+</code></pre></li>
+<li><strong>&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;: _config.zh-cn.yml</strong></li>
 </ul>
 <pre><code>menu:
   &#x5F52;&#x6863;: /zh-cn/zh-cn/archives  #&#x8FD9;&#x91CC;&#x662F;&#x4E2A;bug, &#x5982;&#x679C;&#x4E0D;&#x52A0;&#x53CC;&#x5C42;zh-cn&#x540E;&#x9762;&#x65E0;&#x6CD5;&#x5B9A;&#x4F4D;&#x5230;archives&#x76EE;&#x5F55;
@@ -355,17 +385,15 @@ source
 &#x2514;&#x2500;&#x2500; _posts
     &#x2514;&#x2500;&#x2500; hello-world.md
 </code></pre><p>&#x5728;&#x7AD9;&#x70B9;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;source&#x76EE;&#x5F55;&#xFF0C;&#x540C;&#x65F6;&#x91CC;&#x9762;&#x53C8;&#x6709;&#x4E00;&#x4E2A;_post&#x5B50;&#x76EE;&#x5F55;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;hello-world.md&#x7684;&#x6587;&#x6863;&#x3002;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x7AD9;&#x70B9;&#x7684;&#x9ED8;&#x8BA4;&#x8BED;&#x7CFB;&#x662F;English, &#x6240;&#x4EE5;&#x5728;<code>_post</code>&#x76EE;&#x5F55;&#x4E0B;&#x5B58;&#x653E;&#x7684;&#x5C31;&#x662F;&#x82F1;&#x6587;&#x6587;&#x6863;&#x3002;</p>
-<ul>
-<li><p>1.source/_post&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;<br>&#x5728;<code>source/_posts</code>&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x65B0;&#x589E;&#x4E00;&#x4E2A;zh-cn&#x7684;&#x76EE;&#x5F55;&#xFF0C;&#x4E13;&#x95E8;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x3002;&#x5728;zh-cn&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x547D;&#x540D;&#x4E3A;<code>hello-wolrd-cn.md</code>&#x3002;&#x6B64;&#x65F6;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x5982;&#x4E0B;:</p>
+<h3 id="3-3-1-source-post&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;"><a href="#3-3-1-source-post&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;" class="headerlink" title="3.3.1 source/_post&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;"></a>3.3.1 source/_post&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;</h3><p>&#x5728;<code>source/_posts</code>&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x65B0;&#x589E;&#x4E00;&#x4E2A;zh-cn&#x7684;&#x76EE;&#x5F55;&#xFF0C;&#x4E13;&#x95E8;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x3002;&#x5728;zh-cn&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x547D;&#x540D;&#x4E3A;<code>hello-wolrd-cn.md</code>&#x3002;&#x6B64;&#x65F6;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x5982;&#x4E0B;:</p>
 <pre><code>.
 source
 &#x2514;&#x2500;&#x2500; _posts
-  &#x251C;&#x2500;&#x2500; hello-world.md
-  &#x2514;&#x2500;&#x2500; zh-cn
-      &#x2514;&#x2500;&#x2500; hello-world-cn.md
-</code></pre></li>
-<li><ol>
-<li>source&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;<br>&#x5728;_post&#x589E;&#x52A0;&#x5B8C;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x76EE;&#x5F55;&#x540E;&#xFF0C;&#x5728;source&#x76EE;&#x5F55;&#x76F4;&#x63A5;&#x518D;&#x65B0;&#x589E;&#x4E00;&#x4E2A;<code>zh-cn</code>&#x76EE;&#x5F55;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x5176;&#x5B83;&#x4E00;&#x4E9B;&#x4E2D;&#x6587;&#x6587;&#x6863;,&#x3000;&#x5982;<code>about</code>&#x4E4B;&#x7C7B;&#x7684;&#x3002;&#x540C;&#x65F6;&#x5728;source&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;&#x4E00;&#x4E2A;<code>about</code>&#x76EE;&#x5F55;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x82F1;&#x6587;&#x7684;about&#x6587;&#x6863;&#xFF0C;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x5982;&#x4E0B;:<pre><code>source
+    &#x251C;&#x2500;&#x2500; hello-world.md
+    &#x2514;&#x2500;&#x2500; zh-cn
+        &#x2514;&#x2500;&#x2500; hello-world-cn.md
+</code></pre><h3 id="3-3-2-source&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;"><a href="#3-3-2-source&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;" class="headerlink" title="3.3.2 source&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;"></a>3.3.2 source&#x76EE;&#x5F55;&#x6587;&#x6863;&#x914D;&#x7F6E;</h3><p>&#x5728;_post&#x589E;&#x52A0;&#x5B8C;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x76EE;&#x5F55;&#x540E;&#xFF0C;&#x5728;source&#x76EE;&#x5F55;&#x76F4;&#x63A5;&#x518D;&#x65B0;&#x589E;&#x4E00;&#x4E2A;<code>zh-cn</code>&#x76EE;&#x5F55;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x5176;&#x5B83;&#x4E00;&#x4E9B;&#x4E2D;&#x6587;&#x6587;&#x6863;,&#x3000;&#x5982;<code>about</code>&#x4E4B;&#x7C7B;&#x7684;&#x3002;&#x540C;&#x65F6;&#x5728;source&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;&#x4E00;&#x4E2A;<code>about</code>&#x76EE;&#x5F55;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x82F1;&#x6587;&#x7684;about&#x6587;&#x6863;&#xFF0C;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x5982;&#x4E0B;:</p>
+<pre><code>source
 &#x251C;&#x2500;&#x2500; _posts
 &#x2502;   &#x251C;&#x2500;&#x2500; hello-world.md
 &#x2502;   &#x2514;&#x2500;&#x2500; zh-cn
@@ -373,91 +401,84 @@ source
 &#x251C;&#x2500;&#x2500; about
 &#x2502;   &#x2514;&#x2500;&#x2500; index.md
 &#x2514;&#x2500;&#x2500; zh-cn
-&#x2514;&#x2500;&#x2500; about
-   &#x2514;&#x2500;&#x2500; index.md
-</code></pre>&#x5173;&#x4E8E;<code>about</code>&#x4E2D;&#x7684;<code>index.md</code>, &#x5176;&#x5185;&#x5BB9;&#x5982;&#x4E0B;:</li>
-</ol>
-</li>
-</ul>
+    &#x2514;&#x2500;&#x2500; about
+        &#x2514;&#x2500;&#x2500; index.md
+</code></pre><p>&#x5173;&#x4E8E;<code>about</code>&#x4E2D;&#x7684;<code>index.md</code>, &#x5176;&#x5185;&#x5BB9;&#x5982;&#x4E0B;:</p>
 <ul>
-<li><strong>&#x82F1;&#x6587;&#x8BED;&#x7CFB;</strong><br>```bash  source/about/index.md</li>
+<li><strong>&#x82F1;&#x6587;&#x8BED;&#x7CFB;</strong><br>```</li>
 </ul>
 <hr>
 <p>layout: &#x201C;about&#x201D;<br>title: &#x2018;About Me&#x2019;</p>
 <h2 id="date-2020-04-24-10-00-00"><a href="#date-2020-04-24-10-00-00" class="headerlink" title="date: 2020-04-24 10:00:00"></a>date: 2020-04-24 10:00:00</h2><pre><code>
 * __&#x4E2D;&#x6587;&#x8BED;&#x7CFB;__
-```bash source/zh-cn/about/index.md
----
-layout: &quot;about&quot;
-title: &apos;&#x5173;&#x4E8E;&#x6211;&apos;
-date: 2020-04-26 10:00:00
---
+</code></pre><hr>
+<p>layout: &#x201C;about&#x201D;<br>title: &#x2018;&#x5173;&#x4E8E;&#x6211;&#x2019;</p>
+<h2 id="date-2020-04-26-10-00-00"><a href="#date-2020-04-26-10-00-00" class="headerlink" title="date: 2020-04-26 10:00:00"></a>date: 2020-04-26 10:00:00</h2><p>&#x6D4B;&#x8BD5;About&#x9875;&#x9762;</p>
+<pre><code>Test About Page
+&#x8FD9;&#x6837;&#x521D;&#x6B65;&#x5B8C;&#x6210;&#x7AD9;&#x70B9;&#x6587;&#x6863;&#x7684;&#x76EE;&#x5F55;&#x8BBE;&#x7F6E;&#x3002;
 
-&#x6D4B;&#x8BD5;About&#x9875;&#x9762;
-</code></pre><p>Test About Page<br>&#x8FD9;&#x6837;&#x521D;&#x6B65;&#x5B8C;&#x6210;&#x7AD9;&#x70B9;&#x6587;&#x6863;&#x7684;&#x76EE;&#x5F55;&#x8BBE;&#x7F6E;&#x3002;</p>
-<ul>
-<li><ol>
-<li>&#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;<br>&#x6B64;&#x6B65;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x4E0B;&#x811A;&#x672C;&#xFF0C;&#x628A;&#x8BED;&#x7CFB;&#x76F8;&#x5173;&#x4EE3;&#x7801;&#x8C03;&#x6574;&#x5230;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x5728;<code>themes/minos/layout/common/footer.ejs</code>&#x811A;&#x672C;&#x4E2D;&#xFF0C;&#x627E;&#x5230;:<pre><code>&lt;%- partial(&apos;common/languages&apos;) %&gt;
-</code></pre>&#x628A;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x526A;&#x5207;&#x5230;<code>themes/minos/layout/common/navbar.ejs</code>&#x7684;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF08;75&#x884C;&#xFF09;,&#x3000;&#x5982;&#x4E0B;&#xFF1A;</li>
-</ol>
-</li>
-</ul>
-<pre><code>            &lt;% } %&gt;
 
-            &lt;%- partial(&apos;common/languages&apos;) %&gt;
-        &lt;/div&gt;
+### 3.3.3 &#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;
+&#x6B64;&#x6B65;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x4E0B;&#x811A;&#x672C;&#xFF0C;&#x628A;&#x8BED;&#x7CFB;&#x76F8;&#x5173;&#x4EE3;&#x7801;&#x8C03;&#x6574;&#x5230;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x5728;`themes/minos/layout/common/footer.ejs`&#x811A;&#x672C;&#x4E2D;&#xFF0C;&#x627E;&#x5230;:
+</code></pre><p>&lt;%- partial(&#x2018;common/languages&#x2019;) %&gt;</p>
+<pre><code>&#x628A;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x526A;&#x5207;&#x5230;`themes/minos/layout/common/navbar.ejs`&#x7684;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF08;75&#x884C;&#xFF09;,&#x3000;&#x5982;&#x4E0B;&#xFF1A;
+</code></pre><pre><code>        &lt;% } %&gt;
+
+        &lt;%- partial(&apos;common/languages&apos;) %&gt;
     &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p></p>
+<pre><code>
+&#x540C;&#x65F6;&#x627E;&#x5230;`themes/minos/layout/common/languages.ejs`, &#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x9879;`style=&quot;top:100%&quot;` &#x5230;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x4E2D;:
+</code></pre><p><div class="dropdown-menu has-text-left" role="menu" style="top:100%"></div></p>
+<pre><code>
+## 3.4 &#x67E5;&#x770B;&#x6548;&#x679C;
 
-&lt;/nav&gt;
-</code></pre><p>&#x540C;&#x65F6;&#x627E;&#x5230;<code>themes/minos/layout/common/languages.ejs</code>, &#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x9879;<code>style=&quot;top:100%&quot;</code> &#x5230;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x4E2D;:</p>
-<pre><code>&lt;div class=&quot;dropdown-menu has-text-left&quot; role=&quot;menu&quot; style=&quot;top:100%&quot;&gt;
-</code></pre><h2 id="3-4-&#x67E5;&#x770B;&#x6548;&#x679C;"><a href="#3-4-&#x67E5;&#x770B;&#x6548;&#x679C;" class="headerlink" title="3.4 &#x67E5;&#x770B;&#x6548;&#x679C;"></a>3.4 &#x67E5;&#x770B;&#x6548;&#x679C;</h2><ul>
-<li><ol>
-<li>&#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;<pre><code>cd hexo_blog
-hexo g
-</code></pre></li>
-</ol>
-</li>
-<li><ol>
-<li>&#x672C;&#x5730;&#x6D4B;&#x8BD5;<pre><code>cd hexo_blog
-hexo s
-</code></pre>&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x67E5;&#x770B;localhost:4000&#x7F51;&#x9875;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x3002;</li>
-</ol>
-</li>
-</ul>
-<p>&#x6253;&#x5F00;&#x9ED8;&#x8BA4;&#x7684;&#x82F1;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:<br><a href="hexo-multi-lang-deploy/hexo_english.png">hexo-english</a><br><a href="hexo-multi-lang-deploy/hexo_about_en.png">hexo-about-en</a></p>
-<p>&#x5207;&#x6362;&#x5230;&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:<br><a href="hexo-multi-lang-deploy/hexo_zh.png">hexo-zh</a><br><a href="hexo-multi-lang-deploy/hexo_about_zh.png">hexo-about-zh</a></p>
-<h2 id="3-5-&#x90E8;&#x7F72;&#x5230;github"><a href="#3-5-&#x90E8;&#x7F72;&#x5230;github" class="headerlink" title="3.5 &#x90E8;&#x7F72;&#x5230;github"></a>3.5 &#x90E8;&#x7F72;&#x5230;github</h2><p>&#x5982;&#x679C;&#x67E5;&#x770B;&#x6548;&#x679C;ok, &#x53EF;&#x4EE5;&#x628A;&#x7AD9;&#x70B9;&#x90E8;&#x7F72;&#x5230;github&#x4E0A;&#xFF0C;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;:</p>
-<pre><code>hexo d -g
-</code></pre><p>&#x5907;&#x6CE8;&#xFF1A;&#x5728;&#x90E8;&#x7F72;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;&#x521B;&#x5EFA;&#x597D;&#x7AD9;&#x70B9;&#x4ED3;&#x5E93;&#xFF08;&#x5728;&#x914D;&#x7F6E;&#x4E2D;&#x6307;&#x5B9A;&#x7684;repo&#xFF09;&#xFF0C;&#x3000;&#x5982;<a href="https://github.com/zendwind/zendwind.github.io.git&#x3002;" target="_blank" rel="external">https://github.com/zendwind/zendwind.github.io.git&#x3002;</a></p>
-<p>&#x7136;&#x540E;&#x901A;&#x8FC7;zendwind.github.io&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7AD9;&#x70B9;&#xFF0C;&#x770B;&#x662F;&#x5426;ok&#x3002;</p>
-<h1 id="4-&#x5176;&#x5B83;&#x529F;&#x80FD;"><a href="#4-&#x5176;&#x5B83;&#x529F;&#x80FD;" class="headerlink" title="4. &#x5176;&#x5B83;&#x529F;&#x80FD;"></a>4. &#x5176;&#x5B83;&#x529F;&#x80FD;</h1><p>&#x5982;&#x679C;&#x8981;&#x4E3A;&#x4F60;&#x535A;&#x5BA2;&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x3001;&#x6DFB;&#x52A0;&#x8BA1;&#x6570;&#x53CA;&#x5206;&#x4EAB;&#x529F;&#x80FD;&#xFF0C;&#x5728;hexo&#x4E2D;&#x4E5F;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x3002;</p>
-<h2 id="4-1-&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;"><a href="#4-1-&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;" class="headerlink" title="4.1 &#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;"></a>4.1 &#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;</h2><p>&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4E3B;&#x6D41;&#x7684;&#x6709;&#x4E24;&#x79CD;&#xFF1A;</p>
-<ul>
-<li><strong>&#x56FD;&#x5916;</strong>: Disqus, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x5F88;&#x6162;</li>
-<li><strong>&#x56FD;&#x5185;</strong>: Valine, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x6BD4;&#x8F83;&#x5FEB;<br>&#x672C;&#x6587;&#x91C7;&#x7528;Valine&#x6A21;&#x5F0F;&#x6765;&#x8BBE;&#x7F6E;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;&#xFF0C;Valine&#x5DF2;&#x548C;LeanCloud&#x6253;&#x901A;&#xFF0C;&#x5373;&#x8BC4;&#x8BBA;&#x6570;&#x636E;&#x53EF;&#x653E;&#x5728;LeanCloud&#x5B58;&#x50A8;&#xFF0C;&#x4E14;&#x662F;&#x514D;&#x8D39;&#x7684;&#xFF0C;&#x65B9;&#x4FBF;&#x5E7F;&#x5927;&#x521D;&#x5B66;&#x8005;&#x5B66;&#x4E60;&#x4F7F;&#x7528;&#x3002;&#x8BBE;&#x7F6E;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</li>
-<li><ol>
-<li>&#x521B;&#x5EFA;&#x5E94;&#x7528;<br>&#x767B;&#x5F55;leancloud.com&#x5B98;&#x7F51;&#xFF0C;&#x6CE8;&#x518C;&#x8D26;&#x53F7;,&#x3000;&#x767B;&#x5F55;&#x540E;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>&#x5F00;&#x53D1;&#x7248;</code>&#x5E94;&#x7528;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:<br><a href="hexo-multi-lang-deploy/leancloud_create_app.png">leancloud-create-app</a></li>
-</ol>
-</li>
-<li><ol>
-<li>&#x67E5;&#x770B;&#x5E94;&#x7528;app_id&#x548C;app_key</li>
-</ol>
-</li>
-</ul>
-<p><a href="hexo-multi-lang-deploy/leancloud_app_info.png">leancloud-app-info</a></p>
-<ul>
-<li>3.&#x914D;&#x7F6E;&#x5E94;&#x7528;key<br>&#x5728;&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x4E2D;&#x914D;&#x7F6E;comment&#xFF1A;<code>_config.en.yml &#x548C;_config.zh-cn.yml</code><pre><code class="bash">comments:
-type: valine
-app_id: xxx #replace your app id
-app_key: xxx # replace your app key
-</code></pre>
-</li>
-<li><ol>
-<li>&#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment<br>&#x5728;&#x6587;&#x6863;&#x5F00;&#x5934;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>comments: false</code>&#x6765;&#x5173;&#x95ED;&#x6587;&#x7AE0;&#x8BC4;&#x8BBA;</li>
-</ol>
-</li>
-</ul>
+### 3.4.1 &#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;
+</code></pre><p>cd hexo_blog<br>hexo g</p>
+<pre><code>### 3.4.2 &#x672C;&#x5730;&#x6D4B;&#x8BD5;
+</code></pre><p>cd hexo_blog<br>hexo s</p>
+<pre><code>&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x67E5;&#x770B;localhost:4000&#x7F51;&#x9875;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x3002;
+
+&#x6253;&#x5F00;&#x9ED8;&#x8BA4;&#x7684;&#x82F1;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:
+[hexo-english][1]
+[hexo-about-en][2]
+
+&#x5207;&#x6362;&#x5230;&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:
+[hexo-zh][3]
+[hexo-about-zh][4]
+
+## 3.5 &#x90E8;&#x7F72;&#x5230;github
+&#x5982;&#x679C;&#x67E5;&#x770B;&#x6548;&#x679C;ok, &#x53EF;&#x4EE5;&#x628A;&#x7AD9;&#x70B9;&#x90E8;&#x7F72;&#x5230;github&#x4E0A;&#xFF0C;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;:
+</code></pre><p>hexo d -g</p>
+<pre><code>
+&#x5907;&#x6CE8;&#xFF1A;&#x5728;&#x90E8;&#x7F72;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;&#x521B;&#x5EFA;&#x597D;&#x7AD9;&#x70B9;&#x4ED3;&#x5E93;&#xFF08;&#x5728;&#x914D;&#x7F6E;&#x4E2D;&#x6307;&#x5B9A;&#x7684;repo&#xFF09;&#xFF0C;&#x3000;&#x5982;https://github.com/zendwind/zendwind.github.io.git&#x3002;
+
+&#x7136;&#x540E;&#x901A;&#x8FC7;zendwind.github.io&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7AD9;&#x70B9;&#xFF0C;&#x770B;&#x662F;&#x5426;ok&#x3002;
+
+# 4. &#x5176;&#x5B83;&#x529F;&#x80FD;
+&#x5982;&#x679C;&#x8981;&#x4E3A;&#x4F60;&#x535A;&#x5BA2;&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x3001;&#x6DFB;&#x52A0;&#x8BA1;&#x6570;&#x53CA;&#x5206;&#x4EAB;&#x529F;&#x80FD;&#xFF0C;&#x5728;hexo&#x4E2D;&#x4E5F;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x3002;
+## 4.1 &#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;
+&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4E3B;&#x6D41;&#x7684;&#x6709;&#x4E24;&#x79CD;&#xFF1A;
+- __&#x56FD;&#x5916;__: Disqus, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x5F88;&#x6162;
+- __&#x56FD;&#x5185;__: Valine, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x6BD4;&#x8F83;&#x5FEB;
+&#x672C;&#x6587;&#x91C7;&#x7528;Valine&#x6A21;&#x5F0F;&#x6765;&#x8BBE;&#x7F6E;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;&#xFF0C;Valine&#x5DF2;&#x548C;LeanCloud&#x6253;&#x901A;&#xFF0C;&#x5373;&#x8BC4;&#x8BBA;&#x6570;&#x636E;&#x53EF;&#x653E;&#x5728;LeanCloud&#x5B58;&#x50A8;&#xFF0C;&#x4E14;&#x662F;&#x514D;&#x8D39;&#x7684;&#xFF0C;&#x65B9;&#x4FBF;&#x5E7F;&#x5927;&#x521D;&#x5B66;&#x8005;&#x5B66;&#x4E60;&#x4F7F;&#x7528;&#x3002;&#x8BBE;&#x7F6E;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;
+### 4.1.1 &#x521B;&#x5EFA;&#x5E94;&#x7528;
+&#x767B;&#x5F55;leancloud.com&#x5B98;&#x7F51;&#xFF0C;&#x6CE8;&#x518C;&#x8D26;&#x53F7;,&#x3000;&#x767B;&#x5F55;&#x540E;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;`&#x5F00;&#x53D1;&#x7248;`&#x5E94;&#x7528;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:
+[leancloud-create-app][5]
+
+### 4.1.2 &#x67E5;&#x770B;&#x5E94;&#x7528;app_id&#x548C;app_key
+
+[leancloud-app-info][6]
+
+### 4.1.3 &#x914D;&#x7F6E;&#x5E94;&#x7528;key
+&#x5728;&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x4E2D;&#x914D;&#x7F6E;comment&#xFF1A;`_config.en.yml &#x548C;_config.zh-cn.yml`
+```bash
+comments:
+  type: valine
+  app_id: xxx #replace your app id
+  app_key: xxx # replace your app key
+</code></pre><h3 id="4-1-4-&#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment"><a href="#4-1-4-&#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment" class="headerlink" title="4.1.4 &#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment"></a>4.1.4 &#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment</h3><p>&#x5728;&#x6587;&#x6863;&#x5F00;&#x5934;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>comments: false</code>&#x6765;&#x5173;&#x95ED;&#x6587;&#x7AE0;&#x8BC4;&#x8BBA;</p>
 <p>&#x8BC4;&#x8BBA;&#x6548;&#x679C;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;:<br><a href="hexo-multi-lang-deploy/leancloud_comment.png">leancloud-comment</a></p>
 <h2 id="4-2-&#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;"><a href="#4-2-&#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;" class="headerlink" title="4.2 &#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;"></a>4.2 &#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;</h2><p>&#x4E00;&#x822C;&#x6709;&#x4E24;&#x79CD;&#x6A21;&#x5F0F;&#xFF1A;</p>
 <ul>
@@ -465,44 +486,29 @@ app_key: xxx # replace your app key
 <li><strong>&#x4E0D;&#x849C;&#x5B50;&#x6A21;&#x5F0F;</strong>: &#x7B80;&#x5355;&#xFF0C;&#x76F4;&#x63A5;&#x96C6;&#x6210;&#x811A;&#x672C;&#x5373;&#x53EF;&#x3002;</li>
 </ul>
 <p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x7528;&#x4E0D;&#x849C;&#x5B50;&#x6A21;&#x5F0F;&#x6765;&#x7EDF;&#x8BA1;&#x8BBF;&#x95EE;&#x91CF;&#xFF0C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</p>
-<ul>
-<li><ol>
-<li>&#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;: <code>_config.en.yml&#x548C;_config.zh-cn.yml</code><pre><code>article:
-#&#x589E;&#x52A0;&#x4E00;&#x4E2A;pageview&#x53D8;&#x91CF;&#xFF0C;&#x7528;&#x6765;&#x63A7;&#x5236;&#x662F;&#x5426;&#x663E;&#x793A;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;
-pageview: true
-</code></pre></li>
-</ol>
-</li>
-<li><ol>
-<li>&#x589E;&#x52A0;busuanzi&#x811A;&#x672C;<br>&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;<code>themes/minos/layout/common/head.ejs</code>, &#x5728;&#x6700;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;<pre><code>&lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
-&lt;script async=&quot;&quot; src=&quot;//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;
+<h3 id="4-2-1-&#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;-config-en-yml&#x548C;-config-zh-cn-yml"><a href="#4-2-1-&#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;-config-en-yml&#x548C;-config-zh-cn-yml" class="headerlink" title="4.2.1 &#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;: _config.en.yml&#x548C;_config.zh-cn.yml"></a>4.2.1 &#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;: <code>_config.en.yml&#x548C;_config.zh-cn.yml</code></h3><pre><code>article:
+  #&#x589E;&#x52A0;&#x4E00;&#x4E2A;pageview&#x53D8;&#x91CF;&#xFF0C;&#x7528;&#x6765;&#x63A7;&#x5236;&#x662F;&#x5426;&#x663E;&#x793A;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;
+  pageview: true
+</code></pre><h3 id="4-2-2-&#x589E;&#x52A0;busuanzi&#x811A;&#x672C;"><a href="#4-2-2-&#x589E;&#x52A0;busuanzi&#x811A;&#x672C;" class="headerlink" title="4.2.2 &#x589E;&#x52A0;busuanzi&#x811A;&#x672C;"></a>4.2.2 &#x589E;&#x52A0;busuanzi&#x811A;&#x672C;</h3><p>&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;<code>themes/minos/layout/common/head.ejs</code>, &#x5728;&#x6700;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code>&lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
+  &lt;script async=&quot;&quot; src=&quot;//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;
 &lt;% } %&gt;
-</code></pre></li>
-</ol>
-</li>
-<li><ol>
-<li><p>&#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;<br>&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;<code>themes/minos/layout/common/article.ejs</code>, &#x5728;&#x5408;&#x9002;&#x4F4D;&#x7F6E;(&#x7B2C;28&#x884C;&#x540E;&#xFF09;&#xFF0C;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+</code></pre><h3 id="4-2-3-&#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;"><a href="#4-2-3-&#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;" class="headerlink" title="4.2.3 &#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;"></a>4.2.3 &#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;</h3><p>&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;<code>themes/minos/layout/common/article.ejs</code>, &#x5728;&#x5408;&#x9002;&#x4F4D;&#x7F6E;(&#x7B2C;28&#x884C;&#x540E;&#xFF09;&#xFF0C;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
 <pre><code>
-   &lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
-   &lt;span class=&quot;column is-narrow&quot; id=&quot;busuanzi_value_page_pv&quot;&gt;0&lt;/span&gt;
-   &lt;span class=&quot;column is-narror&quot;&gt; &lt;%=`${ __(&apos;article.vistor&apos;) }` %&gt;&lt;/span&gt;
-   &lt;% } %&gt;
+        &lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
+        &lt;span class=&quot;column is-narrow&quot; id=&quot;busuanzi_value_page_pv&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;column is-narror&quot;&gt; &lt;%=`${ __(&apos;article.vistor&apos;) }` %&gt;&lt;/span&gt;
+        &lt;% } %&gt;
+</code></pre><h3 id="4-2-4-&#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"><a href="#4-2-4-&#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;" class="headerlink" title="4.2.4 &#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"></a>4.2.4 &#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;</h3><p>&#x5728;<code>themes/minos/languages</code>&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x5206;&#x522B;&#x4FEE;&#x6539;<code>en.yml</code>&#x548C;<code>zh-cn.yml</code>,&#x589E;&#x52A0;&#x4E24;&#x4E2A;&#x5BF9;&#x5E94;&#x9879;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:</p>
+<ul>
+<li><strong>en.yml</strong><pre><code>article:
+  vistor: PageView
 </code></pre></li>
-</ol>
-</li>
-<li><p>4.&#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;<br>&#x5728;<code>themes/minos/languages</code>&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x5206;&#x522B;&#x4FEE;&#x6539;<code>en.yml</code>&#x548C;<code>zh-cn.yml</code>,&#x589E;&#x52A0;&#x4E24;&#x4E2A;&#x5BF9;&#x5E94;&#x9879;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:</p>
-</li>
+<li><strong>zh-cn.yml</strong><pre><code>article:
+  vistor: &#x9605;&#x8BFB;&#x91CF;
+</code></pre></li>
 </ul>
-<p>```yaml en.yml<br>article:<br>    vistor: PageView</p>
-<pre><code>```yaml zh-cn.yml
-article:
-    vistor: &#x9605;&#x8BFB;&#x91CF;
-</code></pre><ul>
-<li><ol>
-<li>&#x67E5;&#x770B;&#x6548;&#x679C;<br>&#x6DFB;&#x52A0;&#x5B8C;&#x540E;&#xFF0C;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;&#x622A;&#x56FE;&#x663E;&#x793A;&#xFF0C;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#xFF1A;<br><a href="hexo-multi-lang-deploy/busuanzi_pageview.png">article-pageview</a></li>
-</ol>
-</li>
-</ul>
+<h3 id="4-2-5-&#x67E5;&#x770B;&#x6548;&#x679C;"><a href="#4-2-5-&#x67E5;&#x770B;&#x6548;&#x679C;" class="headerlink" title="4.2.5 &#x67E5;&#x770B;&#x6548;&#x679C;"></a>4.2.5 &#x67E5;&#x770B;&#x6548;&#x679C;</h3><p>&#x6DFB;&#x52A0;&#x5B8C;&#x540E;&#xFF0C;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;&#x622A;&#x56FE;&#x663E;&#x793A;&#xFF0C;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#xFF1A;<br><a href="hexo-multi-lang-deploy/busuanzi_pageview.png">article-pageview</a></p>
 <h1 id="5-&#x603B;&#x7ED3;"><a href="#5-&#x603B;&#x7ED3;" class="headerlink" title="5.&#x603B;&#x7ED3;"></a>5.&#x603B;&#x7ED3;</h1><p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x63CF;&#x8FF0;&#x4E86;&#x5173;&#x4E8E;Hexo&#x5982;&#x4F55;&#x642D;&#x5EFA;&#x591A;&#x8BED;&#x7CFB;&#x65B9;&#x9762;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x540C;&#x65F6;&#x7ED3;&#x5408;&#x5F88;&#x5E38;&#x89C1;&#x7684;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#x5C55;&#x5F00;&#x4E86;&#x4ECB;&#x7ECD;&#xFF0C;&#x5E0C;&#x671B;&#x5927;&#x5BB6;&#x80FD;&#x4ECE;&#x672C;&#x6587;&#x4E2D;&#x83B7;&#x5F97;&#x4E00;&#x4E9B;&#x5E2E;&#x52A9;&#x3002;</p>
 
     
