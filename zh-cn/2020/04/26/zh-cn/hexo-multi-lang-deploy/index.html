@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
 <meta property="og:description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x4E24;&amp;#x5929;&amp;#x6298;&amp;#x817E;&amp;#x4E86;&amp;#x5173;&amp;#x4E8E;Hexo&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x535A;&amp;#x5BA2;&amp;#x642D;&amp;#x5EFA;&amp;#x7684;&amp;#x4E8B;&amp;#x9879;&amp;#xFF0C;&amp;#x7F51;&amp;#x4E0A;&amp;#x6709;&amp;#x5F88;&amp;#x5">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-27T16:48:59.596Z">
+<meta property="og:updated_time" content="2020-04-27T16:50:51.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="　如何实现Hexo多语系博客搭建">
 <meta name="twitter:description" content="&amp;#x6700;&amp;#x8FD1;&amp;#x4E24;&amp;#x5929;&amp;#x6298;&amp;#x817E;&amp;#x4E86;&amp;#x5173;&amp;#x4E8E;Hexo&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x535A;&amp;#x5BA2;&amp;#x642D;&amp;#x5EFA;&amp;#x7684;&amp;#x4E8B;&amp;#x9879;&amp;#xFF0C;&amp;#x7F51;&amp;#x4E0A;&amp;#x6709;&amp;#x5F88;&amp;#x5">
@@ -193,21 +193,79 @@
                     
                     
                     
-                    <a class="navbar-item" href="#date-2020-04-24-10-00-00">3.4&nbsp;&nbsp;date: 2020-04-24 10:00:00</a>
+                    <a class="navbar-item" href="#3-3-3-&amp;#x589E;&amp;#x52A0;&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x5207;&amp;#x6362;&amp;#x914D;&amp;#x7F6E;">3.3.3&nbsp;&nbsp;3.3.3 &amp;amp;#x589E;&amp;amp;#x52A0;&amp;amp;#x591A;&amp;amp;#x8BED;&amp;amp;#x7CFB;&amp;amp;#x5207;&amp;amp;#x6362;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
                     
                     
                     
-                    <a class="navbar-item" href="#date-2020-04-26-10-00-00">3.5&nbsp;&nbsp;date: 2020-04-26 10:00:00</a>
+                    <a class="navbar-item" href="#3-4-&amp;#x67E5;&amp;#x770B;&amp;#x6548;&amp;#x679C;">3.4&nbsp;&nbsp;3.4 &amp;amp;#x67E5;&amp;amp;#x770B;&amp;amp;#x6548;&amp;amp;#x679C;</a>
                     
                     
                     
-                    <a class="navbar-item" href="#4-2-5-&amp;#x67E5;&amp;#x770B;&amp;#x6548;&amp;#x679C;">3.5.1&nbsp;&nbsp;4.2.5 &amp;amp;#x67E5;&amp;amp;#x770B;&amp;amp;#x6548;&amp;amp;#x679C;</a>
+                    <a class="navbar-item" href="#3-4-1-&amp;#x7F16;&amp;#x8BD1;&amp;#x9759;&amp;#x6001;&amp;#x6587;&amp;#x4EF6;">3.4.1&nbsp;&nbsp;3.4.1 &amp;amp;#x7F16;&amp;amp;#x8BD1;&amp;amp;#x9759;&amp;amp;#x6001;&amp;amp;#x6587;&amp;amp;#x4EF6;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-4-2-&amp;#x672C;&amp;#x5730;&amp;#x6D4B;&amp;#x8BD5;">3.4.2&nbsp;&nbsp;3.4.2 &amp;amp;#x672C;&amp;amp;#x5730;&amp;amp;#x6D4B;&amp;amp;#x8BD5;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-5-&amp;#x90E8;&amp;#x7F72;&amp;#x5230;github">3.5&nbsp;&nbsp;3.5 &amp;amp;#x90E8;&amp;amp;#x7F72;&amp;amp;#x5230;github</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#5-&amp;#x603B;&amp;#x7ED3;">4&nbsp;&nbsp;<b>5.&amp;amp;#x603B;&amp;amp;#x7ED3;</b></a>
+                    <a class="navbar-item" href="#4-&amp;#x5176;&amp;#x5B83;&amp;#x529F;&amp;#x80FD;">4&nbsp;&nbsp;<b>4. &amp;amp;#x5176;&amp;amp;#x5B83;&amp;amp;#x529F;&amp;amp;#x80FD;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-1-&amp;#x6DFB;&amp;#x52A0;&amp;#x8BC4;&amp;#x8BBA;&amp;#x529F;&amp;#x80FD;">4.1&nbsp;&nbsp;4.1 &amp;amp;#x6DFB;&amp;amp;#x52A0;&amp;amp;#x8BC4;&amp;amp;#x8BBA;&amp;amp;#x529F;&amp;amp;#x80FD;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-1-1-&amp;#x521B;&amp;#x5EFA;&amp;#x5E94;&amp;#x7528;">4.1.1&nbsp;&nbsp;4.1.1 &amp;amp;#x521B;&amp;amp;#x5EFA;&amp;amp;#x5E94;&amp;amp;#x7528;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-1-2-&amp;#x67E5;&amp;#x770B;&amp;#x5E94;&amp;#x7528;app-id&amp;#x548C;app-key">4.1.2&nbsp;&nbsp;4.1.2 &amp;amp;#x67E5;&amp;amp;#x770B;&amp;amp;#x5E94;&amp;amp;#x7528;app_id&amp;amp;#x548C;app_key</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-1-3-&amp;#x914D;&amp;#x7F6E;&amp;#x5E94;&amp;#x7528;key">4.1.3&nbsp;&nbsp;4.1.3 &amp;amp;#x914D;&amp;amp;#x7F6E;&amp;amp;#x5E94;&amp;amp;#x7528;key</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-1-4-&amp;#x6587;&amp;#x7AE0;&amp;#x5F00;&amp;#x542F;comment&amp;#x6216;&amp;#x5173;&amp;#x95ED;comment">4.1.4&nbsp;&nbsp;4.1.4 &amp;amp;#x6587;&amp;amp;#x7AE0;&amp;amp;#x5F00;&amp;amp;#x542F;comment&amp;amp;#x6216;&amp;amp;#x5173;&amp;amp;#x95ED;comment</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-&amp;#x6DFB;&amp;#x52A0;&amp;#x6587;&amp;#x7AE0;&amp;#x8BBF;&amp;#x95EE;&amp;#x91CF;&amp;#x53CA;&amp;#x7AD9;&amp;#x70B9;&amp;#x8BBF;&amp;#x95EE;&amp;#x7EDF;&amp;#x8BA1;&amp;#x529F;&amp;#x80FD;">4.2&nbsp;&nbsp;4.2 &amp;amp;#x6DFB;&amp;amp;#x52A0;&amp;amp;#x6587;&amp;amp;#x7AE0;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x91CF;&amp;amp;#x53CA;&amp;amp;#x7AD9;&amp;amp;#x70B9;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x7EDF;&amp;amp;#x8BA1;&amp;amp;#x529F;&amp;amp;#x80FD;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-1-&amp;#x4FEE;&amp;#x6539;&amp;#x4E3B;&amp;#x9898;&amp;#x914D;&amp;#x7F6E;-config-en-yml&amp;#x548C;-config-zh-cn-yml">4.2.1&nbsp;&nbsp;4.2.1 &amp;amp;#x4FEE;&amp;amp;#x6539;&amp;amp;#x4E3B;&amp;amp;#x9898;&amp;amp;#x914D;&amp;amp;#x7F6E;: _config.en.yml&amp;amp;#x548C;_config.zh-cn.yml</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-2-&amp;#x589E;&amp;#x52A0;busuanzi&amp;#x811A;&amp;#x672C;">4.2.2&nbsp;&nbsp;4.2.2 &amp;amp;#x589E;&amp;amp;#x52A0;busuanzi&amp;amp;#x811A;&amp;amp;#x672C;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-3-&amp;#x589E;&amp;#x52A0;&amp;#x8BBF;&amp;#x95EE;&amp;#x91CF;&amp;#x7EDF;&amp;#x8BA1;">4.2.3&nbsp;&nbsp;4.2.3 &amp;amp;#x589E;&amp;amp;#x52A0;&amp;amp;#x8BBF;&amp;amp;#x95EE;&amp;amp;#x91CF;&amp;amp;#x7EDF;&amp;amp;#x8BA1;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-4-&amp;#x4FEE;&amp;#x6539;&amp;#x591A;&amp;#x8BED;&amp;#x7CFB;&amp;#x914D;&amp;#x7F6E;">4.2.4&nbsp;&nbsp;4.2.4 &amp;amp;#x4FEE;&amp;amp;#x6539;&amp;amp;#x591A;&amp;amp;#x8BED;&amp;amp;#x7CFB;&amp;amp;#x914D;&amp;amp;#x7F6E;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#4-2-5-&amp;#x67E5;&amp;#x770B;&amp;#x6548;&amp;#x679C;">4.2.5&nbsp;&nbsp;4.2.5 &amp;amp;#x67E5;&amp;amp;#x770B;&amp;amp;#x6548;&amp;amp;#x679C;</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#5-&amp;#x603B;&amp;#x7ED3;">5&nbsp;&nbsp;<b>5.&amp;amp;#x603B;&amp;amp;#x7ED3;</b></a>
                     
                 </div>
             </div>
@@ -381,106 +439,89 @@ source
         &#x2514;&#x2500;&#x2500; index.md
 </code></pre><p>&#x5173;&#x4E8E;<code>about</code>&#x4E2D;&#x7684;<code>index.md</code>, &#x5176;&#x5185;&#x5BB9;&#x5982;&#x4E0B;:</p>
 <ul>
-<li><strong>&#x82F1;&#x6587;&#x8BED;&#x7CFB;</strong><br>```</li>
+<li><strong>&#x82F1;&#x6587;&#x8BED;&#x7CFB;</strong></li>
 </ul>
-<hr>
-<p>layout: &#x201C;about&#x201D;<br>title: &#x2018;About Me&#x2019;</p>
-<h2 id="date-2020-04-24-10-00-00"><a href="#date-2020-04-24-10-00-00" class="headerlink" title="date: 2020-04-24 10:00:00"></a>date: 2020-04-24 10:00:00</h2><pre><code>
-* __&#x4E2D;&#x6587;&#x8BED;&#x7CFB;__
-</code></pre><hr>
-<p>layout: &#x201C;about&#x201D;<br>title: &#x2018;&#x5173;&#x4E8E;&#x6211;&#x2019;</p>
-<h2 id="date-2020-04-26-10-00-00"><a href="#date-2020-04-26-10-00-00" class="headerlink" title="date: 2020-04-26 10:00:00"></a>date: 2020-04-26 10:00:00</h2><p>&#x6D4B;&#x8BD5;About&#x9875;&#x9762;</p>
-<pre><code>Test About Page
-&#x8FD9;&#x6837;&#x521D;&#x6B65;&#x5B8C;&#x6210;&#x7AD9;&#x70B9;&#x6587;&#x6863;&#x7684;&#x76EE;&#x5F55;&#x8BBE;&#x7F6E;&#x3002;
+<pre><code>---
+layout: &quot;about&quot;
+title: &apos;About Me&apos;
+date: 2020-04-24 10:00:00
+---
+</code></pre><ul>
+<li><strong>&#x4E2D;&#x6587;&#x8BED;&#x7CFB;</strong></li>
+</ul>
+<pre><code>---
+layout: &quot;about&quot;
+title: &apos;&#x5173;&#x4E8E;&#x6211;&apos;
+date: 2020-04-26 10:00:00
+--
 
+&#x6D4B;&#x8BD5;About&#x9875;&#x9762;
+</code></pre><p>Test About Page<br>&#x8FD9;&#x6837;&#x521D;&#x6B65;&#x5B8C;&#x6210;&#x7AD9;&#x70B9;&#x6587;&#x6863;&#x7684;&#x76EE;&#x5F55;&#x8BBE;&#x7F6E;&#x3002;</p>
+<h3 id="3-3-3-&#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;"><a href="#3-3-3-&#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;" class="headerlink" title="3.3.3 &#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;"></a>3.3.3 &#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;</h3><p>&#x6B64;&#x6B65;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x4E0B;&#x811A;&#x672C;&#xFF0C;&#x628A;&#x8BED;&#x7CFB;&#x76F8;&#x5173;&#x4EE3;&#x7801;&#x8C03;&#x6574;&#x5230;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x5728;<code>themes/minos/layout/common/footer.ejs</code>&#x811A;&#x672C;&#x4E2D;&#xFF0C;&#x627E;&#x5230;:</p>
+<pre><code>&lt;%- partial(&apos;common/languages&apos;) %&gt;
+</code></pre><p>&#x628A;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x526A;&#x5207;&#x5230;<code>themes/minos/layout/common/navbar.ejs</code>&#x7684;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF08;75&#x884C;&#xFF09;,&#x3000;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>            &lt;% } %&gt;
 
-### 3.3.3 &#x589E;&#x52A0;&#x591A;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x914D;&#x7F6E;
-&#x6B64;&#x6B65;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x4E0B;&#x811A;&#x672C;&#xFF0C;&#x628A;&#x8BED;&#x7CFB;&#x76F8;&#x5173;&#x4EE3;&#x7801;&#x8C03;&#x6574;&#x5230;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x5728;`themes/minos/layout/common/footer.ejs`&#x811A;&#x672C;&#x4E2D;&#xFF0C;&#x627E;&#x5230;:
-</code></pre><p>&lt;%- partial(&#x2018;common/languages&#x2019;) %&gt;</p>
-<pre><code>&#x628A;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x526A;&#x5207;&#x5230;`themes/minos/layout/common/navbar.ejs`&#x7684;&#x5408;&#x9002;&#x4F4D;&#x7F6E;&#xFF08;75&#x884C;&#xFF09;,&#x3000;&#x5982;&#x4E0B;&#xFF1A;
-</code></pre><pre><code>        &lt;% } %&gt;
-
-        &lt;%- partial(&apos;common/languages&apos;) %&gt;
+            &lt;%- partial(&apos;common/languages&apos;) %&gt;
+        &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-</code></pre><p></p>
+
+&lt;/nav&gt;
+</code></pre><p>&#x540C;&#x65F6;&#x627E;&#x5230;<code>themes/minos/layout/common/languages.ejs</code>, &#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x9879;<code>style=&quot;top:100%&quot;</code> &#x5230;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x4E2D;:</p>
+<pre><code>&lt;div class=&quot;dropdown-menu has-text-left&quot; role=&quot;menu&quot; style=&quot;top:100%&quot;&gt;
+</code></pre><h2 id="3-4-&#x67E5;&#x770B;&#x6548;&#x679C;"><a href="#3-4-&#x67E5;&#x770B;&#x6548;&#x679C;" class="headerlink" title="3.4 &#x67E5;&#x770B;&#x6548;&#x679C;"></a>3.4 &#x67E5;&#x770B;&#x6548;&#x679C;</h2><h3 id="3-4-1-&#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;"><a href="#3-4-1-&#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;" class="headerlink" title="3.4.1 &#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;"></a>3.4.1 &#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;</h3><pre><code>cd hexo_blog
+hexo g
+</code></pre><h3 id="3-4-2-&#x672C;&#x5730;&#x6D4B;&#x8BD5;"><a href="#3-4-2-&#x672C;&#x5730;&#x6D4B;&#x8BD5;" class="headerlink" title="3.4.2 &#x672C;&#x5730;&#x6D4B;&#x8BD5;"></a>3.4.2 &#x672C;&#x5730;&#x6D4B;&#x8BD5;</h3><pre><code>cd hexo_blog
+hexo s
+</code></pre><p>&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x67E5;&#x770B;localhost:4000&#x7F51;&#x9875;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x3002;</p>
+<p>&#x6253;&#x5F00;&#x9ED8;&#x8BA4;&#x7684;&#x82F1;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:<br><a href="hexo_english.png">hexo-english</a><br><a href="hexo_about_en.png">hexo-about-en</a></p>
+<p>&#x5207;&#x6362;&#x5230;&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:<br><a href="hexo_zh.png">hexo-zh</a><br><a href="hexo_about_zh.png">hexo-about-zh</a></p>
+<h2 id="3-5-&#x90E8;&#x7F72;&#x5230;github"><a href="#3-5-&#x90E8;&#x7F72;&#x5230;github" class="headerlink" title="3.5 &#x90E8;&#x7F72;&#x5230;github"></a>3.5 &#x90E8;&#x7F72;&#x5230;github</h2><p>&#x5982;&#x679C;&#x67E5;&#x770B;&#x6548;&#x679C;ok, &#x53EF;&#x4EE5;&#x628A;&#x7AD9;&#x70B9;&#x90E8;&#x7F72;&#x5230;github&#x4E0A;&#xFF0C;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;:</p>
+<pre><code>hexo d -g
+</code></pre><p>&#x5907;&#x6CE8;&#xFF1A;&#x5728;&#x90E8;&#x7F72;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;&#x521B;&#x5EFA;&#x597D;&#x7AD9;&#x70B9;&#x4ED3;&#x5E93;&#xFF08;&#x5728;&#x914D;&#x7F6E;&#x4E2D;&#x6307;&#x5B9A;&#x7684;repo&#xFF09;&#xFF0C;&#x3000;&#x5982;<a href="https://github.com/zendwind/zendwind.github.io.git&#x3002;" target="_blank" rel="external">https://github.com/zendwind/zendwind.github.io.git&#x3002;</a></p>
+<p>&#x7136;&#x540E;&#x901A;&#x8FC7;zendwind.github.io&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7AD9;&#x70B9;&#xFF0C;&#x770B;&#x662F;&#x5426;ok&#x3002;</p>
+<h1 id="4-&#x5176;&#x5B83;&#x529F;&#x80FD;"><a href="#4-&#x5176;&#x5B83;&#x529F;&#x80FD;" class="headerlink" title="4. &#x5176;&#x5B83;&#x529F;&#x80FD;"></a>4. &#x5176;&#x5B83;&#x529F;&#x80FD;</h1><p>&#x5982;&#x679C;&#x8981;&#x4E3A;&#x4F60;&#x535A;&#x5BA2;&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x3001;&#x6DFB;&#x52A0;&#x8BA1;&#x6570;&#x53CA;&#x5206;&#x4EAB;&#x529F;&#x80FD;&#xFF0C;&#x5728;hexo&#x4E2D;&#x4E5F;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x3002;</p>
+<h2 id="4-1-&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;"><a href="#4-1-&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;" class="headerlink" title="4.1 &#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;"></a>4.1 &#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;</h2><p>&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4E3B;&#x6D41;&#x7684;&#x6709;&#x4E24;&#x79CD;&#xFF1A;</p>
+<ul>
+<li><strong>&#x56FD;&#x5916;</strong>: Disqus, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x5F88;&#x6162;</li>
+<li><strong>&#x56FD;&#x5185;</strong>: Valine, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x6BD4;&#x8F83;&#x5FEB;<br>&#x672C;&#x6587;&#x91C7;&#x7528;Valine&#x6A21;&#x5F0F;&#x6765;&#x8BBE;&#x7F6E;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;&#xFF0C;Valine&#x5DF2;&#x548C;LeanCloud&#x6253;&#x901A;&#xFF0C;&#x5373;&#x8BC4;&#x8BBA;&#x6570;&#x636E;&#x53EF;&#x653E;&#x5728;LeanCloud&#x5B58;&#x50A8;&#xFF0C;&#x4E14;&#x662F;&#x514D;&#x8D39;&#x7684;&#xFF0C;&#x65B9;&#x4FBF;&#x5E7F;&#x5927;&#x521D;&#x5B66;&#x8005;&#x5B66;&#x4E60;&#x4F7F;&#x7528;&#x3002;&#x8BBE;&#x7F6E;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;<h3 id="4-1-1-&#x521B;&#x5EFA;&#x5E94;&#x7528;"><a href="#4-1-1-&#x521B;&#x5EFA;&#x5E94;&#x7528;" class="headerlink" title="4.1.1 &#x521B;&#x5EFA;&#x5E94;&#x7528;"></a>4.1.1 &#x521B;&#x5EFA;&#x5E94;&#x7528;</h3>&#x767B;&#x5F55;leancloud.com&#x5B98;&#x7F51;&#xFF0C;&#x6CE8;&#x518C;&#x8D26;&#x53F7;,&#x3000;&#x767B;&#x5F55;&#x540E;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>&#x5F00;&#x53D1;&#x7248;</code>&#x5E94;&#x7528;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:<br><a href="leancloud_create_app.png">leancloud-create-app</a></li>
+</ul>
+<h3 id="4-1-2-&#x67E5;&#x770B;&#x5E94;&#x7528;app-id&#x548C;app-key"><a href="#4-1-2-&#x67E5;&#x770B;&#x5E94;&#x7528;app-id&#x548C;app-key" class="headerlink" title="4.1.2 &#x67E5;&#x770B;&#x5E94;&#x7528;app_id&#x548C;app_key"></a>4.1.2 &#x67E5;&#x770B;&#x5E94;&#x7528;app_id&#x548C;app_key</h3><p><a href="leancloud_app_info.png">leancloud-app-info</a></p>
+<h3 id="4-1-3-&#x914D;&#x7F6E;&#x5E94;&#x7528;key"><a href="#4-1-3-&#x914D;&#x7F6E;&#x5E94;&#x7528;key" class="headerlink" title="4.1.3 &#x914D;&#x7F6E;&#x5E94;&#x7528;key"></a>4.1.3 &#x914D;&#x7F6E;&#x5E94;&#x7528;key</h3><p>&#x5728;&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x4E2D;&#x914D;&#x7F6E;comment&#xFF1A;<code>_config.en.yml &#x548C;_config.zh-cn.yml</code></p>
+<pre><code>comments:
+  type: valine
+  app_id: xxx #replace your app id
+  app_key: xxx # replace your app key
+</code></pre><h3 id="4-1-4-&#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment"><a href="#4-1-4-&#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment" class="headerlink" title="4.1.4 &#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment"></a>4.1.4 &#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment</h3><p>&#x5728;&#x6587;&#x6863;&#x5F00;&#x5934;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>comments: false</code>&#x6765;&#x5173;&#x95ED;&#x6587;&#x7AE0;&#x8BC4;&#x8BBA;</p>
+<p>&#x8BC4;&#x8BBA;&#x6548;&#x679C;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;:<br><a href="leancloud_comment.png">leancloud-comment</a></p>
+<h2 id="4-2-&#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;"><a href="#4-2-&#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;" class="headerlink" title="4.2 &#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;"></a>4.2 &#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;</h2><p>&#x4E00;&#x822C;&#x6709;&#x4E24;&#x79CD;&#x6A21;&#x5F0F;&#xFF1A;</p>
+<ul>
+<li><strong>Valine&#x6A21;&#x5F0F;</strong>: &#x96C6;&#x6210;Vistor&#x7EDF;&#x8BA1;&#x529F;&#x80FD;&#xFF0C;&#x4E0E;leancloud&#x6253;&#x901A;&#xFF0C;&#x628A;&#x7EDF;&#x8BA1;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5230;leancloud</li>
+<li><strong>&#x4E0D;&#x849C;&#x5B50;&#x6A21;&#x5F0F;</strong>: &#x7B80;&#x5355;&#xFF0C;&#x76F4;&#x63A5;&#x96C6;&#x6210;&#x811A;&#x672C;&#x5373;&#x53EF;&#x3002;</li>
+</ul>
+<p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x7528;&#x4E0D;&#x849C;&#x5B50;&#x6A21;&#x5F0F;&#x6765;&#x7EDF;&#x8BA1;&#x8BBF;&#x95EE;&#x91CF;&#xFF0C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<h3 id="4-2-1-&#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;-config-en-yml&#x548C;-config-zh-cn-yml"><a href="#4-2-1-&#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;-config-en-yml&#x548C;-config-zh-cn-yml" class="headerlink" title="4.2.1 &#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;: _config.en.yml&#x548C;_config.zh-cn.yml"></a>4.2.1 &#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;: <code>_config.en.yml&#x548C;_config.zh-cn.yml</code></h3><pre><code>article:
+  #&#x589E;&#x52A0;&#x4E00;&#x4E2A;pageview&#x53D8;&#x91CF;&#xFF0C;&#x7528;&#x6765;&#x63A7;&#x5236;&#x662F;&#x5426;&#x663E;&#x793A;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;
+  pageview: true
+</code></pre><h3 id="4-2-2-&#x589E;&#x52A0;busuanzi&#x811A;&#x672C;"><a href="#4-2-2-&#x589E;&#x52A0;busuanzi&#x811A;&#x672C;" class="headerlink" title="4.2.2 &#x589E;&#x52A0;busuanzi&#x811A;&#x672C;"></a>4.2.2 &#x589E;&#x52A0;busuanzi&#x811A;&#x672C;</h3><p>&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;<code>themes/minos/layout/common/head.ejs</code>, &#x5728;&#x6700;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code>&lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
+  &lt;script async=&quot;&quot; src=&quot;//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;
+&lt;% } %&gt;
+</code></pre><h3 id="4-2-3-&#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;"><a href="#4-2-3-&#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;" class="headerlink" title="4.2.3 &#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;"></a>4.2.3 &#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;</h3><p>&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;<code>themes/minos/layout/common/article.ejs</code>, &#x5728;&#x5408;&#x9002;&#x4F4D;&#x7F6E;(&#x7B2C;28&#x884C;&#x540E;&#xFF09;&#xFF0C;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
 <pre><code>
-&#x540C;&#x65F6;&#x627E;&#x5230;`themes/minos/layout/common/languages.ejs`, &#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x9879;`style=&quot;top:100%&quot;` &#x5230;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x4E2D;:
-</code></pre><p><div class="dropdown-menu has-text-left" role="menu" style="top:100%"></div></p>
-<pre><code>
-## 3.4 &#x67E5;&#x770B;&#x6548;&#x679C;
-
-### 3.4.1 &#x7F16;&#x8BD1;&#x9759;&#x6001;&#x6587;&#x4EF6;
-</code></pre><p>cd hexo_blog<br>hexo g</p>
-<pre><code>### 3.4.2 &#x672C;&#x5730;&#x6D4B;&#x8BD5;
-</code></pre><p>cd hexo_blog<br>hexo s</p>
-<pre><code>&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x67E5;&#x770B;localhost:4000&#x7F51;&#x9875;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x3002;
-
-&#x6253;&#x5F00;&#x9ED8;&#x8BA4;&#x7684;&#x82F1;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:
-[hexo-english][1]
-[hexo-about-en][2]
-
-&#x5207;&#x6362;&#x5230;&#x4E2D;&#x6587;&#x8BED;&#x7CFB;&#x7AD9;&#x70B9;&#x6D4B;&#x8BD5;&#x6548;&#x679C;&#x5982;&#x4E0B;:
-[hexo-zh][3]
-[hexo-about-zh][4]
-
-## 3.5 &#x90E8;&#x7F72;&#x5230;github
-&#x5982;&#x679C;&#x67E5;&#x770B;&#x6548;&#x679C;ok, &#x53EF;&#x4EE5;&#x628A;&#x7AD9;&#x70B9;&#x90E8;&#x7F72;&#x5230;github&#x4E0A;&#xFF0C;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;:
-</code></pre><p>hexo d -g</p>
-<pre><code>
-&#x5907;&#x6CE8;&#xFF1A;&#x5728;&#x90E8;&#x7F72;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;&#x521B;&#x5EFA;&#x597D;&#x7AD9;&#x70B9;&#x4ED3;&#x5E93;&#xFF08;&#x5728;&#x914D;&#x7F6E;&#x4E2D;&#x6307;&#x5B9A;&#x7684;repo&#xFF09;&#xFF0C;&#x3000;&#x5982;https://github.com/zendwind/zendwind.github.io.git&#x3002;
-
-&#x7136;&#x540E;&#x901A;&#x8FC7;zendwind.github.io&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7AD9;&#x70B9;&#xFF0C;&#x770B;&#x662F;&#x5426;ok&#x3002;
-
-# 4. &#x5176;&#x5B83;&#x529F;&#x80FD;
-&#x5982;&#x679C;&#x8981;&#x4E3A;&#x4F60;&#x535A;&#x5BA2;&#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x3001;&#x6DFB;&#x52A0;&#x8BA1;&#x6570;&#x53CA;&#x5206;&#x4EAB;&#x529F;&#x80FD;&#xFF0C;&#x5728;hexo&#x4E2D;&#x4E5F;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x3002;
-## 4.1 &#x6DFB;&#x52A0;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;
-&#x8BC4;&#x8BBA;&#x7CFB;&#x7EDF;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4E3B;&#x6D41;&#x7684;&#x6709;&#x4E24;&#x79CD;&#xFF1A;
-- __&#x56FD;&#x5916;__: Disqus, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x5F88;&#x6162;
-- __&#x56FD;&#x5185;__: Valine, &#x8FD9;&#x4E2A;&#x5728;&#x56FD;&#x5185;&#x8BBF;&#x95EE;&#x6BD4;&#x8F83;&#x5FEB;
-&#x672C;&#x6587;&#x91C7;&#x7528;Valine&#x6A21;&#x5F0F;&#x6765;&#x8BBE;&#x7F6E;&#x8BC4;&#x8BBA;&#x529F;&#x80FD;&#xFF0C;Valine&#x5DF2;&#x548C;LeanCloud&#x6253;&#x901A;&#xFF0C;&#x5373;&#x8BC4;&#x8BBA;&#x6570;&#x636E;&#x53EF;&#x653E;&#x5728;LeanCloud&#x5B58;&#x50A8;&#xFF0C;&#x4E14;&#x662F;&#x514D;&#x8D39;&#x7684;&#xFF0C;&#x65B9;&#x4FBF;&#x5E7F;&#x5927;&#x521D;&#x5B66;&#x8005;&#x5B66;&#x4E60;&#x4F7F;&#x7528;&#x3002;&#x8BBE;&#x7F6E;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;
-### 4.1.1 &#x521B;&#x5EFA;&#x5E94;&#x7528;
-&#x767B;&#x5F55;leancloud.com&#x5B98;&#x7F51;&#xFF0C;&#x6CE8;&#x518C;&#x8D26;&#x53F7;,&#x3000;&#x767B;&#x5F55;&#x540E;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;`&#x5F00;&#x53D1;&#x7248;`&#x5E94;&#x7528;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:
-[leancloud-create-app][5]
-
-### 4.1.2 &#x67E5;&#x770B;&#x5E94;&#x7528;app_id&#x548C;app_key
-
-[leancloud-app-info][6]
-
-### 4.1.3 &#x914D;&#x7F6E;&#x5E94;&#x7528;key
-&#x5728;&#x4E3B;&#x9898;&#x914D;&#x7F6E;&#x4E2D;&#x914D;&#x7F6E;comment&#xFF1A;`_config.en.yml &#x548C;_config.zh-cn.yml`
-</code></pre><p>comments:<br>  type: valine<br>  app_id: xxx #replace your app id<br>  app_key: xxx # replace your app key</p>
-<pre><code>### 4.1.4 &#x6587;&#x7AE0;&#x5F00;&#x542F;comment&#x6216;&#x5173;&#x95ED;comment
-&#x5728;&#x6587;&#x6863;&#x5F00;&#x5934;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;`comments: false`&#x6765;&#x5173;&#x95ED;&#x6587;&#x7AE0;&#x8BC4;&#x8BBA;
-
-&#x8BC4;&#x8BBA;&#x6548;&#x679C;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;:
-[leancloud-comment][7]
-## 4.2 &#x6DFB;&#x52A0;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#x53CA;&#x7AD9;&#x70B9;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;
-&#x4E00;&#x822C;&#x6709;&#x4E24;&#x79CD;&#x6A21;&#x5F0F;&#xFF1A;
-- __Valine&#x6A21;&#x5F0F;__: &#x96C6;&#x6210;Vistor&#x7EDF;&#x8BA1;&#x529F;&#x80FD;&#xFF0C;&#x4E0E;leancloud&#x6253;&#x901A;&#xFF0C;&#x628A;&#x7EDF;&#x8BA1;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5230;leancloud
-- __&#x4E0D;&#x849C;&#x5B50;&#x6A21;&#x5F0F;__: &#x7B80;&#x5355;&#xFF0C;&#x76F4;&#x63A5;&#x96C6;&#x6210;&#x811A;&#x672C;&#x5373;&#x53EF;&#x3002;
-
-&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x7528;&#x4E0D;&#x849C;&#x5B50;&#x6A21;&#x5F0F;&#x6765;&#x7EDF;&#x8BA1;&#x8BBF;&#x95EE;&#x91CF;&#xFF0C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;
-### 4.2.1 &#x4FEE;&#x6539;&#x4E3B;&#x9898;&#x914D;&#x7F6E;: `_config.en.yml&#x548C;_config.zh-cn.yml`
-</code></pre><p>article:</p>
-<p>  #&#x589E;&#x52A0;&#x4E00;&#x4E2A;pageview&#x53D8;&#x91CF;&#xFF0C;&#x7528;&#x6765;&#x63A7;&#x5236;&#x662F;&#x5426;&#x663E;&#x793A;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;<br>  pageview: true</p>
-<pre><code>
-### 4.2.2 &#x589E;&#x52A0;busuanzi&#x811A;&#x672C;
-&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;`themes/minos/layout/common/head.ejs`, &#x5728;&#x6700;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;
-</code></pre><p>&lt;% if (!has_config(&#x2018;article.pageview&#x2019;) || get_config(&#x2018;article.pageview&#x2019;) === true) { %&gt;<br>  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><br>&lt;% } %&gt;</p>
-<pre><code>### 4.2.3 &#x589E;&#x52A0;&#x8BBF;&#x95EE;&#x91CF;&#x7EDF;&#x8BA1;
-&#x5728;&#x4E3B;&#x9898;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x627E;&#x5230;`themes/minos/layout/common/article.ejs`, &#x5728;&#x5408;&#x9002;&#x4F4D;&#x7F6E;(&#x7B2C;28&#x884C;&#x540E;&#xFF09;&#xFF0C;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;
-</code></pre><pre><code>    &lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
-    &lt;span class=&quot;column is-narrow&quot; id=&quot;busuanzi_value_page_pv&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;column is-narror&quot;&gt; &lt;%=`${ __(&apos;article.vistor&apos;) }` %&gt;&lt;/span&gt;
-    &lt;% } %&gt;
-</code></pre><pre><code>
-### 4.2.4 &#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;
-&#x5728;`themes/minos/languages`&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x5206;&#x522B;&#x4FEE;&#x6539;`en.yml`&#x548C;`zh-cn.yml`,&#x589E;&#x52A0;&#x4E24;&#x4E2A;&#x5BF9;&#x5E94;&#x9879;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:
-- __en.yml__
-</code></pre><p>article:<br>    vistor: PageView</p>
-<pre><code>- __zh-cn.yml__
-</code></pre><p>article:<br>    vistor: &#x9605;&#x8BFB;&#x91CF;<br>```</p>
+        &lt;% if (!has_config(&apos;article.pageview&apos;) || get_config(&apos;article.pageview&apos;) === true) { %&gt;
+        &lt;span class=&quot;column is-narrow&quot; id=&quot;busuanzi_value_page_pv&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;column is-narror&quot;&gt; &lt;%=`${ __(&apos;article.vistor&apos;) }` %&gt;&lt;/span&gt;
+        &lt;% } %&gt;
+</code></pre><h3 id="4-2-4-&#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"><a href="#4-2-4-&#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;" class="headerlink" title="4.2.4 &#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;"></a>4.2.4 &#x4FEE;&#x6539;&#x591A;&#x8BED;&#x7CFB;&#x914D;&#x7F6E;</h3><p>&#x5728;<code>themes/minos/languages</code>&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x5206;&#x522B;&#x4FEE;&#x6539;<code>en.yml</code>&#x548C;<code>zh-cn.yml</code>,&#x589E;&#x52A0;&#x4E24;&#x4E2A;&#x5BF9;&#x5E94;&#x9879;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:</p>
+<ul>
+<li><strong>en.yml</strong><pre><code>article:
+  vistor: PageView
+</code></pre></li>
+<li><strong>zh-cn.yml</strong><pre><code>article:
+  vistor: &#x9605;&#x8BFB;&#x91CF;
+</code></pre></li>
+</ul>
 <h3 id="4-2-5-&#x67E5;&#x770B;&#x6548;&#x679C;"><a href="#4-2-5-&#x67E5;&#x770B;&#x6548;&#x679C;" class="headerlink" title="4.2.5 &#x67E5;&#x770B;&#x6548;&#x679C;"></a>4.2.5 &#x67E5;&#x770B;&#x6548;&#x679C;</h3><p>&#x6DFB;&#x52A0;&#x5B8C;&#x540E;&#xFF0C;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;&#x622A;&#x56FE;&#x663E;&#x793A;&#xFF0C;&#x6587;&#x7AE0;&#x8BBF;&#x95EE;&#x91CF;&#xFF1A;<br><a href="busuanzi_pageview.png">article-pageview</a></p>
 <h1 id="5-&#x603B;&#x7ED3;"><a href="#5-&#x603B;&#x7ED3;" class="headerlink" title="5.&#x603B;&#x7ED3;"></a>5.&#x603B;&#x7ED3;</h1><p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x63CF;&#x8FF0;&#x4E86;&#x5173;&#x4E8E;Hexo&#x5982;&#x4F55;&#x642D;&#x5EFA;&#x591A;&#x8BED;&#x7CFB;&#x65B9;&#x9762;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x540C;&#x65F6;&#x7ED3;&#x5408;&#x5F88;&#x5E38;&#x89C1;&#x7684;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#x5C55;&#x5F00;&#x4E86;&#x4ECB;&#x7ECD;&#xFF0C;&#x5E0C;&#x671B;&#x5927;&#x5BB6;&#x80FD;&#x4ECE;&#x672C;&#x6587;&#x4E2D;&#x83B7;&#x5F97;&#x4E00;&#x4E9B;&#x5E2E;&#x52A9;&#x3002;</p>
 
