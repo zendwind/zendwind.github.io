@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
 <meta property="og:description" content="If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machin">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-28T03:38:41.449Z">
+<meta property="og:updated_time" content="2020-04-28T03:40:58.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Multiple  Python Versions Management">
 <meta name="twitter:description" content="If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machin">
@@ -134,10 +134,20 @@
                     <a class="navbar-item" href="#2-2-Python-3-6-Installation">2.2&nbsp;&nbsp;2.2 Python 3.6 Installation</a>
                     
                     
+                    
+                    <a class="navbar-item" href="#2-3-Virtualenv-Installation">2.3&nbsp;&nbsp;2.3 Virtualenv Installation</a>
+                    
+                    
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#Summary">3&nbsp;&nbsp;<b>Summary</b></a>
+                    <a class="navbar-item" href="#Experience">3&nbsp;&nbsp;<b>Experience</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Summary">4&nbsp;&nbsp;<b>Summary</b></a>
                     
                 </div>
             </div>
@@ -230,32 +240,55 @@
 <h1 id="2-Installation"><a href="#2-Installation" class="headerlink" title="2. Installation"></a>2. Installation</h1><h2 id="2-1-Python-2-7-5-Installation"><a href="#2-1-Python-2-7-5-Installation" class="headerlink" title="2.1 Python 2.7.5 Installation"></a>2.1 Python 2.7.5 Installation</h2><p>For Centos7, the default Python version is 2.7.5, so here we don&#x2019;t need to install it.</p>
 <h2 id="2-2-Python-3-6-Installation"><a href="#2-2-Python-3-6-Installation" class="headerlink" title="2.2 Python 3.6 Installation"></a>2.2 Python 3.6 Installation</h2><ul>
 <li><strong>Download</strong><br>Download Python3.6 from <a href="https://www.python.org/downloads/release/python-360/" target="_blank" rel="external">Official Website</a>, and upload package to your target machine.</li>
-<li><strong>Compile</strong><br>```<br>./configure  &#x2013;prefix=/data/python3.6<br>make &amp;&amp; make install</li>
+<li><strong>Compile</strong></li>
 </ul>
-<p>#load library, add python3.6 library into /etc/ld.so.conf<br>echo &#x201C;/data/python3.6/lib&#x201D; &gt;&gt;/etc/ld.so.conf</p>
-<p>#load library again<br>ldconfig</p>
-<pre><code>
-## 2.3 Virtualenv Installation
-Virtualenv is a very popular component for managing multi-version environment. You can refer to detail infos from [virtualenv](https://virtualenv.pypa.io/en/latest/).
+<pre><code>./configure  --prefix=/data/python3.6
+make &amp;&amp; make install
 
-- __Installation__
-</code></pre><p>#install<br>pip install virtualenv</p>
-<pre><code>- __Env Config__
-</code></pre><p>#define env<br>mkdir /root/pyenv</p>
-<p>cd /root/pyenv</p>
-<p>virtualenv &#x2013;python /usr/bin/python py2env<br>virtualenv &#x2013;python /data/python3.6/bin/python3 py3env</p>
-<pre><code>
-- __Alias Config__
-If you want to switch the virtual env quickly, the following alias config is convenient for you:
-</code></pre><p>#make alias in /root/.bashrc<br>alias  py3env=&#x2019;source /root/pyenv/py3env/bin/activate&#x2019;<br>alias  py2env=&#x2019;source /root/pyenv/py2env/bin/activate&#x2019;</p>
-<p>#make it work<br>source ~/.bashrc</p>
-<pre><code># Experience
-Now you can use `py3env` or `py2env` to activate the related Python version. And if you want to exit current environment, you can execute `deactivate`  command.
-</code></pre><p>#switch to Python 2.7 environment<br>[root@VM_0_14_centos ~]# py27env</p>
-<p>#exit Python 2.7<br>(py27env) [root@VM_0_14_centos ~]# deactivate</p>
-<p>#switch to Python 3.6 environment<br>[root@VM_0_14_centos ~]# py36env</p>
-<p>#exit Python3.6<br>(py36env) [root@VM_0_14_centos ~]# deactivate<br>[root@VM_0_14_centos ~]#<br><code>``
-If your project is based on Python 3.6, please shift  the</code>py36env<code>environment, and install dependencies with</code>pip`.</p>
+#load library, add python3.6 library into /etc/ld.so.conf
+echo &quot;/data/python3.6/lib&quot; &gt;&gt;/etc/ld.so.conf
+
+#load library again
+ldconfig
+</code></pre><h2 id="2-3-Virtualenv-Installation"><a href="#2-3-Virtualenv-Installation" class="headerlink" title="2.3 Virtualenv Installation"></a>2.3 Virtualenv Installation</h2><p>Virtualenv is a very popular component for managing multi-version environment. You can refer to detail infos from <a href="https://virtualenv.pypa.io/en/latest/" target="_blank" rel="external">virtualenv</a>.</p>
+<ul>
+<li><strong>Installation</strong></li>
+</ul>
+<pre><code>#install
+pip install virtualenv
+</code></pre><ul>
+<li><strong>Env Config</strong></li>
+</ul>
+<pre><code>#define env
+mkdir /root/pyenv
+
+cd /root/pyenv
+
+virtualenv --python /usr/bin/python py2env
+virtualenv --python /data/python3.6/bin/python3 py3env
+</code></pre><ul>
+<li><strong>Alias Config</strong><br>If you want to switch the virtual env quickly, the following alias config is convenient for you:</li>
+</ul>
+<pre><code>#make alias in /root/.bashrc
+alias  py3env=&apos;source /root/pyenv/py3env/bin/activate&apos;
+alias  py2env=&apos;source /root/pyenv/py2env/bin/activate&apos;
+
+#make it work
+source ~/.bashrc
+</code></pre><h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><p>Now you can use <code>py3env</code> or <code>py2env</code> to activate the related Python version. And if you want to exit current environment, you can execute <code>deactivate</code>  command.</p>
+<pre><code>#switch to Python 2.7 environment
+[root@VM_0_14_centos ~]# py27env
+
+#exit Python 2.7
+(py27env) [root@VM_0_14_centos ~]# deactivate
+
+#switch to Python 3.6 environment
+[root@VM_0_14_centos ~]# py36env
+
+#exit Python3.6
+(py36env) [root@VM_0_14_centos ~]# deactivate
+[root@VM_0_14_centos ~]#
+</code></pre><p>If your project is based on Python 3.6, please shift  the <code>py36env</code> environment, and install dependencies with <code>pip</code>.</p>
 <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p><code>virtualenv</code> is a good tool to do this work, meanwhile, there is another similar tool to manage multiple versions , such as <code>pyenv</code>. Hope this post can help you.</p>
 
     
