@@ -16,20 +16,20 @@
 
 
 
-    <meta name="description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
+    <meta name="description" content="This article presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.">
 <meta name="keywords" content="DynamoDB, S3, Faker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta property="og:url" content="http://zendwind.com/zh-cn/2020/04/28/dynamodb-export-with-pipeline/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
+<meta property="og:description" content="This article presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.">
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png">
-<meta property="og:updated_time" content="2020-04-28T15:15:27.681Z">
+<meta property="og:updated_time" content="2020-04-28T15:25:18.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
-<meta name="twitter:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
+<meta name="twitter:description" content="This article presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.">
 <meta name="twitter:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
 
 
@@ -276,8 +276,8 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <p>This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.<br><a id="more"></a></p>
-<h1 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h1><p>This section presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.</p>
+        <p>This article presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.<br><a id="more"></a></p>
+<h1 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h1><p>DynamoDB migration is a hard work. This post will introduce the migrating procedures, including table creation, data falsification, data exportation, and so on.</p>
 <h1 id="2-Prerequisites"><a href="#2-Prerequisites" class="headerlink" title="2. Prerequisites"></a>2. Prerequisites</h1><h2 id="2-1-AWS-Resources"><a href="#2-1-AWS-Resources" class="headerlink" title="2.1 AWS Resources"></a>2.1 AWS Resources</h2><p>The below components will be used in this section.</p>
 <ul>
 <li><strong>Aamazon DynamoDB</strong></li>
