@@ -16,18 +16,18 @@
 
 
 
-    <meta name="description" content="1. PrefaceThis section presents how to migrate full data from DynamoDB (AWS) to TcaplusDB (TencentCloud). All scripts are written in Python3.6 environment. 2. Resources2.1 AWS ResourcesThe below compo">
+    <meta name="description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
 <meta name="keywords" content="DynamoDB, S3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta property="og:url" content="http://zendwind.com/zh-cn/2020/04/28/dynamodb-export-with-pipeline/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:description" content="1. PrefaceThis section presents how to migrate full data from DynamoDB (AWS) to TcaplusDB (TencentCloud). All scripts are written in Python3.6 environment. 2. Resources2.1 AWS ResourcesThe below compo">
+<meta property="og:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-28T03:38:54.679Z">
+<meta property="og:updated_time" content="2020-04-28T03:51:28.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
-<meta name="twitter:description" content="1. PrefaceThis section presents how to migrate full data from DynamoDB (AWS) to TcaplusDB (TencentCloud). All scripts are written in Python3.6 environment. 2. Resources2.1 AWS ResourcesThe below compo">
+<meta name="twitter:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
 
 
 
@@ -303,7 +303,7 @@
         <span class="column is-narrow">
             
             
-            14 分钟 读完
+            13 分钟 读完
         </span>
         
         
@@ -313,7 +313,8 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <h1 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h1><p>This section presents how to migrate full data from DynamoDB (AWS) to TcaplusDB (TencentCloud). All scripts are written in <code>Python3.6</code> environment.</p>
+        <p>This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.<br><a id="more"></a></p>
+<h1 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h1><p>This section presents how to migrate full data from DynamoDB (AWS) to Amazon S3 with AWS Data Pipeline.</p>
 <h1 id="2-Resources"><a href="#2-Resources" class="headerlink" title="2. Resources"></a>2. Resources</h1><h2 id="2-1-AWS-Resources"><a href="#2-1-AWS-Resources" class="headerlink" title="2.1 AWS Resources"></a>2.1 AWS Resources</h2><p>The below components will be used in this section.</p>
 <ul>
 <li><strong>Aamazon DynamoDB</strong></li>
@@ -336,44 +337,7 @@
 </li>
 <li><ol>
 <li>Check <code>pip</code> is exist or not<pre><code>yum install -y python-pip
-</code></pre><h2 id="3-2-Python-Installation"><a href="#3-2-Python-Installation" class="headerlink" title="3.2 Python Installation"></a>3.2 Python Installation</h2>The whole execution environment will be in <code>Python 3.6.</code></li>
-</ol>
-</li>
-<li><ol>
-<li><p>Download Python3.6 from <a href="https://www.python.org/downloads/release/python-360/" target="_blank" rel="external">Official Website</a>, and upload Python3.6 package to CVM instance, and uncompress it, such as <code>/root/Python3.6.0</code>. Then compile it with below command:</p>
-<pre><code>#compile
-./configure --enable-shared --prefix=/data/python3.6
-make &amp;&amp; make install
-
-#load library, add python3.6 library into /etc/ld.so.conf
-echo &quot;/data/python3.6/lib&quot; &gt;&gt;/etc/ld.so.conf
-
-#load config
-ldconfig
-</code></pre></li>
-</ol>
-</li>
-<li><ol>
-<li><p>Use <code>virtualenv</code> to manage the multi-version of Python</p>
-<pre><code>#install
-pip install virtualenv
-
-#define env
-mkdir /root/pyenv
-
-cd /root/pyenv
-
-virtualenv --python /usr/bin/python py2env
-virtualenv --python /data/python3.6/bin/python3 py3env
-
-#make alias in /root/.bashrc
-alias  py3env=&apos;source /root/pyenv/py3env/bin/activate&apos;
-alias  py2env=&apos;source /root/pyenv/py2env/bin/activate&apos;
-
-#make it work
-source ~/.bashrc
-</code></pre><p>As you operate as the above steps, you can use <code>py3env</code> or <code>py2env</code> to activate the related Python version.</p>
-</li>
+</code></pre><h2 id="3-2-Python-Installation"><a href="#3-2-Python-Installation" class="headerlink" title="3.2 Python Installation"></a>3.2 Python Installation</h2>The whole execution environment will be in <code>Python 3.6.</code> If your machine has deployed projects with Python2, you may need to config multiple Python versions environment, you can refer to my blog <a href="https://zendwind.com/2020/04/28/python-multi-version-env/">Multiple Python Versions Management</a></li>
 </ol>
 </li>
 </ul>
