@@ -2,13 +2,13 @@
 <html class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
-<title>How to Migrate DynamoDB to Another Platforms - Zend Wind&#39;s Blog</title>
+<title>Multiple  Python Versions Management - Zend Wind&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link href="/2020/03/28/dynamodb-migrate-s3/" rel="alternate" hreflang="en" />
+<link href="/2020/04/28/python-multi-version-env/" rel="alternate" hreflang="en" />
     
 
 
@@ -16,18 +16,18 @@
 
 
 
-    <meta name="description" content="This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:  Part One: Export DynamoDB Data to S3 with AWS Data Pipeline Part Two: I">
-<meta name="keywords" content="DynamoDB,COS">
+    <meta name="description" content="If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machin">
+<meta name="keywords" content="virtualenv, python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How to Migrate DynamoDB to Another Platforms">
-<meta property="og:url" content="http://zendwind.com/zh-cn/2020/03/28/dynamodb-migrate-s3/index.html">
+<meta property="og:title" content="Multiple  Python Versions Management">
+<meta property="og:url" content="http://zendwind.com/zh-cn/2020/04/28/python-multi-version-env/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:description" content="This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:  Part One: Export DynamoDB Data to S3 with AWS Data Pipeline Part Two: I">
+<meta property="og:description" content="If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machin">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-28T02:54:48.933Z">
+<meta property="og:updated_time" content="2020-04-28T03:38:41.449Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How to Migrate DynamoDB to Another Platforms">
-<meta name="twitter:description" content="This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:  Part One: Export DynamoDB Data to S3 with AWS Data Pipeline Part Two: I">
+<meta name="twitter:title" content="Multiple  Python Versions Management">
+<meta name="twitter:description" content="If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machin">
 
 
 
@@ -117,19 +117,27 @@
                     
                     
                     
-                    <a class="navbar-item" href="#Why-Migrate">1&nbsp;&nbsp;<b>Why Migrate?</b></a>
+                    <a class="navbar-item" href="#1-Prerequisites">1&nbsp;&nbsp;<b>1.Prerequisites</b></a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#Export-Mode">2&nbsp;&nbsp;<b>Export Mode</b></a>
+                    <a class="navbar-item" href="#2-Installation">2&nbsp;&nbsp;<b>2. Installation</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-1-Python-2-7-5-Installation">2.1&nbsp;&nbsp;2.1 Python 2.7.5 Installation</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-2-Python-3-6-Installation">2.2&nbsp;&nbsp;2.2 Python 3.6 Installation</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#Get-Started-with-Migration">3&nbsp;&nbsp;<b>Get Started with Migration</b></a>
+                    <a class="navbar-item" href="#Summary">3&nbsp;&nbsp;<b>Summary</b></a>
                     
                 </div>
             </div>
@@ -160,11 +168,11 @@
         <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
             <div class="dropdown-content">
             
-                <a href="/2020/03/28/dynamodb-migrate-s3/" class="dropdown-item">
+                <a href="/2020/04/28/python-multi-version-env/" class="dropdown-item">
                     English
                 </a>
             
-                <a href="/zh-cn/2020/03/28/dynamodb-migrate-s3/" class="dropdown-item">
+                <a href="/zh-cn/2020/04/28/python-multi-version-env/" class="dropdown-item">
                     简体中文
                 </a>
             
@@ -185,25 +193,25 @@
     <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
-            How to Migrate DynamoDB to Another Platforms
+            Multiple  Python Versions Management
         
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time class="is-text-small" datetime="2020-03-28T15:11:00.000Z" itemprop="datePublished">
-                        3月 28 2020</time>
+            <time class="is-text-small" datetime="2020-04-28T03:00:00.000Z" itemprop="datePublished">
+                        4月 28 2020</time>
         </span>
         
         <span class="column is-narrow article-category">
             <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/TencentCloud/">TencentCloud</a>
+            <a class="article-category-link" href="/categories/Python/">Python</a>
         </span>
         
         
         <span class="column is-narrow">
             
             
-            3 分钟 读完
+            2 分钟 读完
         </span>
         
         
@@ -213,48 +221,49 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <p>This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:</p>
-<ul>
-<li><strong>Part One: Export DynamoDB Data to S3 with AWS Data Pipeline</strong></li>
-<li><strong>Part Two: Import S3 Data to Tencent TcaplusDB</strong></li>
-<li><strong>Part Three: Principles of Design A Migration System</strong></li>
-<li><strong>Part Four: DynamoDB Real-time Migration Solution</strong><a id="more"></a>
-</li>
+        <p>If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machine. This article will present you the solution to manage multiple Python versions with <code>virtualenv</code>.<br><a id="more"></a></p>
+<h1 id="1-Prerequisites"><a href="#1-Prerequisites" class="headerlink" title="1.Prerequisites"></a>1.Prerequisites</h1><ul>
+<li><strong>OS version</strong>: Centos7</li>
+<li><strong>Python version</strong>: Python-2.7.5, Python-3.6.0</li>
+<li><strong>virtualenv version</strong>: 15.1.0</li>
 </ul>
-<h1 id="Why-Migrate"><a href="#Why-Migrate" class="headerlink" title="Why Migrate?"></a>Why Migrate?</h1><p>Different customers have different cases.  As for DynamoDB, it is a popular NoSQL product around the world, and holds most of the market share. So why need to migrate data from DynamoDB to other Platforms. I think the leading causes are as below:</p>
-<ul>
-<li><p><strong>Price</strong><br>As we known, DynamoDB has two pricing mode: <code>on-demand</code> and <code>provisioned</code>. Both of them are cost-expensive, if your business has large traffic in read/write, the DynamoDB will occupy a large proportion.</p>
-</li>
-<li><p><strong>Integration</strong><br>The DynamoDB is strongly bound with AWS, which means you must use AWS other products to work with DynamoDB. I think it is not a good news for most of customers who are unwilling to  be tied on one boat.</p>
-</li>
+<h1 id="2-Installation"><a href="#2-Installation" class="headerlink" title="2. Installation"></a>2. Installation</h1><h2 id="2-1-Python-2-7-5-Installation"><a href="#2-1-Python-2-7-5-Installation" class="headerlink" title="2.1 Python 2.7.5 Installation"></a>2.1 Python 2.7.5 Installation</h2><p>For Centos7, the default Python version is 2.7.5, so here we don&#x2019;t need to install it.</p>
+<h2 id="2-2-Python-3-6-Installation"><a href="#2-2-Python-3-6-Installation" class="headerlink" title="2.2 Python 3.6 Installation"></a>2.2 Python 3.6 Installation</h2><ul>
+<li><strong>Download</strong><br>Download Python3.6 from <a href="https://www.python.org/downloads/release/python-360/" target="_blank" rel="external">Official Website</a>, and upload package to your target machine.</li>
+<li><strong>Compile</strong><br>```<br>./configure  &#x2013;prefix=/data/python3.6<br>make &amp;&amp; make install</li>
 </ul>
-<h1 id="Export-Mode"><a href="#Export-Mode" class="headerlink" title="Export Mode"></a>Export Mode</h1><p>There are three approaches for exporting DynamoDB data:</p>
-<ul>
-<li><p><strong>Export to .csv from  DynamoDB Portal</strong><br>This mode is the most easiest way to export data, however it is just available for those small tables. If table has massive data,  this way will be heavy workload, because only 100 items can be exported each time.</p>
-</li>
-<li><p><strong>Export with Scan</strong><br>This mode is the most popular way to export all of DynamoDB data, however, it is cost-expensive and will exhaust a large number of RCU. Meanwhile, if you use <code>Scan</code> to export data , you must consider how to avoid impacting online business, such as traffic control, bandwidth control, maybe the third-party tool need to be introduced to limit the migrating rate (<a href="https://aws.amazon.com/blogs/developer/rate-limited-scans-in-amazon-dynamodb/" target="_blank" rel="external">Google Guava RateLimit</a>).</p>
-</li>
-<li><p><strong>Export with Data Pipeline</strong><br>This mode is the most cost-effective way to export all of DynamoDB data. It uses <code>AWS EMR</code> to process off-line data parallelly, and its core concept is Map/Reduce. With this offline mode, the scope of business impact is small. In next post, we will use this approach to finish the migrating work.</p>
-</li>
-</ul>
-<h1 id="Get-Started-with-Migration"><a href="#Get-Started-with-Migration" class="headerlink" title="Get Started with Migration"></a>Get Started with Migration</h1><ul>
-<li><p>[Part One: Export DynamoDB Data to S3 with AWS Data Pipeline][2]</p>
-</li>
-<li><p>[Part Two: Import S3 Data to Tencent TcaplusDB][3]</p>
-</li>
-<li><p>[Part Three: Principles of Design A Migration System][4]</p>
-</li>
-<li><p>[Part Four: DynamoDB Real-time Migration Solution][5]</p>
-</li>
-</ul>
-<p>[2]:</p>
+<p>#load library, add python3.6 library into /etc/ld.so.conf<br>echo &#x201C;/data/python3.6/lib&#x201D; &gt;&gt;/etc/ld.so.conf</p>
+<p>#load library again<br>ldconfig</p>
+<pre><code>
+## 2.3 Virtualenv Installation
+Virtualenv is a very popular component for managing multi-version environment. You can refer to detail infos from [virtualenv](https://virtualenv.pypa.io/en/latest/).
+
+- __Installation__
+</code></pre><p>#install<br>pip install virtualenv</p>
+<pre><code>- __Env Config__
+</code></pre><p>#define env<br>mkdir /root/pyenv</p>
+<p>cd /root/pyenv</p>
+<p>virtualenv &#x2013;python /usr/bin/python py2env<br>virtualenv &#x2013;python /data/python3.6/bin/python3 py3env</p>
+<pre><code>
+- __Alias Config__
+If you want to switch the virtual env quickly, the following alias config is convenient for you:
+</code></pre><p>#make alias in /root/.bashrc<br>alias  py3env=&#x2019;source /root/pyenv/py3env/bin/activate&#x2019;<br>alias  py2env=&#x2019;source /root/pyenv/py2env/bin/activate&#x2019;</p>
+<p>#make it work<br>source ~/.bashrc</p>
+<pre><code># Experience
+Now you can use `py3env` or `py2env` to activate the related Python version. And if you want to exit current environment, you can execute `deactivate`  command.
+</code></pre><p>#switch to Python 2.7 environment<br>[root@VM_0_14_centos ~]# py27env</p>
+<p>#exit Python 2.7<br>(py27env) [root@VM_0_14_centos ~]# deactivate</p>
+<p>#switch to Python 3.6 environment<br>[root@VM_0_14_centos ~]# py36env</p>
+<p>#exit Python3.6<br>(py36env) [root@VM_0_14_centos ~]# deactivate<br>[root@VM_0_14_centos ~]#<br><code>``
+If your project is based on Python 3.6, please shift  the</code>py36env<code>environment, and install dependencies with</code>pip`.</p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p><code>virtualenv</code> is a good tool to do this work, meanwhile, there is another similar tool to manage multiple versions , such as <code>pyenv</code>. Hope this post can help you.</p>
 
     
     </div>
     
     <div class="columns is-variable is-1 is-multiline is-mobile">
     
-        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/DynamoDB-COS/">#DynamoDB,COS</a></span>
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/virtualenv-python/">#virtualenv, python</a></span>
     
     </div>
     
@@ -262,12 +271,12 @@
     <div class="columns is-mobile is-multiline article-nav">
         <span class="column is-12-mobile is-half-desktop  article-nav-prev">
             
-            <a href="/2020/04/04/airflow-docker-install/">How to Deploy Airflow with Docker</a>
+            <a href="/2020/04/28/dynamodb-export-with-pipeline/">Export DynamoDB to S3 with AWS Data Pipeline</a>
             
         </span>
         <span class="column is-12-mobile is-half-desktop  article-nav-next">
             
-            <a href="/2018/10/22/hbase-api/">An Introduction to HBase Native API</a>
+            <a href="/2020/04/23/serverless-deploy-vuepress/">How to Deploy Vuepress with Serverless Framework</a>
             
         </span>
     </div>
@@ -315,7 +324,7 @@
     <div class="container">
         <div class="columns content">
             <div class="column is-narrow has-text-centered">
-                &copy; 2020 ballen&nbsp;
+                &copy; 2020 Wen Qiuliang&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
                         href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
                 <br />

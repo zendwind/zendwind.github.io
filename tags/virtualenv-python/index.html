@@ -2,13 +2,13 @@
 <html class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
-<title>How to Migrate DynamoDB to Another Platforms - Zend Wind&#39;s Blog</title>
+<title>Tag: virtualenv, python - Zend Wind&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link href="/2020/03/28/dynamodb-migrate-s3/" rel="alternate" hreflang="en" />
+<link href="/zh-cn/tags/virtualenv-python/index.html" rel="alternate" hreflang="zh-CN" />
     
 
 
@@ -16,18 +16,13 @@
 
 
 
-    <meta name="description" content="This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:  Part One: Export DynamoDB Data to S3 with AWS Data Pipeline Part Two: I">
-<meta name="keywords" content="DynamoDB,COS">
-<meta property="og:type" content="article">
-<meta property="og:title" content="How to Migrate DynamoDB to Another Platforms">
-<meta property="og:url" content="http://zendwind.com/zh-cn/2020/03/28/dynamodb-migrate-s3/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Zend Wind&#39;s Blog">
+<meta property="og:url" content="http://zendwind.com/tags/virtualenv-python/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:description" content="This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:  Part One: Export DynamoDB Data to S3 with AWS Data Pipeline Part Two: I">
-<meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-28T02:54:48.933Z">
+<meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How to Migrate DynamoDB to Another Platforms">
-<meta name="twitter:description" content="This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:  Part One: Export DynamoDB Data to S3 with AWS Data Pipeline Part Two: I">
+<meta name="twitter:title" content="Zend Wind&#39;s Blog">
 
 
 
@@ -76,7 +71,7 @@
 <nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item navbar-logo" href="/zh-cn">
+            <a class="navbar-item navbar-logo" href="/">
                 
                 <img src="/images/logo.png" alt="" height="28">
                 
@@ -91,48 +86,25 @@
         <div class="navbar-menu navbar-start">
             
             <a class="navbar-item "
-               href="/zh-cn/zh-cn/archives">归档</a>
+               href="/archives">Archives</a>
             
             <a class="navbar-item "
-               href="/zh-cn/categories">分类</a>
+               href="/categories">Categories</a>
             
             <a class="navbar-item "
-               href="/zh-cn/about">关于</a>
+               href="/tags">Tags</a>
+            
+            <a class="navbar-item "
+               href="/about">About</a>
             
         </div>
         
         <div class="navbar-menu navbar-end">
             
-            <a class="navbar-item search" title="搜索" href="javascript:;">
+            <a class="navbar-item search" title="Search" href="javascript:;">
                 <i class="fas fa-search"></i>
             </a>
             
-            
-            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
-                <a class="navbar-item" title="目录">
-                    <i class="fa fa-list"></i>
-                </a>
-                <div class="navbar-dropdown is-right">
-                    
-                    
-                    
-                    
-                    <a class="navbar-item" href="#Why-Migrate">1&nbsp;&nbsp;<b>Why Migrate?</b></a>
-                    
-                    
-                    <hr class="navbar-divider">
-                    
-                    
-                    <a class="navbar-item" href="#Export-Mode">2&nbsp;&nbsp;<b>Export Mode</b></a>
-                    
-                    
-                    <hr class="navbar-divider">
-                    
-                    
-                    <a class="navbar-item" href="#Get-Started-with-Migration">3&nbsp;&nbsp;<b>Get Started with Migration</b></a>
-                    
-                </div>
-            </div>
             
             
             <a class="navbar-item" title="GitHub" href="https://github.com/zendwind">
@@ -151,7 +123,7 @@
                 <span class="icon">
                     <i class="fas fa-globe"></i>
                 </span>
-                <span>简体中文</span>
+                <span>English</span>
                 <span class="icon is-small">
             <i class="fas fa-angle-down" aria-hidden="true"></i>
           </span>
@@ -160,11 +132,11 @@
         <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
             <div class="dropdown-content">
             
-                <a href="/2020/03/28/dynamodb-migrate-s3/" class="dropdown-item">
+                <a href="/tags/virtualenv-python/index.html" class="dropdown-item">
                     English
                 </a>
             
-                <a href="/zh-cn/2020/03/28/dynamodb-migrate-s3/" class="dropdown-item">
+                <a href="/zh-cn/tags/virtualenv-python/index.html" class="dropdown-item">
                     简体中文
                 </a>
             
@@ -180,142 +152,70 @@
 
 </nav>
 
-    <section class="section">
+    <section class="section section-heading">
     <div class="container">
-    <article class="article content gallery" itemscope itemprop="blogPost">
+        <div class="content">
+            <h5>#virtualenv, python</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
-            How to Migrate DynamoDB to Another Platforms
+            <a href="/2020/04/28/python-multi-version-env/" itemprop="url">Multiple  Python Versions Management</a>
         
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time class="is-text-small" datetime="2020-03-28T15:11:00.000Z" itemprop="datePublished">
-                        3月 28 2020</time>
+            <time class="is-text-small" datetime="2020-04-28T03:00:00.000Z" itemprop="datePublished">
+                        Apr 28 2020</time>
         </span>
         
         <span class="column is-narrow article-category">
             <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/TencentCloud/">TencentCloud</a>
+            <a class="article-category-link" href="/categories/Python/">Python</a>
         </span>
         
         
         <span class="column is-narrow">
             
             
-            3 分钟 读完
+            2 minutes read
         </span>
         
         
         <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
-        <span class="column is-narror"> 阅读量</span>
+        <span class="column is-narror"> PageView</span>
         
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <p>This post aims to describe how to migrate DyanmoDB data to other Platform. The whole post will include four subtopics as below:</p>
-<ul>
-<li><strong>Part One: Export DynamoDB Data to S3 with AWS Data Pipeline</strong></li>
-<li><strong>Part Two: Import S3 Data to Tencent TcaplusDB</strong></li>
-<li><strong>Part Three: Principles of Design A Migration System</strong></li>
-<li><strong>Part Four: DynamoDB Real-time Migration Solution</strong><a id="more"></a>
-</li>
-</ul>
-<h1 id="Why-Migrate"><a href="#Why-Migrate" class="headerlink" title="Why Migrate?"></a>Why Migrate?</h1><p>Different customers have different cases.  As for DynamoDB, it is a popular NoSQL product around the world, and holds most of the market share. So why need to migrate data from DynamoDB to other Platforms. I think the leading causes are as below:</p>
-<ul>
-<li><p><strong>Price</strong><br>As we known, DynamoDB has two pricing mode: <code>on-demand</code> and <code>provisioned</code>. Both of them are cost-expensive, if your business has large traffic in read/write, the DynamoDB will occupy a large proportion.</p>
-</li>
-<li><p><strong>Integration</strong><br>The DynamoDB is strongly bound with AWS, which means you must use AWS other products to work with DynamoDB. I think it is not a good news for most of customers who are unwilling to  be tied on one boat.</p>
-</li>
-</ul>
-<h1 id="Export-Mode"><a href="#Export-Mode" class="headerlink" title="Export Mode"></a>Export Mode</h1><p>There are three approaches for exporting DynamoDB data:</p>
-<ul>
-<li><p><strong>Export to .csv from  DynamoDB Portal</strong><br>This mode is the most easiest way to export data, however it is just available for those small tables. If table has massive data,  this way will be heavy workload, because only 100 items can be exported each time.</p>
-</li>
-<li><p><strong>Export with Scan</strong><br>This mode is the most popular way to export all of DynamoDB data, however, it is cost-expensive and will exhaust a large number of RCU. Meanwhile, if you use <code>Scan</code> to export data , you must consider how to avoid impacting online business, such as traffic control, bandwidth control, maybe the third-party tool need to be introduced to limit the migrating rate (<a href="https://aws.amazon.com/blogs/developer/rate-limited-scans-in-amazon-dynamodb/" target="_blank" rel="external">Google Guava RateLimit</a>).</p>
-</li>
-<li><p><strong>Export with Data Pipeline</strong><br>This mode is the most cost-effective way to export all of DynamoDB data. It uses <code>AWS EMR</code> to process off-line data parallelly, and its core concept is Map/Reduce. With this offline mode, the scope of business impact is small. In next post, we will use this approach to finish the migrating work.</p>
-</li>
-</ul>
-<h1 id="Get-Started-with-Migration"><a href="#Get-Started-with-Migration" class="headerlink" title="Get Started with Migration"></a>Get Started with Migration</h1><ul>
-<li><p>[Part One: Export DynamoDB Data to S3 with AWS Data Pipeline][2]</p>
-</li>
-<li><p>[Part Two: Import S3 Data to Tencent TcaplusDB][3]</p>
-</li>
-<li><p>[Part Three: Principles of Design A Migration System][4]</p>
-</li>
-<li><p>[Part Four: DynamoDB Real-time Migration Solution][5]</p>
-</li>
-</ul>
-<p>[2]:</p>
-
+        <p>If you have different projects deployed in a same machine and developed with different Python versions, you may suffer this issue: how to manage a multi-version environment for Python in a same machine. This article will present you the solution to manage multiple Python versions with <code>virtualenv</code>.<br></p>
+        <p class="article-more-link">
+            <a href="/2020/04/28/python-multi-version-env/#more">Read More</a>
+        </p>
     
     </div>
     
-    <div class="columns is-variable is-1 is-multiline is-mobile">
-    
-        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/DynamoDB-COS/">#DynamoDB,COS</a></span>
-    
-    </div>
-    
-    
-    <div class="columns is-mobile is-multiline article-nav">
-        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
-            
-            <a href="/2020/04/04/airflow-docker-install/">How to Deploy Airflow with Docker</a>
-            
-        </span>
-        <span class="column is-12-mobile is-half-desktop  article-nav-next">
-            
-            <a href="/2018/10/22/hbase-api/">An Introduction to HBase Native API</a>
-            
-        </span>
-    </div>
     
 </article>
 
 
-<div class="sharebox">
+
+
+
     
-<div class="sharethis-inline-share-buttons"></div>
-<script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5ea559fc6ee5a0001d8b95db&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
-
-</div>
-
-
-
-<div class="comments">
-    <h3 class="title is-4">评论</h3>
     
-<div id="valine-thread"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script>
-    new Valine({
-        el: '#valine-thread',
-        appId: 's7YiMwoKljbjEyiPSekMYxHW-gzGzoHsz',
-        appKey: 'QdFr23RGUj3JYo0I4Yi8wuV3',
-        notify: false,
-        verify: false,
-        avatar: '',
-        placeholder: 'Say something...',
-        meta: ['nick', 'mail'],
-        visitor: true,
-        lang: ''
-    })
-</script>
-
-
-</div>
-
-
     </div>
 </section>
     <footer class="footer">
     <div class="container">
         <div class="columns content">
             <div class="column is-narrow has-text-centered">
-                &copy; 2020 ballen&nbsp;
+                &copy; 2020 Wen Qiuliang&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
                         href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
                 <br />
@@ -374,7 +274,7 @@
     window.FontAwesomeConfig = {
         searchPseudoElements: true
     }
-    moment.locale("zh-CN");
+    moment.locale("en-AU");
 </script>
 
 
@@ -499,7 +399,7 @@
     <div class="searchbox-mask"></div>
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -511,13 +411,13 @@
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
             },
-            CONTENT_URL: '/content.zh-cn.json',
+            CONTENT_URL: '/content.json',
         };
         window.INSIGHT_CONFIG = INSIGHT_CONFIG;
     })(window);

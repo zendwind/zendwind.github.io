@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/</loc>
+    <lastmod>2020-04-28</lastmod>
+  </url>  <url>
+    <loc>http://zendwind.com/2020/04/28/python-multi-version-env/</loc>
+    <lastmod>2020-04-28</lastmod>
+  </url>  <url>
+    <loc>http://zendwind.com/2020/03/28/dynamodb-migrate-s3/</loc>
+    <lastmod>2020-04-28</lastmod>
+  </url>  <url>
     <loc>http://zendwind.com/2020/04/28/zh-cn/scf-tcaplusdb/</loc>
     <lastmod>2020-04-28</lastmod>
   </url>  <url>
@@ -15,9 +24,6 @@
   </url>  <url>
     <loc>http://zendwind.com/2020/04/23/serverless-deploy-vuepress/</loc>
     <lastmod>2020-04-26</lastmod>
-  </url>  <url>
-    <loc>http://zendwind.com/2020/03/28/dynamodb-migrate-s3/</loc>
-    <lastmod>2020-04-25</lastmod>
   </url>  <url>
     <loc>http://zendwind.com/2020/04/04/airflow-docker-install/</loc>
     <lastmod>2020-04-24</lastmod>
