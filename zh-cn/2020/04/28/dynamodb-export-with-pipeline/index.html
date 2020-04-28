@@ -26,7 +26,7 @@
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png">
-<meta property="og:updated_time" content="2020-04-28T15:25:18.099Z">
+<meta property="og:updated_time" content="2020-04-28T15:26:46.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta name="twitter:description" content="This article presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.">
@@ -448,7 +448,7 @@ def main(argv):
   print(&apos;Items in Table: %d&apos;% countRecords(tableName))
 if __name__ == &quot;__main__&quot;:
   main(sys.argv[1:])
-</code></pre><p>Execute the Python script in CVM as below.</p>
+</code></pre><p>Execute the Python script in command line as below.</p>
 <pre><code>python make_sample_data.py --table Dynamodb_test --items 10000
 </code></pre><h1 id="4-Migrate-Data-to-S3"><a href="#4-Migrate-Data-to-S3" class="headerlink" title="4. Migrate Data to S3"></a>4. Migrate Data to S3</h1><h2 id="4-1-Create-S3-Bucket"><a href="#4-1-Create-S3-Bucket" class="headerlink" title="4.1. Create S3 Bucket"></a>4.1. Create S3 Bucket</h2><p>Create an Amazon S3 bucket to receive the DynamoDB export.</p>
 <pre><code>aws s3 mb s3://2-dynamodb-tcaplus-export
