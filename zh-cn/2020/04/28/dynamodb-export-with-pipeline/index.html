@@ -24,10 +24,13 @@
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
 <meta property="og:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-04-28T03:51:28.153Z">
+<meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
+<meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png">
+<meta property="og:updated_time" content="2020-04-28T15:10:22.603Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta name="twitter:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
+<meta name="twitter:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
 
 
 
@@ -123,7 +126,7 @@
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#2-Resources">2&nbsp;&nbsp;<b>2. Resources</b></a>
+                    <a class="navbar-item" href="#2-Prerequisites">2&nbsp;&nbsp;<b>2. Prerequisites</b></a>
                     
                     
                     
@@ -131,105 +134,65 @@
                     
                     
                     
-                    <a class="navbar-item" href="#2-2-Tencent-Cloud-Resources">2.2&nbsp;&nbsp;2.2 Tencent Cloud Resources</a>
+                    <a class="navbar-item" href="#2-2-AWS-Credentials">2.2&nbsp;&nbsp;2.2 AWS Credentials</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-3-Dependencies">2.3&nbsp;&nbsp;2.3 Dependencies</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-4-DynamoDB-Table-Definition">2.4&nbsp;&nbsp;2.4 DynamoDB Table Definition</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#3-Prerequisites">3&nbsp;&nbsp;<b>3. Prerequisites</b></a>
+                    <a class="navbar-item" href="#3-DynamoDB-Environment">3&nbsp;&nbsp;<b>3. DynamoDB Environment</b></a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-1-TencentCloud-CVM-Environment">3.1&nbsp;&nbsp;3.1 TencentCloud CVM Environment</a>
+                    <a class="navbar-item" href="#3-1-Create-DynamoDB-Table">3.1&nbsp;&nbsp;3.1 Create DynamoDB Table</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-2-Python-Installation">3.2&nbsp;&nbsp;3.2 Python Installation</a>
+                    <a class="navbar-item" href="#3-2-Verify-Table-Status">3.2&nbsp;&nbsp;3.2 Verify Table Status</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-3-Python-Modules-Install">3.3&nbsp;&nbsp;3.3 Python Modules Install</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-4-AWS-Credentials-Config">3.4&nbsp;&nbsp;3.4 AWS Credentials Config</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-5-Tencent-Cloud-COS-Credentials-Config">3.5&nbsp;&nbsp;3.5 Tencent Cloud COS Credentials Config</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-6-Data-Type-Comparison">3.6&nbsp;&nbsp;3.6 Data Type Comparison</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-7-Primary-Key">3.7&nbsp;&nbsp;3.7 Primary Key</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-8-Table-Sample">3.8&nbsp;&nbsp;3.8 Table Sample</a>
+                    <a class="navbar-item" href="#3-3-Make-sample-data">3.3&nbsp;&nbsp;3.3 Make sample data</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#4-DynamoDB-Environment">4&nbsp;&nbsp;<b>4. DynamoDB Environment</b></a>
+                    <a class="navbar-item" href="#4-Migrate-Data-to-S3">4&nbsp;&nbsp;<b>4. Migrate Data to S3</b></a>
                     
                     
                     
-                    <a class="navbar-item" href="#4-1-Create-DynamoDB-Table">4.1&nbsp;&nbsp;4.1 Create DynamoDB Table</a>
+                    <a class="navbar-item" href="#4-1-Create-S3-Bucket">4.1&nbsp;&nbsp;4.1. Create S3 Bucket</a>
                     
                     
                     
-                    <a class="navbar-item" href="#4-2-Verify-the-table-status">4.2&nbsp;&nbsp;4.2 Verify the table status</a>
+                    <a class="navbar-item" href="#4-2-Create-AWS-Data-Pipeline">4.2&nbsp;&nbsp;4.2. Create AWS Data Pipeline</a>
                     
                     
                     
-                    <a class="navbar-item" href="#4-3-Make-sample-data">4.3&nbsp;&nbsp;4.3 Make sample data</a>
-                    
-                    
-                    <hr class="navbar-divider">
-                    
-                    
-                    <a class="navbar-item" href="#5-TcaplusDB-Environment">5&nbsp;&nbsp;<b>5. TcaplusDB Environment</b></a>
+                    <a class="navbar-item" href="#4-3-Activate-Data-Pipeline">4.3&nbsp;&nbsp;4.3 Activate Data Pipeline</a>
                     
                     
                     
-                    <a class="navbar-item" href="#5-1-Create-TcaplusDB-Table">5.1&nbsp;&nbsp;5.1 Create TcaplusDB Table</a>
-                    
-                    
-                    <hr class="navbar-divider">
-                    
-                    
-                    <a class="navbar-item" href="#6-Migrate-Data-to-S3">6&nbsp;&nbsp;<b>6. Migrate Data to S3</b></a>
+                    <a class="navbar-item" href="#4-4-Check-Status">4.4&nbsp;&nbsp;4.4 Check Status</a>
                     
                     
                     
-                    <a class="navbar-item" href="#6-1-Create-S3-Bucket">6.1&nbsp;&nbsp;6.1. Create S3 Bucket</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#6-2-Create-AWS-Data-Pipeline">6.2&nbsp;&nbsp;6.2. Create AWS Data Pipeline</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#6-3-Migrate-S3-file-to-TencentCloud-COS">6.3&nbsp;&nbsp;6.3. Migrate S3 file to TencentCloud COS</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#6-3-1-Command-Line-Mode">6.3.1&nbsp;&nbsp;6.3.1 Command Line  Mode</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#6-3-2-Programming-Mode">6.3.2&nbsp;&nbsp;6.3.2 Programming Mode</a>
+                    <a class="navbar-item" href="#4-5-Check-Data">4.5&nbsp;&nbsp;4.5 Check Data</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#coding-utf-8">7&nbsp;&nbsp;<b>-*- coding=utf-8</b></a>
+                    <a class="navbar-item" href="#5-Summary">5&nbsp;&nbsp;<b>5. Summary</b></a>
                     
                 </div>
             </div>
@@ -303,7 +266,7 @@
         <span class="column is-narrow">
             
             
-            13 分钟 读完
+            7 分钟 读完
         </span>
         
         
@@ -314,73 +277,46 @@
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
         <p>This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.<br><a id="more"></a></p>
-<h1 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h1><p>This section presents how to migrate full data from DynamoDB (AWS) to Amazon S3 with AWS Data Pipeline.</p>
-<h1 id="2-Resources"><a href="#2-Resources" class="headerlink" title="2. Resources"></a>2. Resources</h1><h2 id="2-1-AWS-Resources"><a href="#2-1-AWS-Resources" class="headerlink" title="2.1 AWS Resources"></a>2.1 AWS Resources</h2><p>The below components will be used in this section.</p>
+<h1 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h1><p>This section presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.</p>
+<h1 id="2-Prerequisites"><a href="#2-Prerequisites" class="headerlink" title="2. Prerequisites"></a>2. Prerequisites</h1><h2 id="2-1-AWS-Resources"><a href="#2-1-AWS-Resources" class="headerlink" title="2.1 AWS Resources"></a>2.1 AWS Resources</h2><p>The below components will be used in this section.</p>
 <ul>
 <li><strong>Aamazon DynamoDB</strong></li>
 <li><strong>AWS Data Pipeline</strong></li>
-<li><strong>AWS S3</strong><h2 id="2-2-Tencent-Cloud-Resources"><a href="#2-2-Tencent-Cloud-Resources" class="headerlink" title="2.2 Tencent Cloud Resources"></a>2.2 Tencent Cloud Resources</h2>The below components will be used in this section.</li>
-<li><strong>Tcaplus Database</strong></li>
-<li><strong>CVM</strong></li>
-<li><strong>EMR</strong></li>
-<li><strong>COS</strong></li>
+<li><strong>AWS S3</strong></li>
 </ul>
-<h1 id="3-Prerequisites"><a href="#3-Prerequisites" class="headerlink" title="3. Prerequisites"></a>3. Prerequisites</h1><h2 id="3-1-TencentCloud-CVM-Environment"><a href="#3-1-TencentCloud-CVM-Environment" class="headerlink" title="3.1 TencentCloud CVM Environment"></a>3.1 TencentCloud CVM Environment</h2><ul>
-<li><ol>
-<li>Apply for a TencentCloud CVM instance in related region.</li>
-</ol>
-</li>
-<li><ol>
-<li>Check openssl-devel  is exist or not, the <code>boto3</code> module depends on the <code>ssl</code> module.<pre><code>yum install -y openssl-devel
-</code></pre></li>
-</ol>
-</li>
-<li><ol>
-<li>Check <code>pip</code> is exist or not<pre><code>yum install -y python-pip
-</code></pre><h2 id="3-2-Python-Installation"><a href="#3-2-Python-Installation" class="headerlink" title="3.2 Python Installation"></a>3.2 Python Installation</h2>The whole execution environment will be in <code>Python 3.6.</code> If your machine has deployed projects with Python2, you may need to config multiple Python versions environment, you can refer to my blog <a href="https://zendwind.com/2020/04/28/python-multi-version-env/">Multiple Python Versions Management</a></li>
-</ol>
-</li>
-</ul>
-<h2 id="3-3-Python-Modules-Install"><a href="#3-3-Python-Modules-Install" class="headerlink" title="3.3 Python Modules Install"></a>3.3 Python Modules Install</h2><p>Login the CVM instance, and install Python modules with pip in Python3 environment, including <code>awscli(&gt;=1.18.15), boto3 &gt;=(1.7.45), Faker(&gt;=0.8.16) , coscmd (latest) and cos-python-sdk-v5 (latest)</code>.</p>
-<pre><code>pip install awscli==1.18.15
-pip install boto3==1.7.45
-pip install Faker==0.8.16
-pip install coscmd==1.8.6.14
-pip install cos-python-sdk-v5
-</code></pre><h2 id="3-4-AWS-Credentials-Config"><a href="#3-4-AWS-Credentials-Config" class="headerlink" title="3.4 AWS Credentials Config"></a>3.4 AWS Credentials Config</h2><p> Configure aws cli in <code>CVM</code> environment, see <a href="https://docs.aws.amazon.com/opsworks/latest/userguide/registered-instances-register-registering-cli.html" target="_blank" rel="external">official website</a></p>
+<h2 id="2-2-AWS-Credentials"><a href="#2-2-AWS-Credentials" class="headerlink" title="2.2 AWS Credentials"></a>2.2 AWS Credentials</h2><p>Configure AWS credentials in  your host, refer to <a href="https://docs.aws.amazon.com/opsworks/latest/userguide/registered-instances-register-registering-cli.html" target="_blank" rel="external">official website</a>.</p>
 <ul>
 <li><ol>
-<li><p>In command line, create an <code>.aws</code> directory under /root directory and touch a <code>credentials</code> file, then replace aws_access_key_id and aws_secret_access_key of your aws account</p>
+<li>Create a <code>.aws</code> directory in your home directory, such as <code>/root/.aws</code>, touch a <code>credentials</code> file in <code>.aws</code> direcotry , and replace aws_access_key_id and aws_secret_access_key of your aws account.</li>
+</ol>
+</li>
+</ul>
 <pre><code>[default]
 aws_access_key_id=xxx
 aws_secret_access_key=xxx
-</code></pre></li>
-</ol>
-</li>
+</code></pre><ul>
 <li><ol>
-<li>Set up region info in <code>config</code> file under <code>.aws</code> directory<pre><code>[default]
-region = xxx
-</code></pre></li>
+<li>Set up region info in <code>config</code> file under <code>.aws</code> directory</li>
 </ol>
 </li>
 </ul>
-<h2 id="3-5-Tencent-Cloud-COS-Credentials-Config"><a href="#3-5-Tencent-Cloud-COS-Credentials-Config" class="headerlink" title="3.5 Tencent Cloud COS Credentials Config"></a>3.5 Tencent Cloud COS Credentials Config</h2><p>Configure cos cli in <code>CVM</code> environment, see <a href="https://intl.cloud.tencent.com/document/product/436/10976" target="_blank" rel="external">COSCMD Documentation</a>.<br>Create a new file <code>.cos.conf</code> under <code>/root</code> directory, and add below contents in file:</p>
-<pre><code>[common]
-secret_id = XXX
-secret_key = XXX
-bucket = examplebucket-1250000000
-region = ap-shanghai
-max_thread = 5
-part_size = 1
-scheme = https
-</code></pre><h2 id="3-6-Data-Type-Comparison"><a href="#3-6-Data-Type-Comparison" class="headerlink" title="3.6 Data Type Comparison"></a>3.6 Data Type Comparison</h2><p>The data types between DynamoDB and TcaplusDB are different, see as below:<br>|Amazon DynamoDB|TcaplusDB|<br>|&#x2014;|&#x2014;|<br>|Number| int32,uint32,int64,uint64,sint64, double,float|<br>|String|string|<br>|Boolean|bool|<br>|Binary|bytes|<br>|Sets|Array|<br>|List|Array|<br>|Map|struct|</p>
-<h2 id="3-7-Primary-Key"><a href="#3-7-Primary-Key" class="headerlink" title="3.7 Primary Key"></a>3.7 Primary Key</h2><p>In DynamoDB, the primary key has two formats:</p>
+<pre><code>[default]
+region = xxx
+</code></pre><h2 id="2-3-Dependencies"><a href="#2-3-Dependencies" class="headerlink" title="2.3 Dependencies"></a>2.3 Dependencies</h2><p>This article depends on some AWS tools and other tools, such as <code>awscli, boto3, and Faker</code>. The Python version is 2.7.10:</p>
 <ul>
-<li>partition key and range key</li>
-<li>partition key only<br>In TcaplusDB, the primary key includes one or more attributes(less than 4).</li>
+<li><strong>CentOS</strong>:<pre><code>pip install awscli
+pip install boto3
+pip install Faker
+</code></pre></li>
+<li><strong>MacOS</strong>:<pre><code>pip install awscli --user
+pip install boto3 --user
+pip install Faker --user
+</code></pre></li>
 </ul>
-<p>In this section, the primary key in TcaplusDB is the same as DynamoDB, including one paritition attribute and one range attribute. Meanwhile, design an index of partition key.</p>
-<h2 id="3-8-Table-Sample"><a href="#3-8-Table-Sample" class="headerlink" title="3.8 Table Sample"></a>3.8 Table Sample</h2><table>
+<ul>
+<li><strong>Note</strong>: The boto3 module depends on <code>ssl</code> support, so if your Python environment is no <code>ssl</code> module, you should install it first and then re-install the Python. Type <code>import ssl</code> in Python command line to verify whether it is ok or not.</li>
+</ul>
+<h2 id="2-4-DynamoDB-Table-Definition"><a href="#2-4-DynamoDB-Table-Definition" class="headerlink" title="2.4 DynamoDB Table Definition"></a>2.4 DynamoDB Table Definition</h2><table>
 <thead>
 <tr>
 <th>Attribute</th>
@@ -420,16 +356,15 @@ scheme = https
 </tr>
 </tbody>
 </table>
-<h1 id="4-DynamoDB-Environment"><a href="#4-DynamoDB-Environment" class="headerlink" title="4. DynamoDB Environment"></a>4. DynamoDB Environment</h1><p>This section presents how to create DynamoDB table and make sample data.<br>All operations are held in <code>CVM</code> instance.</p>
-<h2 id="4-1-Create-DynamoDB-Table"><a href="#4-1-Create-DynamoDB-Table" class="headerlink" title="4.1 Create DynamoDB Table"></a>4.1 Create DynamoDB Table</h2><p>In command line, create an DynamoDB table  that uses the <code>aws dynamodb create-table</code> command as below.</p>
-<pre><code>aws dynamodb create-table --table-name Tcaplus_test \
+<h1 id="3-DynamoDB-Environment"><a href="#3-DynamoDB-Environment" class="headerlink" title="3. DynamoDB Environment"></a>3. DynamoDB Environment</h1><h2 id="3-1-Create-DynamoDB-Table"><a href="#3-1-Create-DynamoDB-Table" class="headerlink" title="3.1 Create DynamoDB Table"></a>3.1 Create DynamoDB Table</h2><p>In command line, create an DynamoDB table  that uses the <code>aws dynamodb create-table</code> command as below.</p>
+<pre><code>aws dynamodb create-table --table-name Dynamodb_test \
     --attribute-definitions AttributeName=Username,AttributeType=S \
     --key-schema AttributeName=Username,KeyType=HASH \
     --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
-</code></pre><h2 id="4-2-Verify-the-table-status"><a href="#4-2-Verify-the-table-status" class="headerlink" title="4.2 Verify the table status"></a>4.2 Verify the table status</h2><pre><code>aws dynamodb describe-table --table-name Tcaplus_test \
+</code></pre><h2 id="3-2-Verify-Table-Status"><a href="#3-2-Verify-Table-Status" class="headerlink" title="3.2 Verify Table Status"></a>3.2 Verify Table Status</h2><pre><code>aws dynamodb describe-table --table-name Dynamodb_test \
     --query &apos;Table.TableStatus&apos;
-</code></pre><p>Check its response, <code>ACTIVE</code> means that table has been created successfully.</p>
-<h2 id="4-3-Make-sample-data"><a href="#4-3-Make-sample-data" class="headerlink" title="4.3 Make sample data"></a>4.3 Make sample data</h2><p>Use <code>faker</code> module in Python to make sample data for DynamoDB, the code is as below:</p>
+</code></pre><p>The <code>ACTIVE</code> response means that table has been created successfully.</p>
+<h2 id="3-3-Make-sample-data"><a href="#3-3-Make-sample-data" class="headerlink" title="3.3 Make sample data"></a>3.3 Make sample data</h2><p>Use <code>faker</code> module in Python to make sample data for DynamoDB, the code is as below:</p>
 <pre><code>import argparse
 import boto3
 from faker import Faker
@@ -520,149 +455,47 @@ def main(argv):
 if __name__ == &quot;__main__&quot;:
   main(sys.argv[1:])
 </code></pre><p>Execute the Python script in CVM as below.</p>
-<pre><code>python make_sample_data.py --table Tcaplus_test --items 10000
-</code></pre><h1 id="5-TcaplusDB-Environment"><a href="#5-TcaplusDB-Environment" class="headerlink" title="5. TcaplusDB Environment"></a>5. TcaplusDB Environment</h1><h2 id="5-1-Create-TcaplusDB-Table"><a href="#5-1-Create-TcaplusDB-Table" class="headerlink" title="5.1 Create TcaplusDB Table"></a>5.1 Create TcaplusDB Table</h2><p> In TencentCloud TcaplusDB Console, create an TcaplusDB table, see <a href="https://cloud.tencent.com/document/product/596/38808" target="_blank" rel="external">official website</a><br>TcaplusDB table protobuf (v3) file as below:</p>
-<pre><code>syntax = &quot;proto3&quot;;
-import &quot;tcaplusservice.optionv1.proto&quot;;
-message Tcaplus_test {
-    option(tcaplusservice.tcaplus_primary_key) = &quot;Username&quot;;
-
-    string Username = 1;
-    int64  PointsEarned = 2;
-    string ReminderDate = 3;
-    bool   Subscribed = 4;
-    int64  Zipcode = 5;
-    string UserInfo = 6;
-}
-</code></pre><h1 id="6-Migrate-Data-to-S3"><a href="#6-Migrate-Data-to-S3" class="headerlink" title="6. Migrate Data to S3"></a>6. Migrate Data to S3</h1><h2 id="6-1-Create-S3-Bucket"><a href="#6-1-Create-S3-Bucket" class="headerlink" title="6.1. Create S3 Bucket"></a>6.1. Create S3 Bucket</h2><p>Create an Amazon S3 bucket to receive the DynamoDB export.</p>
+<pre><code>python make_sample_data.py --table Dynamodb_test --items 10000
+</code></pre><h1 id="4-Migrate-Data-to-S3"><a href="#4-Migrate-Data-to-S3" class="headerlink" title="4. Migrate Data to S3"></a>4. Migrate Data to S3</h1><h2 id="4-1-Create-S3-Bucket"><a href="#4-1-Create-S3-Bucket" class="headerlink" title="4.1. Create S3 Bucket"></a>4.1. Create S3 Bucket</h2><p>Create an Amazon S3 bucket to receive the DynamoDB export.</p>
 <pre><code>aws s3 mb s3://2-dynamodb-tcaplus-export
-</code></pre><h2 id="6-2-Create-AWS-Data-Pipeline"><a href="#6-2-Create-AWS-Data-Pipeline" class="headerlink" title="6.2. Create AWS Data Pipeline"></a>6.2. Create AWS Data Pipeline</h2><p>Before you start, refer to <a href="https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-getting-started.html" target="_blank" rel="external">Getting Started with AWS Data Pipeline</a></p>
+</code></pre><h2 id="4-2-Create-AWS-Data-Pipeline"><a href="#4-2-Create-AWS-Data-Pipeline" class="headerlink" title="4.2. Create AWS Data Pipeline"></a>4.2. Create AWS Data Pipeline</h2><p>Before you start, refer to <a href="https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-getting-started.html" target="_blank" rel="external">Getting Started with AWS Data Pipeline</a>. The sample configuration of data pipeline is as below:</p>
 <ul>
-<li>Source<ul>
+<li><strong>Source</strong><ul>
 <li>Select <code>Build using a template</code></li>
 <li>Choose <code>Export DynamoDB table to S3</code></li>
 </ul>
 </li>
-<li><p>Paramters</p>
+<li><p><strong>Paramters</strong></p>
 <ul>
-<li><code>Source DynamoDB table name</code>: Tcaplus_test</li>
-<li><code>Output S3 folder</code>: s3://2-dynamodb-tcaplus-export/Tcaplus_test/</li>
+<li><code>Source DynamoDB table name</code>: Dynamodb_test</li>
+<li><code>Output S3 folder</code>: s3://2-dynamodb-tcaplus-export/Dynamodb_test/</li>
 <li><code>DynamoDB read throughput ratio</code>: 0.25</li>
 <li><code>Region of the DynamoDB table</code>: us-east-1</li>
 </ul>
 </li>
-<li><p>Schedule</p>
+<li><p><strong>Schedule</strong></p>
 <ul>
 <li>Select <code>on pipeline activation</code></li>
 </ul>
 </li>
-<li>Pipeline Configuration<ul>
+<li><strong>Pipeline Configuration</strong><ul>
 <li>Disable Logging , Enable it if necessary</li>
 </ul>
 </li>
-<li>Security/Access<ul>
+<li><strong>Security/Access</strong><ul>
 <li>IAM roles select <code>Default</code></li>
 </ul>
 </li>
 </ul>
-<h2 id="6-3-Migrate-S3-file-to-TencentCloud-COS"><a href="#6-3-Migrate-S3-file-to-TencentCloud-COS" class="headerlink" title="6.3. Migrate S3 file to TencentCloud COS"></a>6.3. Migrate S3 file to TencentCloud COS</h2><p>This section introduces two approaches to migrate S3 file to COS</p>
-<ul>
-<li>Command Line Mode</li>
-<li>Programming Mode<h3 id="6-3-1-Command-Line-Mode"><a href="#6-3-1-Command-Line-Mode" class="headerlink" title="6.3.1 Command Line  Mode"></a>6.3.1 Command Line  Mode</h3></li>
-<li>Step1, login the CVM instance with ssh</li>
-<li>Step2, create a directory (<code>migration_tool</code>) under   <code>/root</code> directory</li>
-<li>Step3, go into <code>migration_tool</code> directory and create a sub directory <code>tcaplus_test</code></li>
-<li>Step4, download table file from s3 to local <code>tcaplus_test</code> directory<pre><code>  cd /root/migration_tool
-  aws s3 cp s3://2-dynamodb-tcaplus-export/Tcaplus_test/2020-03-11-10-29-13 tcaplus_test/ --recursive
-</code></pre></li>
-<li>Step5, upload file from local directory to COS directory<pre><code>  cd /root/migration_tool
-  coscmd -b tcaplus-sh-cos-1258272208 upload tcaplus_test Tcaplus_test/2020-03-11-10-29-13 -r
-</code></pre><h3 id="6-3-2-Programming-Mode"><a href="#6-3-2-Programming-Mode" class="headerlink" title="6.3.2 Programming Mode"></a>6.3.2 Programming Mode</h3>Both S3 and COS provide Python SDK to operate objects, it&#x2019;s easy to write Python script.</li>
-<li>Step1, login the CVM instance with ssh</li>
-<li>Step2, install tencentcloud cos package with <code>pip install -U cos-python-sdk-v5</code> under Python3 Environment</li>
-<li>Step2, create a directory (<code>migration_tool</code>) under   <code>/root</code> directory</li>
-<li>Step3, go into <code>migration_tool</code> directory , create a Python Script named <code>s3_to_cos.py</code> as below:<br>```<br>#!/usr/bin/env python<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-*- coding=utf-8"></a>-*- coding=utf-8</h1>from qcloud_cos import CosConfig<br>from qcloud_cos import CosS3Client<br>import boto3<br>#table name of migration<br>dynamodb_table=&#x2019;Tcaplus_test&#x2019;<br>tcaplusdb_table=&#x2019;Tcaplus_test&#x2019;</li>
-</ul>
-<p>s3_bucket_name=&#x2019;2-dynamodb-tcaplus-export&#x2019;<br>cos_bucket_name = &#x2018;tcaplus-sh-cos-1258272208&#x2019;</p>
-<p>s3_prefix=&#x201D;Tcaplus_test/2020-03-11-10-29-13&#x201D;<br>cos_prefix=&#x201D;Tcaplus_test/2020-03-11-10-29-13&#x201D;</p>
-<p>#init S3 client<br>s3RegionName = &#x201C;us-east-1&#x201D;<br>s3Client = boto3.client(&#x201C;s3&#x201D;,region_name=s3RegionName)</p>
-<p>scheme=&#x201D;https&#x201D;<br>cosRegionName=&#x201D;ap-shanghai&#x201D;</p>
-<p>#replace your api credentials of your account<br>SECRET_ID=&#x2019;xxx&#x2019;<br>SECRET_KEY = &#x2018;xxx&#x2019;</p>
-<p>#init cos client<br>cos_config = CosConfig(Region=cosRegionName, SecretId=SECRET_ID, SecretKey=SECRET_KEY,Scheme=scheme)<br>cosClient  = CosS3Client(cos_config)</p>
-<p>def put_s3_to_cos():<br>    &#x201C;&#x201D;&#x201D;<br>    get s3 objects and put objects to cos<br>    :returns response<br>    &#x201C;&#x201D;&#x201D;<br>    try:</p>
-<pre><code>    #list S3 objects of S3 bucket with prefix filter
-    s3_resp  = s3Client.list_objects_v2(
-        Bucket=s3_bucket_name,
-        Prefix=s3_prefix,
-        MaxKeys=1024
-      )
-    print(s3_resp)
-    s3_objects = s3_resp[&apos;Contents&apos;]
-    #iterate the object list , migrate one object each time
-    #Note: if object size hits limit up (aws:5TB, tencent:5GB), you should use another interfaces ,see official website
-    for s3_object in s3_objects:
-       obj_content = s3Client.get_object(Bucket=s3_bucket_name,Key=s3_object[&apos;Key&apos;])
-       obj_stream = obj_content[&apos;Body&apos;]
-       cos_key =  s3_object[&apos;Key&apos;]
-       cos_resp = cosClient.put_object(Bucket=cos_bucket_name,Body=obj_stream,Key=cos_key)
-       print(cos_resp)
-    print(&quot;s3 migrates to cos finish&quot;)
-except Exception as e:
-    print(&quot;s3 migrates to cos fail &quot;,e)
-</code></pre><p>if <strong>name</strong> == &#x2018;<strong>main</strong>&#x2018;:<br>    put_s3_to_cos()</p>
-<pre><code>## 6.4 Migrate COS Data to TcaplusDB
-### 6.4.1 Prerequisites
-* Prepare for TcaplusDB Python Restful SDK
-Please refer to `TcaplusDB Essential` document. The SDK will be provided as attachment, and add this SDK to `/root/migrate_tool` directory.
-
-* Download COS files from COS bucket to local directory of CVM
-</code></pre><p>cd /root/migration_tool<br>coscmd -b tcaplus-sh-cos-1258272208 download Tcaplus_test/2020-03-11-10-29-13/ sample_data/ -r</p>
-<pre><code>### 6.4.2 Data Type
-The row format of COS file is low-level data type of DynamoDB. First, it must be converted to high level data.
-* Low-level data
-</code></pre><p>{&#x201C;a&#x201D;:{&#x201C;S&#x201D;:&#x201D;test&#x201D;}, &#x201C;b&#x201D;:{&#x201C;N&#x201D;:&#x201D;12&#x201D;}, &#x201C;c&#x201D;:{&#x201C;bOOL&#x201D;:true}}</p>
-<pre><code>* High-level data
-</code></pre><p>{ &#x201C;a&#x201D; : &#x201C;test&#x201D; ,  &#x201C;b&#x201D; : 12, &#x201C;c&#x201D; : True}</p>
-<pre><code>### 6.4.3 Convert and Save
-* Sample Data
-</code></pre><p>{&#x201C;Username&#x201D;:{&#x201C;s&#x201D;:&#x201D;kevinortega9345&#x201D;},&#x201D;Subscribed&#x201D;:{&#x201C;bOOL&#x201D;:true},&#x201D;Zipcode&#x201D;:{&#x201C;n&#x201D;:&#x201D;86120&#x201D;},&#x201D;ReminderDate&#x201D;:{&#x201C;s&#x201D;:&#x201D;2020-02-07&#x201D;},&#x201D;PointsEarned&#x201D;:{&#x201C;n&#x201D;:&#x201D;4351&#x201D;} }<br>{&#x201C;Username&#x201D;:{&#x201C;s&#x201D;:&#x201D;ashleywilson3807&#x201D;},&#x201D;Subscribed&#x201D;:{&#x201C;bOOL&#x201D;:true},&#x201D;Zipcode&#x201D;:{&#x201C;n&#x201D;:&#x201D;20612&#x201D;},&#x201D;ReminderDate&#x201D;:{&#x201C;s&#x201D;:&#x201D;2020-03-02&#x201D;},&#x201D;PointsEarned&#x201D;:{&#x201C;n&#x201D;:&#x201D;4121&#x201D;}}<br>{&#x201C;Username&#x201D;:{&#x201C;s&#x201D;:&#x201D;frazierfrank8872&#x201D;},&#x201D;Subscribed&#x201D;:{&#x201C;bOOL&#x201D;:true},&#x201D;Zipcode&#x201D;:{&#x201C;n&#x201D;:&#x201D;9456&#x201D;},&#x201D;ReminderDate&#x201D;:{&#x201C;s&#x201D;:&#x201D;2020-02-17&#x201D;},&#x201D;PointsEarned&#x201D;:{&#x201C;n&#x201D;:&#x201D;7896&#x201D;}}<br>{&#x201C;Username&#x201D;:{&#x201C;s&#x201D;:&#x201D;eric383371&#x201D;},&#x201D;Subscribed&#x201D;:{&#x201C;bOOL&#x201D;:true},&#x201D;Zipcode&#x201D;:{&#x201C;n&#x201D;:&#x201D;7748&#x201D;},&#x201D;ReminderDate&#x201D;:{&#x201C;s&#x201D;:&#x201D;2020-02-25&#x201D;},&#x201D;PointsEarned&#x201D;:{&#x201C;n&#x201D;:&#x201D;6303&#x201D;}}</p>
-<pre><code>* Convert and Save Script
-Create a Python Script in  `/root/migration_tool` directory, the code is as below:
-</code></pre><p>import json<br>import boto3<br>from tcaplus.tcaplusdb_rest_client import TcaplusRestClient</p>
-<p>class CustomEncoder(json.JSONEncoder):<br>    def default(self, obj):<br>        try:<br>            if isinstance(obj, bytes):<br>                return str(obj, encoding=&#x2019;utf-8&#x2019;)<br>            elif isinstance(obj, decimal.Decimal):<br>                if obj == int(obj):<br>                    return int(obj)<br>                else:<br>                    return float(obj)<br>            elif isinstance(obj, set):<br>                return list(obj)</p>
-<pre><code>        # Let the base class default method raise the TypeError
-        return json.JSONEncoder.default(self, obj)
-    except Exception as e:
-        return obj.__dict__[&apos;value&apos;]
-</code></pre><p>#dynamodb deserializer<br>boto3.resource(&#x201C;dynamodb&#x201D;)<br>deserializer = boto3.dynamodb.types.TypeDeserializer()</p>
-<p>#TcaplusDB client</p>
-<p>#TcaplusDB endpoint, internal ip address<br>endpoint=&#x201D;<a href="http://x.x.x.x" target="_blank" rel="external">http://x.x.x.x</a>&#x201C;</p>
-<p>#TcaplusDB access id of table cluster<br>accessId = xxx</p>
-<p>#TcaplusDB access password of table cluster<br>accessPasswd = &#x201C;xxxx&#x201D;</p>
-<p>#TcaplusDB table groupo id<br>tableGroupId = xxx</p>
-<p>#TcaplusDB table name<br>tableName = &#x201C;Tcaplus_test&#x201D;</p>
-<p>#init TcaplusDB client<br>client = TcaplusRestClient(endpoint, accessId, accessPasswd)<br>client.SetTargetTable(tableGroupId, tableName)</p>
-<p>def convert(filename):<br>    with open(filename) as f:<br>        lines = f.readlines()<br>        for line in lines:</p>
-<pre><code>        #replace all irregular values
-        nline = line.replace(&apos;:false&apos;,&apos;:&quot;False&quot;&apos;).replace(&apos;:true&apos;,&apos;:&quot;True&quot;&apos;).replace(&apos;bOOL&apos;,&apos;BOOL&apos;).replace(&apos;nULLValue&apos;,&apos;NULL&apos;)
-        lowLevelLine = json.loads(nline)
-        highLevelLine = {k: deserializer.deserialize(v) for k,v in lowLevelLine.items()}
-        jsonStr = json.dumps(highLevelLine,cls=CustomEncoder)
-        print(jsonStr)
-        # add record to TcaplusDB
-        record = json.loads(jsonStr)
-        status, resp = client.AddRecord(record)
-        print(resp)
-</code></pre><p>if <strong>name</strong> == &#x2018;<strong>main</strong>&#x2018;:</p>
-<pre><code>#replace your file name of sample data here
-filename=os.getcwd()+&apos;/sample_data/c54a3412-44ba-4e69-b854-58050e133337&apos;
-convert(filename)
-</code></pre><pre><code>## 6.5. Summary
-This section presents a simple way to migrate data from COS to TcaplusDB. However, if the data size is over 1GB or 10+GB, the performance will be unacceptable.
-For big data scenarios,  parallelism is important. There are lots of big data suites such as Spark, Map/Reduce for this scenario. Here, the EMR product of TencentCloud is very suitable for processing data in parallel. Meanwhile, the EMR has gotten through COS, and user can use the EMR to process COS data directly. The whole steps will be introduced in next paper.
-# 7. Attachment
-* tcaplusdb-restapi-python-sdk-en
-</code></pre><p><a href="https://git.code.oa.com/tcaplus/tcaplusdb-restapi-python-sdk-en" target="_blank" rel="external">https://git.code.oa.com/tcaplus/tcaplusdb-restapi-python-sdk-en</a><br>```<br>Include 8 basic API interfaces to operate TcaplusDB data</p>
+<p>The above configuration is shown in following figure.<br><img src="/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png" alt="AWS_Data_Pipeline_Create"></p>
+<h2 id="4-3-Activate-Data-Pipeline"><a href="#4-3-Activate-Data-Pipeline" class="headerlink" title="4.3 Activate Data Pipeline"></a>4.3 Activate Data Pipeline</h2><p>After configure the pipeline , activate the pipeline and you will see below informations:<br><img src="/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png" alt="AWS_Data_Pipeline_Activate"></p>
+<h2 id="4-4-Check-Status"><a href="#4-4-Check-Status" class="headerlink" title="4.4 Check Status"></a>4.4 Check Status</h2><p>If the Data pipeline has been scheduled successfully, it will execute the exportation step by step. When the workflow has shown the <code>HEALTHY</code> status, it means the exporting work is done, otherwise the <code>Health Status</code> will be   <code>ERROR</code>.</p>
+<h2 id="4-5-Check-Data"><a href="#4-5-Check-Data" class="headerlink" title="4.5 Check Data"></a>4.5 Check Data</h2><p>The Data Pipeline uses map/reduce technology to transform data parallelly. And the result file of exportation in S3 bucket is like below.</p>
+<pre><code>{&quot;Username&quot;:{&quot;s&quot;:&quot;kevinortega9345&quot;},&quot;Subscribed&quot;:{&quot;bOOL&quot;:true},&quot;Zipcode&quot;:{&quot;n&quot;:&quot;86120&quot;},&quot;ReminderDate&quot;:{&quot;s&quot;:&quot;2020-02-07&quot;},&quot;PointsEarned&quot;:{&quot;n&quot;:&quot;4351&quot;} }
+{&quot;Username&quot;:{&quot;s&quot;:&quot;ashleywilson3807&quot;},&quot;Subscribed&quot;:{&quot;bOOL&quot;:true},&quot;Zipcode&quot;:{&quot;n&quot;:&quot;20612&quot;},&quot;ReminderDate&quot;:{&quot;s&quot;:&quot;2020-03-02&quot;},&quot;PointsEarned&quot;:{&quot;n&quot;:&quot;4121&quot;}}
+{&quot;Username&quot;:{&quot;s&quot;:&quot;frazierfrank8872&quot;},&quot;Subscribed&quot;:{&quot;bOOL&quot;:true},&quot;Zipcode&quot;:{&quot;n&quot;:&quot;9456&quot;},&quot;ReminderDate&quot;:{&quot;s&quot;:&quot;2020-02-17&quot;},&quot;PointsEarned&quot;:{&quot;n&quot;:&quot;7896&quot;}}
+{&quot;Username&quot;:{&quot;s&quot;:&quot;eric383371&quot;},&quot;Subscribed&quot;:{&quot;bOOL&quot;:true},&quot;Zipcode&quot;:{&quot;n&quot;:&quot;7748&quot;},&quot;ReminderDate&quot;:{&quot;s&quot;:&quot;2020-02-25&quot;},&quot;PointsEarned&quot;:{&quot;n&quot;:&quot;6303&quot;}}
+</code></pre><h1 id="5-Summary"><a href="#5-Summary" class="headerlink" title="5. Summary"></a>5. Summary</h1><p>This section presents a simple way to migrate data from DynamoDB to S3. However, if the data size is over 1GB or 10+GB, the performance will be worse, the crucial bottleneck is the transformation speed of DynamoDB data with Data Pipeline, you need consider the optimization measures for accelerating the transformation speed, such as using better performance core instance type and increasing the number of core instance count.</p>
 
     
     </div>
