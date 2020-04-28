@@ -17,7 +17,7 @@
 
 
     <meta name="description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
-<meta name="keywords" content="DynamoDB, S3">
+<meta name="keywords" content="DynamoDB, S3, Faker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta property="og:url" content="http://zendwind.com/zh-cn/2020/04/28/dynamodb-export-with-pipeline/index.html">
@@ -26,7 +26,7 @@
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png">
-<meta property="og:updated_time" content="2020-04-28T15:10:22.603Z">
+<meta property="og:updated_time" content="2020-04-28T15:15:27.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta name="twitter:description" content="This article introduces how to export DynamoDB to Amazon S3 with AWS Data Pipeline.">
@@ -160,7 +160,7 @@
                     
                     
                     
-                    <a class="navbar-item" href="#3-3-Make-sample-data">3.3&nbsp;&nbsp;3.3 Make sample data</a>
+                    <a class="navbar-item" href="#3-3-Fake-Sample-Data">3.3&nbsp;&nbsp;3.3 Fake Sample Data</a>
                     
                     
                     <hr class="navbar-divider">
@@ -286,19 +286,13 @@
 </ul>
 <h2 id="2-2-AWS-Credentials"><a href="#2-2-AWS-Credentials" class="headerlink" title="2.2 AWS Credentials"></a>2.2 AWS Credentials</h2><p>Configure AWS credentials in  your host, refer to <a href="https://docs.aws.amazon.com/opsworks/latest/userguide/registered-instances-register-registering-cli.html" target="_blank" rel="external">official website</a>.</p>
 <ul>
-<li><ol>
 <li>Create a <code>.aws</code> directory in your home directory, such as <code>/root/.aws</code>, touch a <code>credentials</code> file in <code>.aws</code> direcotry , and replace aws_access_key_id and aws_secret_access_key of your aws account.</li>
-</ol>
-</li>
 </ul>
 <pre><code>[default]
 aws_access_key_id=xxx
 aws_secret_access_key=xxx
 </code></pre><ul>
-<li><ol>
 <li>Set up region info in <code>config</code> file under <code>.aws</code> directory</li>
-</ol>
-</li>
 </ul>
 <pre><code>[default]
 region = xxx
@@ -364,7 +358,7 @@ pip install Faker --user
 </code></pre><h2 id="3-2-Verify-Table-Status"><a href="#3-2-Verify-Table-Status" class="headerlink" title="3.2 Verify Table Status"></a>3.2 Verify Table Status</h2><pre><code>aws dynamodb describe-table --table-name Dynamodb_test \
     --query &apos;Table.TableStatus&apos;
 </code></pre><p>The <code>ACTIVE</code> response means that table has been created successfully.</p>
-<h2 id="3-3-Make-sample-data"><a href="#3-3-Make-sample-data" class="headerlink" title="3.3 Make sample data"></a>3.3 Make sample data</h2><p>Use <code>faker</code> module in Python to make sample data for DynamoDB, the code is as below:</p>
+<h2 id="3-3-Fake-Sample-Data"><a href="#3-3-Fake-Sample-Data" class="headerlink" title="3.3 Fake Sample Data"></a>3.3 Fake Sample Data</h2><p>Use <code>faker</code> module in Python to make sample data for DynamoDB, the code is as below:</p>
 <pre><code>import argparse
 import boto3
 from faker import Faker
@@ -502,7 +496,7 @@ if __name__ == &quot;__main__&quot;:
     
     <div class="columns is-variable is-1 is-multiline is-mobile">
     
-        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/DynamoDB-S3/">#DynamoDB, S3</a></span>
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/DynamoDB-S3-Faker/">#DynamoDB, S3, Faker</a></span>
     
     </div>
     
