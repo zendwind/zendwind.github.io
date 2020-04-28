@@ -26,7 +26,7 @@
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png">
 <meta property="og:image" content="http://zendwind.com/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png">
-<meta property="og:updated_time" content="2020-04-28T15:26:46.192Z">
+<meta property="og:updated_time" content="2020-04-28T15:38:30.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Export DynamoDB to S3 with AWS Data Pipeline">
 <meta name="twitter:description" content="This article presents how to migrate full data from AWS DynamoDB  to Amazon S3 with AWS Data Pipeline.">
@@ -482,7 +482,7 @@ if __name__ == &quot;__main__&quot;:
 </li>
 </ul>
 <p>The above configuration is shown in following figure.<br><img src="/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_create.png" alt="AWS_Data_Pipeline_Create"></p>
-<h2 id="4-3-Activate-Data-Pipeline"><a href="#4-3-Activate-Data-Pipeline" class="headerlink" title="4.3 Activate Data Pipeline"></a>4.3 Activate Data Pipeline</h2><p>After configure the pipeline , activate the pipeline and you will see below informations:<br><img src="/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png" alt="AWS_Data_Pipeline_Activate"></p>
+<h2 id="4-3-Activate-Data-Pipeline"><a href="#4-3-Activate-Data-Pipeline" class="headerlink" title="4.3 Activate Data Pipeline"></a>4.3 Activate Data Pipeline</h2><p>After configuring the pipeline, activate the pipeline and you will see below information:<br><img src="/2020/04/28/dynamodb-export-with-pipeline/data_pipeline_activate.png" alt="AWS_Data_Pipeline_Activate"></p>
 <h2 id="4-4-Check-Status"><a href="#4-4-Check-Status" class="headerlink" title="4.4 Check Status"></a>4.4 Check Status</h2><p>If the Data pipeline has been scheduled successfully, it will execute the exportation step by step. When the workflow has shown the <code>HEALTHY</code> status, it means the exporting work is done, otherwise the <code>Health Status</code> will be   <code>ERROR</code>.</p>
 <h2 id="4-5-Check-Data"><a href="#4-5-Check-Data" class="headerlink" title="4.5 Check Data"></a>4.5 Check Data</h2><p>The Data Pipeline uses map/reduce technology to transform data parallelly. And the result file of exportation in S3 bucket is like below.</p>
 <pre><code>{&quot;Username&quot;:{&quot;s&quot;:&quot;kevinortega9345&quot;},&quot;Subscribed&quot;:{&quot;bOOL&quot;:true},&quot;Zipcode&quot;:{&quot;n&quot;:&quot;86120&quot;},&quot;ReminderDate&quot;:{&quot;s&quot;:&quot;2020-02-07&quot;},&quot;PointsEarned&quot;:{&quot;n&quot;:&quot;4351&quot;} }
