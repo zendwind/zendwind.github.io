@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Zend Wind&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+<link href="/zh-cn/index.html" rel="alternate" hreflang="en" />
+    
+
+
+
+
+
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Zend Wind&#39;s Blog">
+<meta property="og:url" content="http://zendwind.com/zh-cn/zh-cn/index.html">
+<meta property="og:site_name" content="Zend Wind&#39;s Blog">
+<meta property="og:locale" content="zh-cn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zend Wind&#39;s Blog">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+
+  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/zh-cn">
+                
+                <img src="/images/logo.png" alt="" height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/zh-cn/zh-cn/archives">归档</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/categories">分类</a>
+            
+            <a class="navbar-item "
+               href="/zh-cn/about">关于</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/zendwind">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+       
+            
+<div class="column is-narrow has-text-centered">
+    <div class="dropdown is-up is-right is-hoverable" style="margin-top: -0.2em;">
+        <div class="dropdown-trigger">
+            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+                <span class="icon">
+                    <i class="fas fa-globe"></i>
+                </span>
+                <span>简体中文</span>
+                <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+            </button>
+        </div>
+        <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
+            <div class="dropdown-content">
+            
+                <a href="/zh-cn/index.html" class="dropdown-item">
+                    English
+                </a>
+            
+                <a href="/zh-cn/zh-cn/index.html" class="dropdown-item">
+                    简体中文
+                </a>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+   
+
+</nav>
+
+    <section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/07/28/zh-cn/tcaplusdb-terraform/" itemprop="url"></a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2020-07-28T12:28:31.294Z" itemprop="datePublished">
+                        7月 28 2020</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            15 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="1-&#x524D;&#x8A00;"><a href="#1-&#x524D;&#x8A00;" class="headerlink" title="1.&#x524D;&#x8A00;"></a>1.&#x524D;&#x8A00;</h1><p>Terraform&#x662F;&#x56FD;&#x5916;&#x5F88;&#x6D41;&#x884C;&#x7684;&#x8D44;&#x6E90;&#x7F16;&#x6392;&#x5DE5;&#x5177;&#xFF0C;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#x53EF;&#x67E5;&#x770B;<a href="https://www.terraform.io/" target="_blank" rel="external">Hashicorp&#x5B98;&#x7F51;</a>&#x3002;TIC&#x662F;&#x817E;&#x8BAF;&#x4E91;&#x57FA;&#x4E8E;Terraform&#x6253;&#x9020;&#x4E00;&#x6B3E;&#x514D;&#x8D39;&#x670D;&#x52A1;&#xFF0C;&#x53EF;&#x4E3A;&#x4E0D;&#x540C;&#x4E91;&#x5E73;&#x53F0;&#x7684;&#x57FA;&#x7840;&#x67B6;&#x6784;&#x8D44;&#x6E90;&#x63D0;&#x4F9B;&#x6613;&#x7528;&#x3001;&#x9AD8;&#x6548;&#x3001;&#x5B89;&#x5168;&#x7684;&#x7EDF;&#x4E00;&#x8D44;&#x6E90;&#x7F16;&#x6392;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#xFF0C;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x58F0;&#x660E;&#x578B;&#x8BED;&#x8A00;&#xFF0C;&#x517C;&#x5BB9;&#x4F17;&#x591A;&#x4F18;&#x79C0;&#x7684;&#x5F00;&#x6E90;&#x793E;&#x533A;&#x5DE5;&#x5177;&#xFF0C;&#x540C;&#x65F6;&#x63D0;&#x4F9B;&#x4EE3;&#x7801;&#x7F16;&#x8F91;&#x548C;&#x89C6;&#x56FE;&#x7F16;&#x8F91;&#x4E24;&#x79CD;&#x6A21;&#x5F0F;&#xFF0C;&#x6709;&#x6548;&#x964D;&#x4F4E;&#x5B66;&#x4E60;&#x6210;&#x672C;&#x548C;&#x4F7F;&#x7528;&#x96BE;&#x5EA6;&#x3002;TIC &#x4F7F;&#x7528;&#x4EE3;&#x7801;&#x7248;&#x672C;&#x7BA1;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x7BA1;&#x7406;&#x57FA;&#x7840;&#x67B6;&#x6784;&#xFF0C;&#x4FDD;&#x969C;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x7684;&#x6784;&#x5EFA;&#x3001;&#x7BA1;&#x7406;&#x548C;&#x8FC1;&#x79FB;&#x7684;&#x53EF;&#x9760;&#x6027;&#x548C;&#x5B89;&#x5168;&#x6027;&#x3002;&#x5177;&#x4F53;&#x4EA7;&#x54C1;&#x4ECB;&#x7ECD;&#x53EF;&#x53C2;&#x8003;<a href="https://cloud.tencent.com/product/tic" target="_blank" rel="external">TIC&#x5B98;&#x7F51;</a>&#x3002;TcalplusDB&#x662F;&#x817E;&#x8BAF;&#x53BB;&#x63A8;&#x51FA;&#x7684;&#x4E00;&#x6B3E;&#x5168;&#x6258;&#x7BA1;NoSQL&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#xFF0C;&#x53EF;&#x4E3A;&#x7528;&#x6237;&#x63D0;&#x4F9B;&#x9AD8;&#x6027;&#x80FD;&#x3001;&#x4F4E;&#x6210;&#x672C;&#x3001;&#x6613;&#x6269;&#x5C55;&#x3001;&#x7A33;&#x5B9A;&#x3001;&#x5B89;&#x5168;&#x7684;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#xFF0C;&#x76EE;&#x524D;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#x4E8E;&#x738B;&#x8005;&#x8363;&#x8000;&#x3001;&#x523A;&#x6FC0;&#x6218;&#x573A;&#x3001;&#x7A7F;&#x8D8A;&#x706B;&#x7EBF;&#x3001;&#x706B;&#x5F71;&#x5FCD;&#x8005;&#x7B49;&#x6570;&#x767E;&#x6B3E;&#x6D41;&#x884C;&#x6E38;&#x620F;&#xFF0C;&#x5177;&#x4F53;&#x4EA7;&#x54C1;&#x80FD;&#x529B;&#x4ECB;&#x7ECD;&#x53EF;&#x53C2;&#x8003;&#x53E6;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x300A;<a href="https://cloud.tencent.com/developer/article/1637625" target="_blank" rel="external">&#x817E;&#x8BAF;&#x4E91;TcaplusDB&#x57FA;&#x7840;&#x80FD;&#x529B;&#x4ECB;&#x7ECD;</a>&#x300B;&#x3002;</p>
+<p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5229;&#x7528;TIC&#x8FDB;&#x884C;TcaplusDB&#x8D44;&#x6E90;&#x7684;&#x7F16;&#x6392;&#x8C03;&#x5EA6;&#x3002;</p>
+<h1 id="2-&#x73AF;&#x5883;&#x51C6;&#x5907;"><a href="#2-&#x73AF;&#x5883;&#x51C6;&#x5907;" class="headerlink" title="2.&#x73AF;&#x5883;&#x51C6;&#x5907;"></a>2.&#x73AF;&#x5883;&#x51C6;&#x5907;</h1><h2 id="2-1-&#x817E;&#x8BAF;&#x4E91;&#x73AF;&#x5883;"><a href="#2-1-&#x817E;&#x8BAF;&#x4E91;&#x73AF;&#x5883;" class="headerlink" title="2.1 &#x817E;&#x8BAF;&#x4E91;&#x73AF;&#x5883;"></a>2.1 &#x817E;&#x8BAF;&#x4E91;&#x73AF;&#x5883;</h2><p>&#x6240;&#x6709;&#x64CD;&#x4F5C;&#x4F9D;&#x8D56;&#x4E8E;&#x7528;&#x6237;&#x9700;&#x8981;&#x63D0;&#x524D;&#x7533;&#x8BF7;&#x817E;&#x8BAF;&#x4E91;&#x8D26;&#x53F7;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;&#x7533;&#x8BF7;&#x4E00;&#x4E2A;API&#x5BC6;&#x94A5;&#x3002;</p>
+<h2 id="2-2-TIC&#x73AF;&#x5883;"><a href="#2-2-TIC&#x73AF;&#x5883;" class="headerlink" title="2.2 TIC&#x73AF;&#x5883;"></a>2.2 TIC&#x73AF;&#x5883;</h2><p>&#x817E;&#x8BAF;&#x4E91;TIC&#x5165;&#x95E8;&#x53EF;&#x53C2;&#x8003;<a href="https://cloud.tencent.com/product/tic/getting-started" target="_blank" rel="external">&#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x3002;&#x817E;&#x8BAF;&#x4E91;TIC&#x63A7;&#x5236;&#x53F0;&#x5305;&#x62EC;&#x51E0;&#x4E2A;&#x90E8;&#x5206;:</p>
+<ul>
+<li><strong>&#x8D44;&#x6E90;&#x6808;</strong>: &#x540C;&#x4E00;&#x57FA;&#x7840;&#x67B6;&#x6784;&#x7684;&#x6240;&#x6709;&#x4E91;&#x8D44;&#x6E90;&#x7684;&#x6709;&#x673A;&#x7EC4;&#x5408;&#x79F0;&#x4E4B;&#x4E3A;&#x8D44;&#x6E90;&#x6808;&#xFF0C;&#x817E;&#x8BAF;&#x4E91; TIC &#x57FA;&#x4E8E;&#x8D44;&#x6E90;&#x6808;&#x7684;&#x7EF4;&#x5EA6;&#x5168;&#x9762;&#x7BA1;&#x7406;&#x57FA;&#x7840;&#x67B6;&#x6784;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x8D44;&#x6E90;&#x6808;&#x7684;&#x7248;&#x672C;&#x3001;&#x8D44;&#x6E90;&#x548C;&#x5386;&#x53F2;&#x4E8B;&#x4EF6;&#x7BA1;&#x7406;</li>
+<li><strong>&#x6A21;&#x677F;&#x7BA1;&#x7406;</strong>: &#x817E;&#x8BAF;&#x4E91; TIC &#x4EA7;&#x54C1;&#x4E00;&#x5171;&#x63D0;&#x4F9B;&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x6A21;&#x677F;&#x7BA1;&#x7406;&#xFF0C;&#x7528;&#x6237;&#x79C1;&#x6709;&#x7684;&#x6A21;&#x677F;&#x548C;&#x516C;&#x5171;&#x6A21;&#x677F;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x81EA;&#x5DF1;&#x7684;&#x79C1;&#x6709;&#x6A21;&#x677F;&#x7528;&#x4EE5;&#x91CD;&#x590D;&#x4F7F;&#x7528;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5C06;&#x516C;&#x5171;&#x6A21;&#x677F;&#x4FDD;&#x5B58;&#x4E3A;&#x79C1;&#x6709;&#x6A21;&#x677F;&#x3002;&#x516C;&#x5171;&#x6A21;&#x677F;&#x4E3A;&#x817E;&#x8BAF;&#x4E91;&#x8BA4;&#x8BC1;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;&#xFF0C;&#x7528;&#x6237;&#x53EA;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x7B80;&#x5355;&#x7684;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x4F7F;&#x7528;&#x3002;</li>
+<li><strong>&#x8D44;&#x6E90;&#x7BA1;&#x7406;</strong>: &#x8D44;&#x6E90;&#x5217;&#x8868;&#x7F57;&#x5217;&#x51FA;&#x5F53;&#x524D;&#x817E;&#x8BAF;&#x4E91; TIC &#x652F;&#x6301;&#x7684;&#x8D44;&#x6E90;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC;&#x53C2;&#x6570;&#x4F7F;&#x7528;&#x9650;&#x5236;&#x3001;&#x5E94;&#x7528;&#x6848;&#x4F8B;&#x548C;&#x5BF9;&#x5E94;&#x7684;&#x4EA7;&#x54C1;&#x5B98;&#x7F51;&#x53C2;&#x8003;&#x3002;</li>
+</ul>
+<h1 id="3-TIC&#x5B9E;&#x64CD;"><a href="#3-TIC&#x5B9E;&#x64CD;" class="headerlink" title="3. TIC&#x5B9E;&#x64CD;"></a>3. TIC&#x5B9E;&#x64CD;</h1><p>&#x4ECE;TIC&#x63A7;&#x5236;&#x53F0;&#x521B;&#x5EFA;TcaplusDB&#x8D44;&#x6E90;&#x7F16;&#x6392;&#x8FC7;&#x7A0B;&#x6709;&#x51E0;&#x4E2A;&#x6B65;&#x9AA4;:&#x3000;&#x6A21;&#x677F;&#x521B;&#x5EFA;&#x3001;&#x8D44;&#x6E90;&#x6808;&#x521B;&#x5EFA;&#x3001;&#x53C2;&#x6570;&#x8C03;&#x6574;&#x3001;&#x7F16;&#x6392;&#x524D;&#x8BA1;&#x5212;&#x3001;&#x7F16;&#x6392;&#x6267;&#x884C;&#x7B49;&#x51E0;&#x4E2A;&#x6B65;&#x9AA4;&#x3002;</p>
+<h2 id="3-1-&#x6A21;&#x677F;&#x51C6;&#x5907;"><a href="#3-1-&#x6A21;&#x677F;&#x51C6;&#x5907;" class="headerlink" title="3.1 &#x6A21;&#x677F;&#x51C6;&#x5907;"></a>3.1 &#x6A21;&#x677F;&#x51C6;&#x5907;</h2><p>&#x5177;&#x4F53;TIC&#x4E2D;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x8BED;&#x6CD5;&#x8BF7;&#x53C2;&#x8003;Terraform&#x5B98;&#x7F51;&#x4E0B;Providers&#x4E2D;&#x5173;&#x4E8E;TencentCloud&#x7684;TcpalusDB&#x76F8;&#x5173;&#x8D44;&#x6E90;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;&#x3002;&#x8FD9;&#x91CC;&#x4EE5;&#x51C6;&#x5907;&#x79C1;&#x6709;&#x6A21;&#x677F;&#x4E3A;&#x4F8B;&#x4ECB;&#x7ECD;&#x4E0B;&#x6A21;&#x677F;&#x521B;&#x5EFA;&#x8FC7;&#x7A0B;&#x3002;<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_temp.png" alt="tic-template"></p>
+<p>TcaplusDB&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x5206;&#x6210;&#x4E09;&#x5757;&#xFF1A;</p>
+<ul>
+<li><strong>main.tf</strong>:  &#x7BA1;&#x7406;&#x6240;&#x6709;&#x7684;Resource&#x8D44;&#x6E90;&#xFF0C;TcaplusDB&#x7684;&#x8D44;&#x6E90;&#x5305;&#x62EC;&#x51E0;&#x5757;: VPC&#x8D44;&#x6E90;&#x3001;&#x5B50;&#x7F51;&#x8D44;&#x6E90;&#x3001;&#x96C6;&#x7FA4;&#x8D44;&#x6E90;&#x3001;&#x8868;&#x683C;&#x7EC4;&#x8D44;&#x6E90;&#x3001;IDL&#x8D44;&#x6E90;&#x53CA;&#x8868;&#x8D44;&#x6E90;;<ul>
+<li><strong>VPC&#x8D44;&#x6E90;</strong>: TcaplusDB&#x90E8;&#x7F72;&#x5728;&#x817E;&#x8BAF;&#x4E91;VPC&#x73AF;&#x5883;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x521B;&#x5EFA;&#x8868;&#x4E4B;&#x524D;&#x521B;&#x5EFA;&#x597D;&#x76F8;&#x5E94;&#x7684;VPC</li>
+<li><strong>&#x5B50;&#x7F51;&#x8D44;&#x6E90;</strong>:  &#x5B50;&#x7F51;&#x8D44;&#x6E90;&#x4E0E;VPC&#x8D44;&#x6E90;&#x5173;&#x8054;&#xFF0C;&#x7528;&#x4E8E;&#x8868;&#x793A;TcaplusDB&#x8D44;&#x6E90;&#x6240;&#x5C5E;&#x54EA;&#x4E2A;&#x5B50;&#x7F51;</li>
+<li><strong>&#x96C6;&#x7FA4;&#x8D44;&#x6E90;</strong>:  TcaplusDB&#x8868;&#x6240;&#x5728;&#x96C6;&#x7FA4;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;&#x6570;&#x636E;&#x5E93;&#x6982;&#x5FF5;</li>
+<li><strong>&#x8868;&#x683C;&#x7EC4;&#x8D44;&#x6E90;</strong>: &#x903B;&#x8F91;&#x5206;&#x7EC4;&#xFF0C;&#x7C7B;&#x4F3C;&#x6E38;&#x620F;&#x5206;&#x533A;&#x6982;&#x5FF5;&#xFF0C;&#x5982;&#x5FAE;&#x4FE1;&#x533A;&#x3001;QQ&#x533A;</li>
+<li><strong>IDL&#x8D44;&#x6E90;</strong>: &#x7528;&#x4E8E;&#x5B9A;&#x4E49;&#x8868;&#x7ED3;&#x6784;</li>
+<li><strong>&#x8868;&#x8D44;&#x6E90;</strong>: &#x7528;&#x4E8E;&#x521B;&#x5EFA;TcaplusDB&#x5177;&#x4F53;&#x7684;&#x8868;</li>
+</ul>
+</li>
+<li><strong>variables.tf</strong>: &#x7BA1;&#x7406;&#x6240;&#x6709;&#x53D8;&#x91CF;&#xFF0C;&#x7528;&#x4E8E;<code>main.tf</code>&#x5F15;&#x7528;</li>
+<li><strong>game_players.proto</strong>: &#x9ED8;&#x8BA4;&#x7684;&#x8868;&#x7ED3;&#x6784;&#x5B9A;&#x4E49;&#x6587;&#x4EF6;&#xFF0C;Google Protobuf3&#x534F;&#x8BAE;&#x683C;&#x5F0F;&#x5B9A;&#x4E49;</li>
+</ul>
+<p>&#x5177;&#x4F53;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;:</p>
+<ul>
+<li><strong>main.tf</strong><br>```main.tf</li>
+</ul>
+<p>resource &#x201C;tencentcloud_vpc&#x201D; &#x201C;tw_vpc&#x201D; {<br>  name       = var.instance_name<br>  cidr_block = var.vpc_cidr<br>  description  = &#x201C;TencentCloud VPC resoource&#x201D;<br>}</p>
+<p>resource &#x201C;tencentcloud_subnet&#x201D; &#x201C;tw_sub&#x201D; {<br>  name              = var.instance_name<br>  vpc_id            = tencentcloud_vpc.tw_vpc.id<br>  availability_zone = var.availability_zone<br>  cidr_block        = var.subnet_cidr<br>  is_multicast      = false<br>  description = &#x201C;Subnet resource of VPC&#x201D;<br>}</p>
+<p>resource &#x201C;tencentcloud_tcaplus_cluster&#x201D; &#x201C;test_cluster&#x201D; {<br>  idl_type                 = var.cluster_idl<br>  cluster_name                 = var.cluster_name<br>  vpc_id                   = tencentcloud_vpc.tw_vpc.id<br>  subnet_id                = tencentcloud_subnet.tw_sub.id</p>
+<p>  password                 = var.cluster_password<br>  old_password_expire_last = 3600<br>  description  = &#x201C;TcaplusDB Cluster Resource&#x201D;<br>}</p>
+<p>resource &#x201C;tencentcloud_tcaplus_tablegroup&#x201D; &#x201C;tablegroup&#x201D; {<br>  cluster_id      = tencentcloud_tcaplus_cluster.test_cluster.id<br>  tablegroup_name = var.tablegroup_name<br>  description = &#x201C;TcaplusDB TableGroup resource&#x201D;<br>}</p>
+<p>resource &#x201C;tencentcloud_tcaplus_idl&#x201D; &#x201C;test_idl&#x201D; {<br>  cluster_id        = tencentcloud_tcaplus_cluster.test_cluster.id<br>  tablegroup_id = tencentcloud_tcaplus_tablegroup.tablegroup.id</p>
+<p>  file_name     = var.idl_file_name<br>  file_type     = var.idl_file_type<br>  file_ext_type = var.idl_file_ext_type<br>  file_content  = file(var.idl_temp_file)<br>  description = &#x201C;TcaplusDB IDL resource&#x201D;<br>}<br>resource &#x201C;tencentcloud_tcaplus_table&#x201D; &#x201C;test_table&#x201D; {<br>  cluster_id  = tencentcloud_tcaplus_cluster.test_cluster.id<br>  tablegroup_id = tencentcloud_tcaplus_tablegroup.tablegroup.id<br>  table_name         = var.table_name<br>  table_type         = var.table_type<br>  description        = var.table_desc<br>  idl_id             = tencentcloud_tcaplus_idl.test_idl.id<br>  table_idl_type     = var.table_idl<br>  reserved_read_cu  = var.reserved_read_cu<br>  reserved_write_cu = var.reserved_write_cu<br>  reserved_volume    = var.reserved_volume<br>  description  = &#x201C;TcaplusDB table resource&#x201D;<br>}</p>
+<pre><code>
+* __variables.tf__
+```variables.tf
+variable &quot;region&quot; {
+  default = &quot;ap-shanghai&quot;
+}
+variable &quot;availability_zone&quot; {
+  default = &quot;ap-shanghai-1&quot;
+}
+variable &quot;instance_name&quot; {
+  default = &quot;vpc_test&quot;
+}
+variable &quot;vpc_cidr&quot; {
+  default = &quot;172.18.0.0/16&quot;
+}
+variable &quot;subnet_cidr&quot; {
+  default = &quot;172.18.0.0/24&quot;
+}
+
+variable &quot;cluster_idl&quot; {
+  default = &quot;PROTO&quot;
+}
+variable &quot;cluster_name&quot; {
+  default = &quot;tw_tcaplus_cluster&quot;
+}
+variable &quot;cluster_password&quot; {
+  default = &quot;TcaplusDB2020&quot;
+}
+variable &quot;tablegroup_name&quot; {
+  default = &quot;tw_tcaplus_tb_1&quot;
+}
+
+variable &quot;idl_file_name&quot; {
+  default = &quot;game_players&quot;
+}
+
+variable &quot;idl_file_type&quot; {
+  default = &quot;PROTO&quot;
+}
+variable &quot;idl_file_ext_type&quot; {
+  default = &quot;proto&quot;
+}
+
+variable &quot;idl_temp_file&quot; {
+  default = &quot;game_players.proto&quot;
+}
+variable &quot;table_name&quot; {
+  default = &quot;game_players&quot;
+}
+variable &quot;table_type&quot; {
+  default = &quot;GENERIC&quot;
+}
+variable &quot;table_desc&quot; {
+  default = &quot;tic_test&quot;
+}
+
+variable &quot;table_idl&quot; {
+  default = &quot;PROTO&quot;
+}
+
+variable &quot;reserved_read_cu&quot; {
+  default = &quot;80&quot;
+}
+variable &quot;reserved_write_cu&quot; {
+  default = &quot;20&quot;
+}
+variable &quot;reserved_volume&quot; {
+  default = &quot;1&quot;
+}
+</code></pre><ul>
+<li><strong>game_players.proto</strong><br>```game_players.proto<br>syntax = &#x201C;proto3&#x201D;;                      // Specify the version of the protocol buffers language</li>
+</ul>
+<p>import &#x201C;tcaplusservice.optionv1.proto&#x201D;; // Use the public definitions of TcaplusDB by importing them.</p>
+<p>message game_players {  // Define a TcaplusDB table with message</p>
+<pre><code>// Specify the primary keys with the option tcaplusservice.tcaplus_primary_key
+// The primary key of a TcaplusDB table has a limit of 4 fields
+option(tcaplusservice.tcaplus_primary_key) = &quot;player_id, player_name, player_email&quot;;
+
+// Specify the primary key indexes with the option tcaplusservice.tcaplus_index
+option(tcaplusservice.tcaplus_index) = &quot;index_1(player_id, player_name)&quot;;
+option(tcaplusservice.tcaplus_index) = &quot;index_2(player_id, player_email)&quot;;
+
+
+// Value Types supported by TcaplusDB
+// int32, int64, uint32, uint64, sint32, sint64, bool, fixed64, sfixed64, double, fixed32, sfixed32, float, string, bytes
+// Nested Types Message
+
+// primary key fields
+int64 player_id = 1;
+string player_name = 2;
+string player_email = 3;
+
+
+// Ordinary fields
+int32 game_server_id = 4;
+repeated string login_timestamp = 5;
+repeated string logout_timestamp = 6;
+bool is_online = 7;
+
+payment pay = 8;
+</code></pre><p>}</p>
+<p>message payment {</p>
+<pre><code>int64 pay_id = 1;
+uint64 amount = 2;
+int64 method = 3;
+</code></pre><p>}</p>
+<p>```</p>
+<h2 id="3-2-&#x8D44;&#x6E90;&#x6808;&#x51C6;&#x5907;"><a href="#3-2-&#x8D44;&#x6E90;&#x6808;&#x51C6;&#x5907;" class="headerlink" title="3.2 &#x8D44;&#x6E90;&#x6808;&#x51C6;&#x5907;"></a>3.2 &#x8D44;&#x6E90;&#x6808;&#x51C6;&#x5907;</h2><p>&#x5728;&#x521B;&#x5EFA;&#x597D;&#x6A21;&#x677F;&#x597D;&#xFF0C;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x5B9E;&#x9645;&#x7684;&#x8D44;&#x6E90;&#x521B;&#x5EFA;&#x52A8;&#x4F5C;&#x3002;</p>
+<h3 id="3-2-1-&#x521B;&#x5EFA;&#x8D44;&#x6E90;&#x6808;"><a href="#3-2-1-&#x521B;&#x5EFA;&#x8D44;&#x6E90;&#x6808;" class="headerlink" title="3.2.1 &#x521B;&#x5EFA;&#x8D44;&#x6E90;&#x6808;"></a>3.2.1 &#x521B;&#x5EFA;&#x8D44;&#x6E90;&#x6808;</h3><p><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_resource_stack.png" alt="tic-resource-stack"><br><strong>&#x6CE8;&#x610F;</strong>:</p>
+<ul>
+<li><strong>&#x5730;&#x57DF;&#x9009;&#x62E9;</strong>: &#x8FD9;&#x4E2A;&#x548C;&#x6A21;&#x677F;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x5730;&#x57DF;&#x53D8;&#x91CF;&#x6240;&#x586B;&#x7684;&#x503C;&#x8981;&#x4FDD;&#x6301;&#x4E00;&#x81F4;</li>
+<li><strong>&#x6307;&#x5B9A;&#x6A21;&#x677F;</strong>: &#x8FD9;&#x91CC;&#x9009;&#x62E9;&#x521A;&#x521B;&#x5EFA;&#x597D;&#x7684;&#x79C1;&#x6709;&#x6A21;&#x677F;</li>
+</ul>
+<h3 id="3-2-2-&#x53C2;&#x6570;&#x8C03;&#x6574;"><a href="#3-2-2-&#x53C2;&#x6570;&#x8C03;&#x6574;" class="headerlink" title="3.2.2 &#x53C2;&#x6570;&#x8C03;&#x6574;"></a>3.2.2 &#x53C2;&#x6570;&#x8C03;&#x6574;</h3><p>&#x9009;&#x62E9;&#x6A21;&#x677F;&#x540E;&#x70B9;&#x51FB;&#x4E0B;&#x4E00;&#x6B65;&#x4F1A;&#x663E;&#x793A;&#x6A21;&#x677F;&#xFF0C;&#x6B64;&#x6B65;&#x9700;&#x8981;&#x8C03;&#x6574;&#x4E0B;&#x6A21;&#x677F;&#x53C2;&#x6570;&#xFF0C;&#x5982;&#x5730;&#x57DF;&#x3001;&#x53EF;&#x7528;&#x533A;&#x3001;VPC&#x548C;&#x5B50;&#x7F51;CIDR&#x3002;<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_param_config.png" alt="tic-param-config"></p>
+<h3 id="3-2-3-&#x7F16;&#x6392;&#x8BA1;&#x5212;"><a href="#3-2-3-&#x7F16;&#x6392;&#x8BA1;&#x5212;" class="headerlink" title="3.2.3 &#x7F16;&#x6392;&#x8BA1;&#x5212;"></a>3.2.3 &#x7F16;&#x6392;&#x8BA1;&#x5212;</h3><p>&#x8C03;&#x6574;&#x5B8C;&#x53C2;&#x6570;&#x540E;&#xFF0C;&#x70B9;&#x51FB;&#x4E0B;&#x4E00;&#x6B65;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x8FDB;&#x5165;&#x7F16;&#x6392;&#x8BA1;&#x5212;&#xFF0C;&#x6B64;&#x6B65;&#x4F1A;&#x68C0;&#x67E5;&#x6240;&#x521B;&#x5EFA;&#x8D44;&#x6E90;&#x7684;&#x8BED;&#x6CD5;&#x662F;&#x5426;OK&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x95EE;&#x9898;, &#x4F1A;&#x663E;&#x793A;&#x6A21;&#x677F;&#x9700;&#x8981;&#x589E;&#x52A0;&#x7684;&#x8D44;&#x6E90;&#x6570;&#xFF0C;&#x5E76;&#x663E;&#x793A;Plan&#x4E3A;Finish&#x72B6;&#x6001;&#x3002;<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_plan.png" alt="tic-plan"></p>
+<h3 id="3-2-4-&#x7F16;&#x6392;&#x5E94;&#x7528;"><a href="#3-2-4-&#x7F16;&#x6392;&#x5E94;&#x7528;" class="headerlink" title="3.2.4 &#x7F16;&#x6392;&#x5E94;&#x7528;"></a>3.2.4 &#x7F16;&#x6392;&#x5E94;&#x7528;</h3><p>Plan&#x6267;&#x884C;&#x5B8C;&#x540E;&#xFF0C;&#x70B9;&#x51FB;&#x4E0B;&#x4E00;&#x6B65;&#x4F1A;&#x8FDB;&#x5165;Apply&#x6B65;&#x9AA4;&#xFF0C;&#x6B64;&#x6B65;&#x4F1A;&#x8981;&#x6C42;&#x8F93;&#x5165;&#x8D44;&#x6E90;&#x6808;&#x540D;&#x79F0;:<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_apply.png" alt="tic-apply"></p>
+<p>&#x70B9;&#x51FB;&#x786E;&#x8BA4;&#x540E;&#xFF0C;&#x4F1A;&#x751F;&#x6210;Apply&#x4E8B;&#x4EF6;&#xFF0C;&#x6B63;&#x5728;&#x6267;&#x884C;&#x4E2D;&#x7684;&#x4E8B;&#x4EF6;&#x72B6;&#x6001;&#x4E3A;<code>APPLY_IN_PROGRESS</code>&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_event.png" alt="tic-event"></p>
+<p>&#x6267;&#x884C;&#x5B8C;&#x540E;&#xFF0C;&#x53EA;&#x8981;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#xFF0C;&#x4E8B;&#x4EF6;&#x72B6;&#x6001;&#x4F1A;&#x53D8;&#x4E3A;<code>APPLY_COMPLETED</code>&#xFF0C;&#x70B9;&#x51FB;&#x4E8B;&#x4EF6;&#x8BE6;&#x60C5;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5177;&#x4F53;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_apply_result.png" alt="tic-apply-result"></p>
+<p>&#x6574;&#x4E2A;Apply&#x8FC7;&#x7A0B;&#x4F1A;&#x6839;&#x636E;Plan&#x4E2D;&#x7F16;&#x6392;&#x7684;&#x8D44;&#x6E90;&#x5217;&#x8868;&#x6309;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#x4E00;&#x4E00;&#x521B;&#x5EFA;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2D;&#x95F4;&#x6709;&#x4EFB;&#x4F55;&#x5F02;&#x5E38;&#xFF0C;&#x90FD;&#x4F1A;&#x5728;&#x6267;&#x884C;&#x7ED3;&#x679C;&#x4E2D;&#x663E;&#x793A;&#x5177;&#x4F53;&#x7684;&#x5F02;&#x5E38;&#x9519;&#x8BEF;&#x7801;&#xFF0C;&#x53EF;&#x6839;&#x636E;&#x5177;&#x4F53;&#x63CF;&#x8FF0;&#x6765;&#x76F8;&#x5E94;&#x5904;&#x7406;&#x3002;</p>
+<h3 id="3-2-5-&#x67E5;&#x770B;TcaplusDB&#x521B;&#x5EFA;&#x7ED3;&#x679C;"><a href="#3-2-5-&#x67E5;&#x770B;TcaplusDB&#x521B;&#x5EFA;&#x7ED3;&#x679C;" class="headerlink" title="3.2.5 &#x67E5;&#x770B;TcaplusDB&#x521B;&#x5EFA;&#x7ED3;&#x679C;"></a>3.2.5 &#x67E5;&#x770B;TcaplusDB&#x521B;&#x5EFA;&#x7ED3;&#x679C;</h3><p>&#x6839;&#x636E;Apply&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x63A5;&#x7740;&#x6253;&#x5F00;TcaplusDB&#x63A7;&#x5236;&#x53F0;&#xFF0C;&#x770B;&#x770B;&#x6A21;&#x677F;&#x4E2D;&#x6240;&#x5B9A;&#x4E49;&#x7684;&#x4E0A;&#x6D77;&#x5730;&#x57DF;(ap-shanghai)&#x521B;&#x5EFA;&#x7684;&#x540D;&#x79F0;&#x4E3A;<code>tw_tcaplus_cluster</code>&#x7684;&#x96C6;&#x7FA4;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;:<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_tcaplus_result.png" alt="tic-tcaplus-result"></p>
+<p>&#x5728;&#x8868;&#x683C;&#x7EC4;&#x4E2D;&#x67E5;&#x770B;&#x8868;&#x683C;&#x8BE6;&#x60C5;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF0C;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x6A21;&#x677F;&#x6240;&#x5B9A;&#x4E49;&#x7684;&#x540D;&#x4E3A;<code>game_players</code>&#x7684;TcaplusDB&#x8868;&#xFF0C;&#x8868;&#x7684;&#x521D;&#x59CB;&#x53C2;&#x6570;&#x548C;&#x6A21;&#x677F;&#x4FDD;&#x6301;&#x4E00;&#x81F4;(&#x8BFB;&#x5199;CU&#x3001;&#x5BB9;&#x91CF;)&#x3002;<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_tcaplus_table.png" alt="tic-tcaplus-table"></p>
+<h2 id="3-3-&#x8D44;&#x6E90;&#x6808;&#x9500;&#x6BC1;"><a href="#3-3-&#x8D44;&#x6E90;&#x6808;&#x9500;&#x6BC1;" class="headerlink" title="3.3 &#x8D44;&#x6E90;&#x6808;&#x9500;&#x6BC1;"></a>3.3 &#x8D44;&#x6E90;&#x6808;&#x9500;&#x6BC1;</h2><p>&#x9488;&#x5BF9;&#x6240;&#x521B;&#x5EFA;&#x7684;&#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x9500;&#x6BC1;&#xFF0C;TIC&#x652F;&#x6301;&#x4E00;&#x952E;&#x9500;&#x6BC1;&#xFF0C;&#x65B9;&#x4FBF;&#x7528;&#x6237;&#x7EDF;&#x4E00;&#x8FDB;&#x884C;&#x8D44;&#x6E90;&#x7684;&#x7BA1;&#x7406;&#x3002;&#x5728;&#x8D44;&#x6E90;&#x6808;&#x5217;&#x8868;&#x9875;&#x9762;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x9700;&#x8981;&#x9500;&#x6BC1;&#x7684;&#x8D44;&#x6E90;&#x6808;&#xFF0C;&#x9009;&#x4E2D;&#x540E;&#x70B9;&#x51FB;&#x9500;&#x6BC1;&#x5373;&#x53EF;&#x3002;<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_stack_destroy.png" alt="tic-stack-destroy"></p>
+<p>&#x5BF9;&#x4E8E;&#x5DF2;&#x7ECF;&#x9500;&#x6BC1;&#x7684;&#x8D44;&#x6E90;&#x6808;&#xFF0C;&#x8FD8;&#x652F;&#x6301;&#x5728;&#x539F;&#x6709;&#x7248;&#x672C;&#x4E0A;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x7248;&#x672C;&#x4FBF;&#x4E8E;&#x7528;&#x6237;&#x4EE5;&#x540C;&#x4E00;&#x4E2A;&#x8D44;&#x6E90;&#x6808;&#x521B;&#x5EFA;&#x540C;&#x6837;&#x7684;&#x8D44;&#x6E90;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;<br><img src="/2020/07/28/zh-cn/tcaplusdb-terraform/tic_stack_version.png" alt="tic-stack-version"></p>
+<h1 id="4-&#x603B;&#x7ED3;"><a href="#4-&#x603B;&#x7ED3;" class="headerlink" title="4. &#x603B;&#x7ED3;"></a>4. &#x603B;&#x7ED3;</h1><p>&#x672C;&#x6587;&#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x5229;&#x7528;TIC&#x5DE5;&#x5177;&#x6765;&#x8FDB;&#x884C;TcaplusDB&#x8D44;&#x6E90;&#x7684;&#x521B;&#x5EFA;&#x4E0E;&#x9500;&#x6BC1;&#xFF0C;&#x57FA;&#x4E8E;Terraform&#x4FBF;&#x5229;&#x7684;&#x7F16;&#x6392;&#x8C03;&#x5EA6;&#x673A;&#x5236;&#x65B9;&#x4FBF;&#x7528;&#x6237;&#x5FEB;&#x901F;&#x521B;&#x5EFA;&#x6216;&#x9500;&#x6BC1;&#x4E1A;&#x52A1;&#x6240;&#x9700;&#x8D44;&#x6E90;&#xFF0C;&#x907F;&#x514D;&#x4EBA;&#x5DE5;&#x8FDB;&#x884C;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x3002;</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/05/16/zh-cn/poor-charlie-almanack-read-note/" itemprop="url">穷查理宝典读书笔记</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2020-05-16T08:17:00.000Z" itemprop="datePublished">
+                        5月 16 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/读书笔记/">读书笔记</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x6700;&#x8FD1;&#x51E0;&#x5468;&#x5B8C;&#x6210;&#x4E86;&#x7A77;&#x67E5;&#x7406;&#x5B9D;&#x5178;&#x7684;&#x9605;&#x8BFB;&#xFF0C;&#x7F51;&#x4E0A;&#x4E5F;&#x6709;&#x5F88;&#x591A;&#x670B;&#x53CB;&#x603B;&#x7ED3;&#x4E86;&#x8BFB;&#x540E;&#x7B14;&#x8BB0;&#xFF0C;&#x4E0D;&#x8FC7;&#x5927;&#x591A;&#x5343;&#x7BC7;&#x4E00;&#x5F8B;&#xFF0C;&#x57FA;&#x672C;&#x5C5E;&#x4E8E;&#x96F7;&#x540C;&#x7684;&#x603B;&#x7ED3;&#xFF0C;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x5229;&#x7528;&#x601D;&#x7EF4;&#x8111;&#x56FE;&#x7684;&#x65B9;&#x5F0F;&#x603B;&#x7ED3;&#x4E86;&#x51E0;&#x4E2A;&#x65B9;&#x9762;&#x7684;&#x8BFB;&#x540E;&#x611F;: &#x5DE5;&#x4F5C;&#xFF0C;&#x751F;&#x6D3B;&#xFF0C;&#x5B66;&#x4E60;&#xFF0C;&#x6295;&#x8D44;&#xFF0C;&#x63A8;&#x8350;&#x4E66;&#x5355;&#x3002;&#x5E0C;&#x671B;&#x80FD;&#x5E2E;&#x52A9;&#x5230;&#x5927;&#x5BB6;Get&#x5230;&#x6838;&#x5FC3;&#x70B9;<br></p>
+        <p class="article-more-link">
+            <a href="/2020/05/16/zh-cn/poor-charlie-almanack-read-note/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/04/26/zh-cn/hexo-multi-lang-deploy/" itemprop="url">如何实现Hexo多语系博客搭建</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2020-04-26T15:23:00.000Z" itemprop="datePublished">
+                        4月 26 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/Hexo/">Hexo</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            15 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x6700;&#x8FD1;&#x4E24;&#x5929;&#x6298;&#x817E;&#x4E86;&#x5173;&#x4E8E;Hexo&#x591A;&#x8BED;&#x7CFB;&#x535A;&#x5BA2;&#x642D;&#x5EFA;&#x7684;&#x4E8B;&#x9879;&#xFF0C;&#x7F51;&#x4E0A;&#x6709;&#x5F88;&#x591A;&#x8D44;&#x6599;&#xFF0C;&#x4E0D;&#x8FC7;&#x573A;&#x666F;&#x90FD;&#x6709;&#x6240;&#x4E0D;&#x540C;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x63CF;&#x8FF0;&#x7684;&#x591A;&#x8BED;&#x7CFB;&#x53EA;&#x662F;&#x628A;&#x4E00;&#x4E9B;&#x5173;&#x952E;&#x8BCD;&#x56FD;&#x9645;&#x5316;&#x3002;&#x6211;&#x6298;&#x817E;&#x7684;&#x573A;&#x666F;&#x662F;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x53CC;&#x8BED;&#x535A;&#x5BA2;&#x7684;&#x7BA1;&#x7406;&#xFF08;&#x4E2D;&#x6587;&#xFF0B;&#x82F1;&#x6587;)&#xFF0C;&#x901A;&#x8FC7;&#x8BED;&#x7CFB;&#x5207;&#x6362;&#x7EC4;&#x4EF6;&#x5B9A;&#x4F4D;&#x5230;&#x5BF9;&#x5E94;&#x8BED;&#x7CFB;&#x7684;&#x535A;&#x5BA2;&#x9996;&#x9875;&#x3002;&#x672C;&#x6587;&#x5C31;&#x662F;&#x57FA;&#x4E8E;&#x8FD9;&#x6837;&#x7684;&#x80CC;&#x666F;&#x6765;&#x8BB0;&#x5F55;&#x6298;&#x817E;&#x7684;&#x8FC7;&#x7A0B;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/2020/04/26/zh-cn/hexo-multi-lang-deploy/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/05/15/zh-cn/hadoop-small-file-storage/" itemprop="url">【原】Hadoop小文件存储方案</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2018-05-15T15:30:00.000Z" itemprop="datePublished">
+                        5月 15 2018</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/Hadoop/">Hadoop</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            42 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x8FD1;&#x6765;&#xFF0C;&#x4E1A;&#x52A1;&#x90E8;&#x95E8;&#x56E0;&#x5386;&#x53F2;&#x539F;&#x56E0;&#xFF0C;&#x5E0C;&#x671B;&#x5BF9;&#x73B0;&#x5B58;&#x7684;&#x56FE;&#x7247;&#x3001;&#x5BF9;&#x8D26;&#x7B49;&#x5386;&#x53F2;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x6539;&#x9020;&#xFF0C;&#x7531;&#x539F;&#x5148;&#x7684;&#x5355;&#x673A;&#x5B58;&#x50A8;&#x6539;&#x6210;&#x5206;&#x5E03;&#x5F0F;&#x5B58;&#x50A8;&#x4FBF;&#x4E8E;&#x7BA1;&#x7406;&#x548C;&#x7EF4;&#x62A4;&#xFF0C;&#x76EE;&#x524D;&#x7EC4;&#x5185;&#x4E5F;&#x5728;&#x5927;&#x529B;&#x63A8;&#x5E7F;HDFS&#x5728;&#x90E8;&#x95E8;&#x7684;&#x5E94;&#x7528; &#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6B64;&#x80CC;&#x666F;&#x4E0B;&#xFF0C;&#x8C03;&#x7814;&#x4E86;&#x76EE;&#x524D;&#x5173;&#x4E8E;HDFS&#x7684;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#xFF0C;&#x672C;&#x6587;&#x4F1A;&#x7740;&#x91CD;&#x4ECE;&#x5C0F;&#x6587;&#x4EF6;&#x9700;&#x6C42;&#x5165;&#x624B;&#xFF0C;&#x5206;&#x6790;&#x76EE;&#x524D;&#x5404;&#x79CD;&#x73B0;&#x6709;&#x5C0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7684;&#x72B6;&#x51B5;&#x53CA;&#x5404;&#x81EA;&#x4F7F;&#x7528;&#x7684;&#x573A;&#x666F;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/2018/05/15/zh-cn/hadoop-small-file-storage/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2017/11/11/zh-cn/phoenix-introduction/" itemprop="url">【原】浅谈Phoenix在HBase中的应用</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2017-11-11T13:00:00.000Z" itemprop="datePublished">
+                        11月 11 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/HBase/">HBase</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            27 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x4E1A;&#x52A1;&#x4F7F;&#x7528;HBase&#x5DF2;&#x7ECF;&#x6709;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x4E86;&#xFF0C;&#x671F;&#x95F4;&#x4E5F;&#x53CD;&#x9988;&#x4E86;&#x5F88;&#x591A;&#x95EE;&#x9898;&#xFF0C;&#x5176;&#x4E2D;&#x53CD;&#x9988;&#x6700;&#x591A;&#x7684;&#x662F;HBase&#x662F;&#x5426;&#x652F;&#x6301;SQL&#x67E5;&#x8BE2;&#x548C;&#x4E8C;&#x7EA7;&#x7D22;&#x5F15;&#xFF0C;&#x7531;&#x4E8E;HBase&#x5728;&#x8FD9;&#x4E24;&#x5757;&#x4E0A;&#x76EE;&#x524D;&#x6682;&#x4E0D;&#x652F;&#x6301;&#xFF0C;&#x5BFC;&#x81F4;&#x4E1A;&#x52A1;&#x5728;&#x4F7F;&#x7528;&#x65F6;&#x65E0;&#x6CD5;&#x66F4;&#x597D;&#x7684;&#x5229;&#x7528;&#x73B0;&#x6709;&#x7684;&#x7ECF;&#x9A8C;&#x6765;&#x67E5;&#x8BE2;HBase&#x3002;&#x867D;&#x7136;HBase&#x672C;&#x8EAB;&#x4E0D;&#x652F;&#x6301;SQL&#xFF0C;&#x4F46;&#x4E1A;&#x754C;&#x8FD8;&#x662F;&#x6709;&#x73B0;&#x6210;&#x7684;&#x65B9;&#x6848;&#x6765;&#x652F;&#x6301;&#xFF0C;&#x5982;Hive&#x3001;Impala&#x3001;Phoenix&#x7B49;&#x3002;&#x4F17;&#x591A;&#x65B9;&#x6848;&#x5404;&#x6709;&#x5404;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x5BF9;Phoenix&#x4F5C;&#x4E00;&#x4E2A;&#x5927;&#x6982;&#x7684;&#x4ECB;&#x7ECD;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/2017/11/11/zh-cn/phoenix-introduction/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2017/10/15/zh-cn/python-read-dump/" itemprop="url">【原】Python解析mysqldump文件</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2017-10-15T14:00:00.000Z" itemprop="datePublished">
+                        10月 15 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/Python/">Python</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x6700;&#x8FD1;&#x5728;&#x505A;&#x79BB;&#x7EBF;&#x6570;&#x636E;&#x5BFC;&#x5165;HBase&#x9879;&#x76EE;&#xFF0C;&#x6D89;&#x53CA;&#x5C06;&#x5B58;&#x50A8;&#x5728;Mysql&#x4E2D;&#x7684;&#x5386;&#x53F2;&#x6570;&#x636E;&#x901A;&#x8FC7;bulkload&#x7684;&#x65B9;&#x5F0F;&#x5BFC;&#x5165;HBase&#x3002;&#x7531;&#x4E8E;&#x6E90;&#x6570;&#x636E;&#x5DF2;&#x7ECF;&#x4E0D;&#x5728;DB&#x4E2D;&#xFF0C;&#x800C;&#x662F;&#x4EE5;&#x6587;&#x4EF6;&#x5F62;&#x5F0F;&#x5B58;&#x50A8;&#x5728;&#x673A;&#x5668;&#x78C1;&#x76D8;&#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x662F;mysqldump&#x5BFC;&#x51FA;&#x7684;&#x683C;&#x5F0F;&#x3002;&#x5982;&#x4F55;&#x5C06;mysqldump&#x683C;&#x5F0F;&#x7684;&#x6587;&#x4EF6;&#x8F6C;&#x6362;&#x6210;&#x5B9E;&#x9645;&#x7684;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x63D0;&#x4F9B;&#x7ED9;bulkload&#x4F5C;&#x8F6C;&#x6362;&#xFF0C;&#x662F;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/2017/10/15/zh-cn/python-read-dump/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2017/10/11/zh-cn/hbase-read-write-exception-summary/" itemprop="url">【原】HBase读写异常问题总结</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2017-10-11T01:26:00.000Z" itemprop="datePublished">
+                        10月 11 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/HBase/">HBase</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            19 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x56FD;&#x5E86;&#x671F;&#x95F4;&#xFF0C;HBase&#x96C6;&#x7FA4;&#x51FA;&#x73B0;&#x4E00;&#x6B21;&#x6BD4;&#x8F83;&#x4E25;&#x91CD;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6545;&#x969C;&#x671F;&#x95F4;&#xFF0C;&#x4E1A;&#x52A1;&#x65B9;&#x53CD;&#x9988;&#x67E5;&#x8BE2;&#x5927;&#x91CF;&#x8D85;&#x65F6;&#xFF0C;&#x7531;&#x4E8E;&#x6D89;&#x53CA;&#x91CD;&#x70B9;&#x4E1A;&#x52A1;&#x67E5;&#x8BE2;&#xFF0C;&#x5F71;&#x54CD;&#x4E5F;&#x662F;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x590D;&#x76D8;&#x4E00;&#x4E0B;&#x95EE;&#x9898;&#x53D1;&#x751F;&#x8FC7;&#x7A0B;&#x5E76;&#x4F5C;&#x76F8;&#x5E94;&#x5206;&#x6790;<br></p>
+        <p class="article-more-link">
+            <a href="/2017/10/11/zh-cn/hbase-read-write-exception-summary/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2017/10/08/zh-cn/hadoop-ha-qjm/" itemprop="url">【原】Hadoop HA机制学习</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time class="is-text-small" datetime="2017-10-08T13:00:00.000Z" itemprop="datePublished">
+                        10月 8 2017</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/Hadoop/">Hadoop</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            31 分钟 读完
+        </span>
+        
+        
+        <span class="column is-narrow" id="busuanzi_value_page_pv">0</span>
+        <span class="column is-narror"> 阅读量</span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>&#x6700;&#x8FD1;&#x5728;&#x5185;&#x90E8;&#x5206;&#x4EAB;&#x8FC7;&#x4E00;&#x6B21;&#x5173;&#x4E8E;Hadoop&#x6280;&#x672F;&#x4E3B;&#x9898;&#x7684;&#x6F14;&#x8BB2;&#xFF0C;&#x7531;&#x4E8E;&#x63A5;&#x89E6;&#x65F6;&#x95F4;&#x4E0D;&#x957F;&#xFF0C;&#x5F88;&#x591A;&#x6280;&#x672F;&#x7EC6;&#x8282;&#x8BA4;&#x8BC6;&#x4E0D;&#x591F;&#xFF0C;&#x4E5F;&#x6CA1;&#x8BB2;&#x6E05;&#x695A;&#xFF0C;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x6280;&#x672F;&#x4EBA;&#x5458;&#xFF0C;&#x672C;&#x7740;&#x8FFD;&#x6839;&#x6EAF;&#x6E90;&#x7684;&#x7CBE;&#x795E;&#xFF0C;&#x8FD8;&#x662F;&#x6709;&#x5FC5;&#x8981;&#x5403;&#x900F;&#xFF0C;&#x4E5F;&#x4E3A;&#x81EA;&#x5DF1;&#x7684;&#x5DE5;&#x4F5C;&#x6C89;&#x6DC0;&#x4E00;&#x4E9B;&#x7ECF;&#x9A8C;&#x603B;&#x7ED3;&#x3002;&#x7F51;&#x4E0A;&#x5173;&#x4E8E;Hadoop HA&#x7684;&#x8D44;&#x6599;&#x591A;&#x96C6;&#x4E2D;&#x4E8E;&#x600E;&#x4E48;&#x642D;&#x5EFA;HA&#xFF0C;&#x5BF9;&#x4E8E;HA&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8FD9;&#x4E48;&#x505A;&#x63CF;&#x8FF0;&#x751A;&#x5C11;&#xFF0C;&#x6240;&#x4EE5;&#x672C;&#x6587;&#x5BF9;&#x4E8E;HA&#x662F;&#x5982;&#x4F55;&#x642D;&#x5EFA;&#x7684;&#x6682;&#x4E0D;&#x4ECB;&#x7ECD;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x4ECB;&#x7ECD;HA&#x662F;&#x600E;&#x4E48;&#x8FD0;&#x4F5C;&#xFF0C;QJM&#x53C8;&#x662F;&#x600E;&#x4E48;&#x53D1;&#x6325;&#x529F;&#x6548;&#x7684;&#x3002;<br></p>
+        <p class="article-more-link">
+            <a href="/2017/10/08/zh-cn/hadoop-ha-qjm/#more">阅读更多</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 BallenWen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+                <br />
+                <span id="busuanzi_container_site_uv">
+	    	UV:
+                <span id="busuanzi_value_site_uv">0</span>
+		</span>
+		<span id="busuanzi_container_site_pv">
+	    	PV:
+                <span id="busuanzi_value_site_pv">0</span>
+		</span>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.zh-cn.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>
