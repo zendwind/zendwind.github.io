@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/</loc>
+    
+    <lastmod>2020-11-05T12:08:47.042Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zendwind.com/2020/09/28/zh-cn/redis-hybrid-store-solution/</loc>
+    
+    <lastmod>2020-09-29T12:37:24.897Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zendwind.com/2020/08/01/zh-cn/tcaplusdb-terraform/</loc>
     
     <lastmod>2020-08-01T13:33:46.775Z</lastmod>
