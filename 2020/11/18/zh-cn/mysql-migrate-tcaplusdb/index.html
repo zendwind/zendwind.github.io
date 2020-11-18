@@ -2,13 +2,13 @@
 <html class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
-<title>Zend Wind&#39;s Blog</title>
+<title>MySQL数据实时迁移TcaplusDB方案 - Zend Wind&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link href="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/" rel="alternate" hreflang="en" />
+<link href="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/" rel="alternate" hreflang="en" />
     
 
 
@@ -16,29 +16,30 @@
 
 
 
-    <meta name="description" content="[TOC] 1.&amp;#x524D;&amp;#x8A00;&amp;#x968F;&amp;#x7740;&amp;#x4E1A;&amp;#x52A1;&amp;#x6570;&amp;#x636E;&amp;#x91CF;&amp;#x7684;&amp;#x5267;&amp;#x589E;&amp;#xFF0C;&amp;#x4F20;&amp;#x7EDF;MySQL&amp;#x5728;&amp;#x6570;&amp;#x636E;&amp;#x5B58;&amp;#x50A8;&amp;#x4E0A;&amp;#x53D8;&amp;#x5F97;&amp;#x">
+    <meta name="description" content="TcaplusDB&amp;#x662F;&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x63A8;&amp;#x51FA;&amp;#x4E00;&amp;#x6B3E;&amp;#x5168;&amp;#x6258;&amp;#x7BA1;NoSQL&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#x670D;&amp;#x52A1;&amp;#xFF0C;&amp;#x5DF2;&amp;#x88AB;&amp;#x516C;&amp;#x53F8;&amp;#x5185;&amp;#x5916;&amp;#">
+<meta name="keywords" content="MySQL,TcaplusDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zend Wind&#39;s Blog">
-<meta property="og:url" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/index.html">
+<meta property="og:title" content="MySQL数据实时迁移TcaplusDB方案">
+<meta property="og:url" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:description" content="[TOC] 1.&amp;#x524D;&amp;#x8A00;&amp;#x968F;&amp;#x7740;&amp;#x4E1A;&amp;#x52A1;&amp;#x6570;&amp;#x636E;&amp;#x91CF;&amp;#x7684;&amp;#x5267;&amp;#x589E;&amp;#xFF0C;&amp;#x4F20;&amp;#x7EDF;MySQL&amp;#x5728;&amp;#x6570;&amp;#x636E;&amp;#x5B58;&amp;#x50A8;&amp;#x4E0A;&amp;#x53D8;&amp;#x5F97;&amp;#x">
+<meta property="og:description" content="TcaplusDB&amp;#x662F;&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x63A8;&amp;#x51FA;&amp;#x4E00;&amp;#x6B3E;&amp;#x5168;&amp;#x6258;&amp;#x7BA1;NoSQL&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#x670D;&amp;#x52A1;&amp;#xFF0C;&amp;#x5DF2;&amp;#x88AB;&amp;#x516C;&amp;#x53F8;&amp;#x5185;&amp;#x5916;&amp;#">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/mysql_ins_info.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/mysql_account_create.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/ckafka_topic.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/tcaplusdb_table.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_config.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_type.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_info.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/ckafka_subscribe.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/scf_trigger.png">
-<meta property="og:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/tcaplus_data.png">
-<meta property="og:updated_time" content="2020-11-05T12:08:47.042Z">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/mysql_ins_info.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/mysql_account_create.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/ckafka_topic.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/tcaplusdb_table.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_config.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_type.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_info.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/ckafka_subscribe.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/scf_trigger.png">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/tcaplus_data.png">
+<meta property="og:updated_time" content="2020-11-18T02:01:22.885Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zend Wind&#39;s Blog">
-<meta name="twitter:description" content="[TOC] 1.&amp;#x524D;&amp;#x8A00;&amp;#x968F;&amp;#x7740;&amp;#x4E1A;&amp;#x52A1;&amp;#x6570;&amp;#x636E;&amp;#x91CF;&amp;#x7684;&amp;#x5267;&amp;#x589E;&amp;#xFF0C;&amp;#x4F20;&amp;#x7EDF;MySQL&amp;#x5728;&amp;#x6570;&amp;#x636E;&amp;#x5B58;&amp;#x50A8;&amp;#x4E0A;&amp;#x53D8;&amp;#x5F97;&amp;#x">
-<meta name="twitter:image" content="http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/mysql_ins_info.png">
+<meta name="twitter:title" content="MySQL数据实时迁移TcaplusDB方案">
+<meta name="twitter:description" content="TcaplusDB&amp;#x662F;&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x63A8;&amp;#x51FA;&amp;#x4E00;&amp;#x6B3E;&amp;#x5168;&amp;#x6258;&amp;#x7BA1;NoSQL&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#x670D;&amp;#x52A1;&amp;#xFF0C;&amp;#x5DF2;&amp;#x88AB;&amp;#x516C;&amp;#x53F8;&amp;#x5185;&amp;#x5916;&amp;#">
+<meta name="twitter:image" content="http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/mysql_ins_info.png">
 
 
 
@@ -309,11 +310,11 @@
         <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
             <div class="dropdown-content">
             
-                <a href="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/" class="dropdown-item">
+                <a href="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/" class="dropdown-item">
                     English
                 </a>
             
-                <a href="/zh-cn/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/" class="dropdown-item">
+                <a href="/zh-cn/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/" class="dropdown-item">
                     简体中文
                 </a>
             
@@ -334,13 +335,18 @@
     <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
-            
+            MySQL数据实时迁移TcaplusDB方案
         
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time class="is-text-small" datetime="2020-08-03T11:47:14.258Z" itemprop="datePublished">
-                        8月 3 2020</time>
+            <time class="is-text-small" datetime="2020-11-18T01:58:00.000Z" itemprop="datePublished">
+                        11月 18 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/TcaplusDB/">TcaplusDB</a>
         </span>
         
         
@@ -357,7 +363,7 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <p>[TOC]</p>
+        <p>TcaplusDB&#x662F;&#x817E;&#x8BAF;&#x4E91;&#x63A8;&#x51FA;&#x4E00;&#x6B3E;&#x5168;&#x6258;&#x7BA1;NoSQL&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#xFF0C;&#x5DF2;&#x88AB;&#x516C;&#x53F8;&#x5185;&#x5916;&#x591A;&#x6B3E;&#x6E38;&#x620F;&#x4F7F;&#x7528;&#x3002;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5B9E;&#x65F6;&#x8FC1;&#x79FB;MySQL&#x6570;&#x636E;&#x5230;TcaplusDB&#x3002;<br><a id="more"></a></p>
 <h1 id="1-&#x524D;&#x8A00;"><a href="#1-&#x524D;&#x8A00;" class="headerlink" title="1.&#x524D;&#x8A00;"></a>1.&#x524D;&#x8A00;</h1><p>&#x968F;&#x7740;&#x4E1A;&#x52A1;&#x6570;&#x636E;&#x91CF;&#x7684;&#x5267;&#x589E;&#xFF0C;&#x4F20;&#x7EDF;MySQL&#x5728;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x4E0A;&#x53D8;&#x5F97;&#x8D8A;&#x6765;&#x8D8A;&#x5403;&#x529B;&#xFF0C;NoSQL&#x56E0;&#x5176;&#x826F;&#x597D;&#x7684;&#x6027;&#x80FD;&#x3001;&#x6269;&#x5C55;&#x6027;&#x3001;&#x7A33;&#x5B9A;&#x6027;&#x9010;&#x6E10;&#x6210;&#x4E3A;&#x4E1A;&#x52A1;&#x9009;&#x578B;&#x7684;&#x9996;&#x8981;&#x8003;&#x8651;&#x3002;TcaplusDB&#x662F;&#x817E;&#x8BAF;&#x4E91;&#x63A8;&#x51FA;&#x7684;&#x4E00;&#x6B3E;&#x5168;&#x6258;&#x7BA1;NoSQL&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#xFF0C;&#x65E8;&#x5728;&#x4E3A;&#x5BA2;&#x6237;&#x63D0;&#x4F9B;&#x6781;&#x81F4;&#x7684;&#x6570;&#x636E;&#x636E;&#x5B58;&#x50A8;&#x4F53;&#x9A8C;&#xFF0C;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x8BF7;&#x53C2;&#x8003;<a href="https://cloud.tencent.com/product/tcaplusdb" target="_blank" rel="external">&#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x3002;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5C06;MySQL&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x5230;TcaplusDB&#x3002;</p>
 <h1 id="2-&#x8FC1;&#x79FB;&#x8BF4;&#x660E;"><a href="#2-&#x8FC1;&#x79FB;&#x8BF4;&#x660E;" class="headerlink" title="2. &#x8FC1;&#x79FB;&#x8BF4;&#x660E;"></a>2. &#x8FC1;&#x79FB;&#x8BF4;&#x660E;</h1><p>MySQL&#x4E0E;TcaplusDB&#x5C5E;&#x4E8E;&#x5F02;&#x6784;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x4E4B;&#x524D;&#x9700;&#x8981;&#x8003;&#x8651;&#x4E24;&#x8005;&#x95F4;&#x6570;&#x636E;&#x7684;&#x5DEE;&#x5F02;&#x3002;</p>
 <h2 id="2-1-&#x672F;&#x8BED;&#x548C;&#x6982;&#x5FF5;"><a href="#2-1-&#x672F;&#x8BED;&#x548C;&#x6982;&#x5FF5;" class="headerlink" title="2.1 &#x672F;&#x8BED;&#x548C;&#x6982;&#x5FF5;"></a>2.1 &#x672F;&#x8BED;&#x548C;&#x6982;&#x5FF5;</h2><table>
@@ -812,23 +818,23 @@ message info {
 </ul>
 <h2 id="4-2-&#x8FC1;&#x79FB;&#x8FC7;&#x7A0B;"><a href="#4-2-&#x8FC1;&#x79FB;&#x8FC7;&#x7A0B;" class="headerlink" title="4.2 &#x8FC1;&#x79FB;&#x8FC7;&#x7A0B;"></a>4.2 &#x8FC1;&#x79FB;&#x8FC7;&#x7A0B;</h2><h3 id="4-2-1-MySQL&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;"><a href="#4-2-1-MySQL&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;" class="headerlink" title="4.2.1 MySQL&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;"></a>4.2.1 MySQL&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;</h3><ul>
 <li><strong>&#x5B57;&#x7B26;&#x96C6;</strong>: &#x7EDF;&#x4E00;&#x4E3A;<code>utf8mb4</code>&#x3002;</li>
-<li><p><strong>&#x5E93;&#x8868;</strong>: &#x4ECE;&#x63A7;&#x5236;&#x53F0;&#x767B;&#x5F55;&#x5B9E;&#x4F8B;&#x540E;&#xFF0C;&#x68C0;&#x67E5;&#x5E93;&#x8868;&#x521B;&#x5EFA;&#x662F;&#x5426;OK,&#x3000;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/mysql_ins_info.png" alt="mysql_ins_info"></p>
+<li><p><strong>&#x5E93;&#x8868;</strong>: &#x4ECE;&#x63A7;&#x5236;&#x53F0;&#x767B;&#x5F55;&#x5B9E;&#x4F8B;&#x540E;&#xFF0C;&#x68C0;&#x67E5;&#x5E93;&#x8868;&#x521B;&#x5EFA;&#x662F;&#x5426;OK,&#x3000;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/mysql_ins_info.png" alt="mysql_ins_info"></p>
 </li>
-<li><p><strong>&#x4E13;&#x7528;&#x8D26;&#x6237;</strong>: &#x521B;&#x5EFA;&#x8FC1;&#x79FB;&#x4E13;&#x7528;&#x8D26;&#x6237;tw_tcaplus, &#x4E3B;&#x673A;&#x6388;&#x6743;&#x6682;&#x65F6;&#x8BBE;&#x7F6E;&#x4E3A;<code>%</code>&#xFF0C;&#x5141;&#x8BB8;&#x6240;&#x6709;&#x4E3B;&#x673A;&#x901A;&#x8FC7;&#x6B64;&#x8D26;&#x6237;&#x6765;&#x8BBF;&#x95EE;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/mysql_account_create.png" alt="mysql_account_create"></p>
+<li><p><strong>&#x4E13;&#x7528;&#x8D26;&#x6237;</strong>: &#x521B;&#x5EFA;&#x8FC1;&#x79FB;&#x4E13;&#x7528;&#x8D26;&#x6237;tw_tcaplus, &#x4E3B;&#x673A;&#x6388;&#x6743;&#x6682;&#x65F6;&#x8BBE;&#x7F6E;&#x4E3A;<code>%</code>&#xFF0C;&#x5141;&#x8BB8;&#x6240;&#x6709;&#x4E3B;&#x673A;&#x901A;&#x8FC7;&#x6B64;&#x8D26;&#x6237;&#x6765;&#x8BBF;&#x95EE;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/mysql_account_create.png" alt="mysql_account_create"></p>
 </li>
 </ul>
 <h3 id="4-2-2-CKafka&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;"><a href="#4-2-2-CKafka&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;" class="headerlink" title="4.2.2 CKafka&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;"></a>4.2.2 CKafka&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;</h3><ul>
-<li><strong>Topic</strong>: &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x8FC1;&#x79FB;&#x4E13;&#x7528;&#x7684;topic,  topic&#x540D;&#x4E3A;<code>tw_migrate</code>&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/ckafka_topic.png" alt="ckafka_topic"></li>
+<li><strong>Topic</strong>: &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x8FC1;&#x79FB;&#x4E13;&#x7528;&#x7684;topic,  topic&#x540D;&#x4E3A;<code>tw_migrate</code>&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/ckafka_topic.png" alt="ckafka_topic"></li>
 </ul>
 <h3 id="4-2-3-TcaplusDB&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;"><a href="#4-2-3-TcaplusDB&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;" class="headerlink" title="4.2.3 TcaplusDB&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;"></a>4.2.3 TcaplusDB&#x5B9E;&#x4F8B;&#x68C0;&#x67E5;</h3><ul>
-<li><strong>TcaplusDB&#x8868;</strong>: &#x8FDB;TcpalusDB&#x63A7;&#x5236;&#x53F0;&#xFF0C;&#x67E5;&#x770B;&#x8868;&#x683C;&#x5217;&#x8868;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/tcaplusdb_table.png" alt="tcaplusdb_table"></li>
+<li><strong>TcaplusDB&#x8868;</strong>: &#x8FDB;TcpalusDB&#x63A7;&#x5236;&#x53F0;&#xFF0C;&#x67E5;&#x770B;&#x8868;&#x683C;&#x5217;&#x8868;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/tcaplusdb_table.png" alt="tcaplusdb_table"></li>
 </ul>
 <h3 id="4-2-4-&#x6570;&#x636E;&#x8BA2;&#x9605;"><a href="#4-2-4-&#x6570;&#x636E;&#x8BA2;&#x9605;" class="headerlink" title="4.2.4 &#x6570;&#x636E;&#x8BA2;&#x9605;"></a>4.2.4 &#x6570;&#x636E;&#x8BA2;&#x9605;</h3><ul>
-<li><p><strong>&#x8BA2;&#x9605;&#x901A;&#x9053;&#x521B;&#x5EFA;</strong>: &#x5728;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x670D;&#x52A1;&#x63A7;&#x5236;&#x53F0;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x8BA2;&#x9605;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x4E0B;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe.png" alt="data_subscribe"></p>
+<li><p><strong>&#x8BA2;&#x9605;&#x901A;&#x9053;&#x521B;&#x5EFA;</strong>: &#x5728;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x670D;&#x52A1;&#x63A7;&#x5236;&#x53F0;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x8BA2;&#x9605;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x4E0B;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe.png" alt="data_subscribe"></p>
 </li>
-<li><p><strong>&#x8BA2;&#x9605;&#x914D;&#x7F6E;</strong>:  &#x521D;&#x59CB;&#x5316;&#x8BA2;&#x9605;&#x914D;&#x7F6E;&#xFF0C;&#x9009;&#x62E9;MySQL&#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x9009;&#x62E9;VPC&#x548C;&#x5B50;&#x7F51;(<code>&#x6CE8;&#x610F;&#x8981;&#x4E0E;MySQL&#x5B9E;&#x4F8B;&#x540C;&#x5C5E;&#x4E00;&#x4E2A;&#x7F51;&#x7EDC;</code>)&#xFF0C;&#x5728;&#x540C;&#x6B65;&#x7C7B;&#x578B;&#x5904;&#x53EA;&#x9009;&#x62E9;<strong>&#x6570;&#x636E;&#x66F4;&#x65B0;</strong>&#xFF0C;&#x5E93;&#x8868;&#x4EFB;&#x52A1;&#x5904;&#x9009;&#x62E9;<strong>test</strong>&#x8868;&#x4F5C;&#x4E3A;&#x8BA2;&#x9605;&#x7684;&#x8868;&#x3002;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_config.png" alt="data_subscribe_config"><br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_type.png" alt="data_subscribe_type"></p>
+<li><p><strong>&#x8BA2;&#x9605;&#x914D;&#x7F6E;</strong>:  &#x521D;&#x59CB;&#x5316;&#x8BA2;&#x9605;&#x914D;&#x7F6E;&#xFF0C;&#x9009;&#x62E9;MySQL&#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x9009;&#x62E9;VPC&#x548C;&#x5B50;&#x7F51;(<code>&#x6CE8;&#x610F;&#x8981;&#x4E0E;MySQL&#x5B9E;&#x4F8B;&#x540C;&#x5C5E;&#x4E00;&#x4E2A;&#x7F51;&#x7EDC;</code>)&#xFF0C;&#x5728;&#x540C;&#x6B65;&#x7C7B;&#x578B;&#x5904;&#x53EA;&#x9009;&#x62E9;<strong>&#x6570;&#x636E;&#x66F4;&#x65B0;</strong>&#xFF0C;&#x5E93;&#x8868;&#x4EFB;&#x52A1;&#x5904;&#x9009;&#x62E9;<strong>test</strong>&#x8868;&#x4F5C;&#x4E3A;&#x8BA2;&#x9605;&#x7684;&#x8868;&#x3002;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_config.png" alt="data_subscribe_config"><br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_type.png" alt="data_subscribe_type"></p>
 </li>
-<li><p><strong>&#x8BA2;&#x9605;&#x8BE6;&#x60C5;</strong>: &#x914D;&#x7F6E;&#x597D;&#x540E;&#xFF0C;&#x70B9;&#x51FB;&#x542F;&#x52A8;&#x4F1A;&#x53BB;&#x4FEE;&#x6539;MySQL&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#x5E76;&#x91CD;&#x542F;MySQL&#x5B9E;&#x4F8B;&#xFF0C;&#x8BA2;&#x9605;&#x4FE1;&#x606F;&#x5982;&#x4E0B;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_info.png" alt="data_subscribe_info"></p>
+<li><p><strong>&#x8BA2;&#x9605;&#x8BE6;&#x60C5;</strong>: &#x914D;&#x7F6E;&#x597D;&#x540E;&#xFF0C;&#x70B9;&#x51FB;&#x542F;&#x52A8;&#x4F1A;&#x53BB;&#x4FEE;&#x6539;MySQL&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#x5E76;&#x91CD;&#x542F;MySQL&#x5B9E;&#x4F8B;&#xFF0C;&#x8BA2;&#x9605;&#x4FE1;&#x606F;&#x5982;&#x4E0B;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/data_subscribe_info.png" alt="data_subscribe_info"></p>
 </li>
 <li><p><strong>&#x6CE8;&#x610F;</strong> : <strong>&#x8BA2;&#x9605;&#x914D;&#x7F6E;&#x8FC7;&#x7A0B;&#x4F1A;&#x5BF9;MySQL&#x5B9E;&#x4F8B;&#x4FEE;&#x6539;&#x4E00;&#x4E9B;binlog&#x914D;&#x7F6E;&#x53C2;&#x6570;&#xFF0C;&#x4FEE;&#x6539;&#x8FC7;&#x7A0B;&#x4F1A;kill&#x5F53;&#x524D;&#x5DF2;&#x6709;&#x8FDE;&#x63A5;&#x5E76;&#x91CD;&#x542F;MySQL&#x5B9E;&#x4F8B;&#xFF0C;&#x4E1A;&#x52A1;&#x9700;&#x8981;&#x5173;&#x6CE8;&#x8FD9;&#x70B9;</strong></p>
 </li>
@@ -895,8 +901,8 @@ val = (7, &apos;June&apos;, info_bin,)
 cursor.execute(sql, val)
 db.commit()
 db.close()
-</code></pre><p>&#x6253;&#x5F00;&#x53E6;&#x4E00;&#x4E2A;CVM&#x7EC8;&#x7AEF;&#xFF0C;&#x6267;&#x884C;&#x4E0A;&#x8FF0;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E76;&#x67E5;&#x770B;4.2.5.4&#x542F;&#x52A8;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/ckafka_subscribe.png" alt="ckafka_subscribe"><br>&#x4ECE;&#x4E0A;&#x56FE;&#x6765;&#x770B;&#x8BF4;&#x660E;&#x6570;&#x636E;&#x8BA2;&#x9605;&#x7A0B;&#x5E8F;&#x5DF2;&#x7ECF;&#x6355;&#x83B7;&#x5230;MySQL&#x7684;&#x6570;&#x636E;&#x63D2;&#x5165;&#x52A8;&#x4F5C;&#x3002;</p>
-<h3 id="4-2-6-&#x6570;&#x636E;&#x6D88;&#x8D39;"><a href="#4-2-6-&#x6570;&#x636E;&#x6D88;&#x8D39;" class="headerlink" title="4.2.6 &#x6570;&#x636E;&#x6D88;&#x8D39;"></a>4.2.6 &#x6570;&#x636E;&#x6D88;&#x8D39;</h3><p>&#x6570;&#x636E;&#x6D88;&#x8D39;&#x901A;&#x8FC7;&#x817E;&#x8BAF;&#x4E91;SCF&#x6765;&#x5B9E;&#x73B0;&#x3002;SCF&#x652F;&#x6301;&#x521B;&#x5EFA;CKafka&#x89E6;&#x53D1;&#x5668;&#xFF0C;&#x501F;&#x52A9;&#x89E6;&#x53D1;&#x5668;&#x673A;&#x5236;&#x53EF;&#x5B9E;&#x65F6;&#x6355;&#x83B7;CKafka&#x7684;&#x6570;&#x636E;&#x6D41;&#xFF0C;&#x53EA;&#x8981;&#x6709;&#x6570;&#x636E;&#x53D1;&#x5E03;&#x5230;Ckafka&#x6307;&#x5B9A;topic, &#x4F1A;&#x89E6;&#x53D1;SCF&#x81EA;&#x52A8;&#x62C9;&#x53D6;Topic&#x65B0;&#x8FDB;&#x7684;&#x6570;&#x636E;&#x3002;&#x89E6;&#x53D1;&#x5668;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/scf_trigger.png" alt="scf_trigger"></p>
+</code></pre><p>&#x6253;&#x5F00;&#x53E6;&#x4E00;&#x4E2A;CVM&#x7EC8;&#x7AEF;&#xFF0C;&#x6267;&#x884C;&#x4E0A;&#x8FF0;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E76;&#x67E5;&#x770B;4.2.5.4&#x542F;&#x52A8;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/ckafka_subscribe.png" alt="ckafka_subscribe"><br>&#x4ECE;&#x4E0A;&#x56FE;&#x6765;&#x770B;&#x8BF4;&#x660E;&#x6570;&#x636E;&#x8BA2;&#x9605;&#x7A0B;&#x5E8F;&#x5DF2;&#x7ECF;&#x6355;&#x83B7;&#x5230;MySQL&#x7684;&#x6570;&#x636E;&#x63D2;&#x5165;&#x52A8;&#x4F5C;&#x3002;</p>
+<h3 id="4-2-6-&#x6570;&#x636E;&#x6D88;&#x8D39;"><a href="#4-2-6-&#x6570;&#x636E;&#x6D88;&#x8D39;" class="headerlink" title="4.2.6 &#x6570;&#x636E;&#x6D88;&#x8D39;"></a>4.2.6 &#x6570;&#x636E;&#x6D88;&#x8D39;</h3><p>&#x6570;&#x636E;&#x6D88;&#x8D39;&#x901A;&#x8FC7;&#x817E;&#x8BAF;&#x4E91;SCF&#x6765;&#x5B9E;&#x73B0;&#x3002;SCF&#x652F;&#x6301;&#x521B;&#x5EFA;CKafka&#x89E6;&#x53D1;&#x5668;&#xFF0C;&#x501F;&#x52A9;&#x89E6;&#x53D1;&#x5668;&#x673A;&#x5236;&#x53EF;&#x5B9E;&#x65F6;&#x6355;&#x83B7;CKafka&#x7684;&#x6570;&#x636E;&#x6D41;&#xFF0C;&#x53EA;&#x8981;&#x6709;&#x6570;&#x636E;&#x53D1;&#x5E03;&#x5230;Ckafka&#x6307;&#x5B9A;topic, &#x4F1A;&#x89E6;&#x53D1;SCF&#x81EA;&#x52A8;&#x62C9;&#x53D6;Topic&#x65B0;&#x8FDB;&#x7684;&#x6570;&#x636E;&#x3002;&#x89E6;&#x53D1;&#x5668;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/scf_trigger.png" alt="scf_trigger"></p>
 <p>SCF&#x6355;&#x83B7;&#x5230;&#x6570;&#x636E;&#x540E;&#xFF0C;&#x89E3;&#x6790;&#x6355;&#x83B7;&#x7684;&#x6570;&#x636E;&#x5305;&#x5E76;&#x8F6C;&#x6362;&#x6210;TcaplusDB&#x80FD;&#x8BC6;&#x522B;&#x7684;JSON&#x8BB0;&#x5F55;&#x683C;&#x5F0F;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x8C03;&#x7528;TcaplusDB Python RESTful SDK&#x63A5;&#x53E3;&#x628A;JSON&#x8BB0;&#x5F55;&#x5199;&#x5230;TcaplusDB&#x8868;&#x3002;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x53EF;&#x5728;SCF&#x63A7;&#x5236;&#x53F0;&#x4E0A;&#x4F20;&#x4EE3;&#x7801;ZIP&#x5305;&#x5373;&#x53EF;&#xFF0C;&#x3000;<a href="https://tcaplusdb-restful-sdk-1258272208.cos.ap-shanghai.myqcloud.com/mysql_migrate_tcaplusdb/real_time_migrate/scf_migrate_tcaplusdb.zip" target="_blank" rel="external">&#x4E0B;&#x8F7D;&#x5730;&#x5740;</a> &#x3002;&#x4EE3;&#x7801;&#x5173;&#x952E;&#x903B;&#x8F91;:</p>
 <ul>
 <li><strong>&#x6355;&#x83B7;&#x63D2;&#x5165;&#x64CD;&#x4F5C;</strong>: &#x9488;&#x5BF9;&#x6570;&#x636E;&#x662F;INSERT&#x64CD;&#x4F5C;&#x7C7B;&#x578B;&#x7684;&#xFF0C;&#x8F6C;&#x6362;&#x6210;TcaplusDB&#x7684;AddRecord&#x64CD;&#x4F5C;&#xFF0C;&#x5373;&#x65B0;&#x589E;&#x4E00;&#x6761;&#x8BB0;&#x5F55;</li>
@@ -906,7 +912,7 @@ db.close()
 <li><p><strong>&#x810F;&#x6570;&#x636E;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</strong>: &#x5BF9;&#x4E8E;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#xFF0C;&#x7531;&#x4E8E;&#x662F;&#x5B9E;&#x65F6;&#x8FC1;&#x79FB;&#xFF0C;&#x5168;&#x91CF;&#x6570;&#x636E;&#x6682;&#x672A;&#x540C;&#x6B65;&#x5230;TcaplusDB&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x80FD;&#x4F1A;&#x5B58;&#x5728;&#x5220;&#x9664;&#x4E00;&#x6761;&#x7A7A;&#x8BB0;&#x5F55;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x9700;&#x8981;&#x9488;&#x5BF9;&#x5220;&#x9664;&#x4E3A;&#x7A7A;&#x8BB0;&#x5F55;&#x573A;&#x666F;&#x65F6;&#x628A;&#x5F85;&#x5220;&#x9664;&#x7684;&#x8BB0;&#x5F55;&#x5148;&#x4FDD;&#x5B58;&#x5230;&#x53E6;&#x4E00;&#x5F20;&#x5F85;&#x5220;&#x9664;&#x8868;&#xFF0C;&#x7B49;&#x5168;&#x91CF;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x81F3;TcaplusDB&#x540E;&#xFF0C;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x5BF9;&#x8D26;&#xFF0C;&#x5373;&#x68C0;&#x67E5;&#x5F85;&#x5220;&#x9664;&#x8868;&#x4E2D;&#x7684;&#x8BB0;&#x5F55;&#x662F;&#x5426;&#x91CD;&#x65B0;&#x901A;&#x8FC7; &#x79BB;&#x7EBF;&#x8FC1;&#x79FB;&#x65B9;&#x5F0F;&#x5199;&#x5230;&#x4E86;&#x4E1A;&#x52A1;TcaplusDB&#x8868;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x5219;&#x9700;&#x8981;&#x628A;&#x4E1A;&#x52A1;&#x8868;&#x4E2D;&#x7684;&#x8BB0;&#x5F55;&#x8FDB;&#x884C;&#x5220;&#x9664;&#xFF0C;&#x907F;&#x514D;&#x810F;&#x6570;&#x636E;&#x7684;&#x51FA;&#x73B0;&#x3002;</p>
 </li>
 </ul>
-<h3 id="4-2-7-&#x6570;&#x636E;&#x9A8C;&#x8BC1;"><a href="#4-2-7-&#x6570;&#x636E;&#x9A8C;&#x8BC1;" class="headerlink" title="4.2.7 &#x6570;&#x636E;&#x9A8C;&#x8BC1;"></a>4.2.7 &#x6570;&#x636E;&#x9A8C;&#x8BC1;</h3><p>&#x901A;&#x8FC7;SCF&#x8F6C;&#x6362;&#x5199;&#x5165;&#x5230;TcaplusDB&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/tcaplus_data.png" alt="tcaplus_data"></p>
+<h3 id="4-2-7-&#x6570;&#x636E;&#x9A8C;&#x8BC1;"><a href="#4-2-7-&#x6570;&#x636E;&#x9A8C;&#x8BC1;" class="headerlink" title="4.2.7 &#x6570;&#x636E;&#x9A8C;&#x8BC1;"></a>4.2.7 &#x6570;&#x636E;&#x9A8C;&#x8BC1;</h3><p>&#x901A;&#x8FC7;SCF&#x8F6C;&#x6362;&#x5199;&#x5165;&#x5230;TcaplusDB&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/tcaplus_data.png" alt="tcaplus_data"></p>
 <h2 id="4-3-&#x8FC1;&#x79FB;&#x603B;&#x7ED3;"><a href="#4-3-&#x8FC1;&#x79FB;&#x603B;&#x7ED3;" class="headerlink" title="4.3 &#x8FC1;&#x79FB;&#x603B;&#x7ED3;"></a>4.3 &#x8FC1;&#x79FB;&#x603B;&#x7ED3;</h2><p>&#x4E0A;&#x9762;&#x5B9E;&#x73B0;&#x5E76;&#x9A8C;&#x8BC1;&#x4E86;&#x5B9E;&#x65F6;&#x8FC1;&#x79FB;&#x6570;&#x636E;&#x6D41;&#x7BA1;&#x9053;&#xFF0C;&#x901A;&#x8FC7;&#x6570;&#x636E;&#x8BA2;&#x9605;&#x6355;&#x83B7;MySQL&#x589E;&#x5220;&#x6539;&#x4E8B;&#x4EF6;&#x5E76;&#x5B9E;&#x65F6;&#x901A;&#x8FC7;&#x8BA2;&#x9605;&#x7A0B;&#x5E8F;&#x4F20;&#x8F93;&#x5230;Ckafka, &#x540C;&#x65F6;&#x901A;&#x8FC7;SCF&#x89E6;&#x53D1;&#x5668;&#x673A;&#x5236;&#x6355;&#x83B7;CKafka&#x7684;&#x8F93;&#x5165;&#x6570;&#x636E;&#x6D41;&#x5E76;&#x62C9;&#x53D6;&#x89E3;&#x6790;&#x6700;&#x540E;&#x5199;&#x5230;TcaplusDB&#x3002;&#x9488;&#x5BF9;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#xFF0C;&#x4E3A;&#x907F;&#x514D;&#x7A7A;&#x5220;&#x573A;&#x666F;&#xFF0C;&#x628A;&#x5220;&#x9664;&#x65F6;&#x9519;&#x8BEF;&#x7801;&#x4E3A;261&#xFF08;&#x6570;&#x636E;&#x8BB0;&#x5F55;&#x4E0D;&#x5B58;&#x5728;&#xFF09;&#x7684;&#x5355;&#x72EC;&#x5904;&#x7406;&#xFF0C;&#x5373;&#x628A;&#x8FD9;&#x90E8;&#x5206;&#x6570;&#x636E;&#x91CD;&#x65B0;&#x5199;&#x5230;&#x65B0;&#x7684;&#x4E00;&#x5F20;&#x5F85;&#x5220;&#x9664;&#x8868;&#xFF0C;&#x5F85;&#x5168;&#x91CF;&#x8FC1;&#x79FB;&#x5B8C;&#x6210;&#x540E;&#x518D;&#x7EDF;&#x4E00;&#x5BF9;&#x8D26;&#x6E05;&#x7406;&#x8FD9;&#x90E8;&#x5206;&#x810F;&#x6570;&#x636E;&#x3002;</p>
 <h1 id="5-&#x79BB;&#x7EBF;&#x8FC1;&#x79FB;&#x65B9;&#x6848;"><a href="#5-&#x79BB;&#x7EBF;&#x8FC1;&#x79FB;&#x65B9;&#x6848;" class="headerlink" title="5. &#x79BB;&#x7EBF;&#x8FC1;&#x79FB;&#x65B9;&#x6848;"></a>5. &#x79BB;&#x7EBF;&#x8FC1;&#x79FB;&#x65B9;&#x6848;</h1><p>&#x79BB;&#x7EBF;&#x8FC1;&#x79FB;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;: &#x4E00;&#x79CD;&#x662F;dump&#x65B9;&#x5F0F;&#x628A;&#x8868;&#x6570;&#x636E;dump&#x6210;SQL&#x6587;&#x4EF6;&#x5F62;&#x5F0F;&#xFF0C;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x4E3A;Insert&#x683C;&#x5F0F;&#xFF0C;&#x7136;&#x540E;&#x53EF;&#x4EE5;&#x628A;SQL&#x6587;&#x4EF6;&#x56DE;&#x5199;&#x5230;&#x53E6;&#x4E00;&#x4E34;&#x65F6;MySQL&#x5B9E;&#x4F8B;&#x4EA7;&#x751F;Binlog&#x8D70;&#x5B9E;&#x65F6;&#x8FC1;&#x79FB;&#x65B9;&#x6848;;&#x3000;&#x53E6;&#x4E00;&#x79CD;&#x662F;select&#x65B9;&#x5F0F;&#xFF0C;&#x4ECE;&#x8868;&#x4E2D;&#x67E5;&#x6570;&#x636E;&#x51FA;&#x6765;&#x4EE5;&#x6307;&#x5B9A;&#x683C;&#x5F0F;&#x4FDD;&#x5B58;&#x5230;&#x6587;&#x672C;&#x6587;&#x4EF6;,&#x3000;&#x5982;JSON&#x683C;&#x5F0F;&#x884C;&#xFF0C;&#x901A;&#x8FC7;&#x817E;&#x8BAF;&#x4E91;&#x6279;&#x91CF;&#x89E3;&#x6790;&#x7684;&#x65B9;&#x5F0F;&#x5199;&#x5230;TcaplusDB&#x3002;</p>
 <h2 id="5-1-Dump&#x65B9;&#x5F0F;&#x8FC1;&#x79FB;"><a href="#5-1-Dump&#x65B9;&#x5F0F;&#x8FC1;&#x79FB;" class="headerlink" title="5.1 Dump&#x65B9;&#x5F0F;&#x8FC1;&#x79FB;"></a>5.1 Dump&#x65B9;&#x5F0F;&#x8FC1;&#x79FB;</h2><h3 id="5-1-1-Dump&#x8868;&#x6570;&#x636E;"><a href="#5-1-1-Dump&#x8868;&#x6570;&#x636E;" class="headerlink" title="5.1.1 Dump&#x8868;&#x6570;&#x636E;"></a>5.1.1 Dump&#x8868;&#x6570;&#x636E;</h3><p>dump&#x5168;&#x8868;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x7528;&#x5982;&#x4E0B;&#x547D;&#x4EE4;:</p>
@@ -1045,11 +1051,17 @@ if __name__ == &apos;__main__&apos;:
     
     </div>
     
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/zh-cn/tags/MySQL-TcaplusDB/">#MySQL,TcaplusDB</a></span>
+    
+    </div>
+    
     
     <div class="columns is-mobile is-multiline article-nav">
         <span class="column is-12-mobile is-half-desktop  article-nav-prev">
             
-            <a href="/2020/09/28/zh-cn/redis-hybrid-store-solution/"></a>
+            <a href="/2020/11/18/zh-cn/redis-hybrid-store-solution/">SSDB迁移Tendis解决方案</a>
             
         </span>
         <span class="column is-12-mobile is-half-desktop  article-nav-next">

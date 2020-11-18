@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://zendwind.com/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/</loc>
-    <lastmod>2020-11-05</lastmod>
+    <loc>http://zendwind.com/2020/11/18/zh-cn/redis-hybrid-store-solution/</loc>
+    <lastmod>2020-11-18</lastmod>
   </url>  <url>
-    <loc>http://zendwind.com/2020/09/28/zh-cn/redis-hybrid-store-solution/</loc>
-    <lastmod>2020-09-29</lastmod>
+    <loc>http://zendwind.com/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/</loc>
+    <lastmod>2020-11-18</lastmod>
   </url>  <url>
     <loc>http://zendwind.com/2020/08/01/zh-cn/tcaplusdb-terraform/</loc>
     <lastmod>2020-08-01</lastmod>

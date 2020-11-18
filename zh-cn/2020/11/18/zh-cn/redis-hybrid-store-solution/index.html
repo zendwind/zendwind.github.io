@@ -2,13 +2,13 @@
 <html class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
-<title>Zend Wind&#39;s Blog</title>
+<title>SSDB迁移Tendis解决方案 - Zend Wind&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link href="/2020/09/28/zh-cn/redis-hybrid-store-solution/" rel="alternate" hreflang="en" />
+<link href="/2020/11/18/zh-cn/redis-hybrid-store-solution/" rel="alternate" hreflang="en" />
     
 
 
@@ -16,19 +16,20 @@
 
 
 
-    <meta name="description" content="[TOC] SSDB&amp;#x8FC1;&amp;#x79FB;Tendis&amp;#x89E3;&amp;#x51B3;&amp;#x65B9;&amp;#x6848;1.&amp;#x524D;&amp;#x8A00;SSDB&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x9AD8;&amp;#x6027;&amp;#x80FD;&amp;#x7684;KV&amp;#x5B58;&amp;#x50A8;&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#xFF0C;&amp;#x4E2A;">
+    <meta name="description" content="Tendis&amp;#x662F;&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x63A8;&amp;#x51FA;&amp;#x4E00;&amp;#x6B3E;&amp;#x517C;&amp;#x5BB9;Redis&amp;#x534F;&amp;#x8BAE;&amp;#x7684;&amp;#x6DF7;&amp;#x5408;&amp;#x5B58;&amp;#x50A8;&amp;#x578B;&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#xFF0C;&amp;#x5E95;&amp;#x5C">
+<meta name="keywords" content="SSDB,Tendis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zend Wind&#39;s Blog">
-<meta property="og:url" content="http://zendwind.com/2020/09/28/zh-cn/redis-hybrid-store-solution/index.html">
+<meta property="og:title" content="SSDB迁移Tendis解决方案">
+<meta property="og:url" content="http://zendwind.com/zh-cn/2020/11/18/zh-cn/redis-hybrid-store-solution/index.html">
 <meta property="og:site_name" content="Zend Wind&#39;s Blog">
-<meta property="og:description" content="[TOC] SSDB&amp;#x8FC1;&amp;#x79FB;Tendis&amp;#x89E3;&amp;#x51B3;&amp;#x65B9;&amp;#x6848;1.&amp;#x524D;&amp;#x8A00;SSDB&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x9AD8;&amp;#x6027;&amp;#x80FD;&amp;#x7684;KV&amp;#x5B58;&amp;#x50A8;&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#xFF0C;&amp;#x4E2A;">
+<meta property="og:description" content="Tendis&amp;#x662F;&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x63A8;&amp;#x51FA;&amp;#x4E00;&amp;#x6B3E;&amp;#x517C;&amp;#x5BB9;Redis&amp;#x534F;&amp;#x8BAE;&amp;#x7684;&amp;#x6DF7;&amp;#x5408;&amp;#x5B58;&amp;#x50A8;&amp;#x578B;&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#xFF0C;&amp;#x5E95;&amp;#x5C">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:image" content="http://zendwind.com/2020/09/28/zh-cn/redis-hybrid-store-solution/siphon_start.png">
-<meta property="og:updated_time" content="2020-09-29T12:37:24.897Z">
+<meta property="og:image" content="http://zendwind.com/2020/11/18/zh-cn/redis-hybrid-store-solution/siphon_start.png">
+<meta property="og:updated_time" content="2020-11-18T02:06:34.691Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zend Wind&#39;s Blog">
-<meta name="twitter:description" content="[TOC] SSDB&amp;#x8FC1;&amp;#x79FB;Tendis&amp;#x89E3;&amp;#x51B3;&amp;#x65B9;&amp;#x6848;1.&amp;#x524D;&amp;#x8A00;SSDB&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x9AD8;&amp;#x6027;&amp;#x80FD;&amp;#x7684;KV&amp;#x5B58;&amp;#x50A8;&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#xFF0C;&amp;#x4E2A;">
-<meta name="twitter:image" content="http://zendwind.com/2020/09/28/zh-cn/redis-hybrid-store-solution/siphon_start.png">
+<meta name="twitter:title" content="SSDB迁移Tendis解决方案">
+<meta name="twitter:description" content="Tendis&amp;#x662F;&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x63A8;&amp;#x51FA;&amp;#x4E00;&amp;#x6B3E;&amp;#x517C;&amp;#x5BB9;Redis&amp;#x534F;&amp;#x8BAE;&amp;#x7684;&amp;#x6DF7;&amp;#x5408;&amp;#x5B58;&amp;#x50A8;&amp;#x578B;&amp;#x6570;&amp;#x636E;&amp;#x5E93;&amp;#xFF0C;&amp;#x5E95;&amp;#x5C">
+<meta name="twitter:image" content="http://zendwind.com/2020/11/18/zh-cn/redis-hybrid-store-solution/siphon_start.png">
 
 
 
@@ -118,89 +119,83 @@
                     
                     
                     
-                    <a class="navbar-item" href="#SSDB&amp;#x8FC1;&amp;#x79FB;Tendis&amp;#x89E3;&amp;#x51B3;&amp;#x65B9;&amp;#x6848;">1&nbsp;&nbsp;<b>SSDB&amp;amp;#x8FC1;&amp;amp;#x79FB;Tendis&amp;amp;#x89E3;&amp;amp;#x51B3;&amp;amp;#x65B9;&amp;amp;#x6848;</b></a>
+                    <a class="navbar-item" href="#1-&amp;#x524D;&amp;#x8A00;">1&nbsp;&nbsp;<b>1.&amp;amp;#x524D;&amp;amp;#x8A00;</b></a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#1-&amp;#x524D;&amp;#x8A00;">2&nbsp;&nbsp;<b>1.&amp;amp;#x524D;&amp;amp;#x8A00;</b></a>
+                    <a class="navbar-item" href="#2-&amp;#x8FC1;&amp;#x79FB;&amp;#x8BF4;&amp;#x660E;">2&nbsp;&nbsp;<b>2. &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x8BF4;&amp;amp;#x660E;</b></a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#2-&amp;#x8FC1;&amp;#x79FB;&amp;#x8BF4;&amp;#x660E;">3&nbsp;&nbsp;<b>2. &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x8BF4;&amp;amp;#x660E;</b></a>
+                    <a class="navbar-item" href="#3-&amp;#x8FC1;&amp;#x79FB;&amp;#x51C6;&amp;#x5907;">3&nbsp;&nbsp;<b>3.&amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x51C6;&amp;amp;#x5907;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-1-&amp;#x8FC1;&amp;#x79FB;&amp;#x5DE5;&amp;#x5177;">3.1&nbsp;&nbsp;3.1 &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x5DE5;&amp;amp;#x5177;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-Redis&amp;#x5DE5;&amp;#x5177;">3.2&nbsp;&nbsp;3.2 Redis&amp;amp;#x5DE5;&amp;amp;#x5177;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-&amp;#x73AF;&amp;#x5883;&amp;#x51C6;&amp;#x5907;">3.3&nbsp;&nbsp;3.2 &amp;amp;#x73AF;&amp;amp;#x5883;&amp;amp;#x51C6;&amp;amp;#x5907;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-1-&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x8D26;&amp;#x53F7;">3.3.1&nbsp;&nbsp;3.2.1 &amp;amp;#x817E;&amp;amp;#x8BAF;&amp;amp;#x4E91;&amp;amp;#x8D26;&amp;amp;#x53F7;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-2-&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;CVM&amp;#x73AF;&amp;#x5883;&amp;#x7533;&amp;#x8BF7;">3.3.2&nbsp;&nbsp;3.2.2 &amp;amp;#x817E;&amp;amp;#x8BAF;&amp;amp;#x4E91;CVM&amp;amp;#x73AF;&amp;amp;#x5883;&amp;amp;#x7533;&amp;amp;#x8BF7;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-3-&amp;#x7533;&amp;#x8BF7;&amp;#x4E00;&amp;#x4E2A;tendis&amp;#x5B9E;&amp;#x4F8B;">3.3.3&nbsp;&nbsp;3.2.3 &amp;amp;#x7533;&amp;amp;#x8BF7;&amp;amp;#x4E00;&amp;amp;#x4E2A;tendis&amp;amp;#x5B9E;&amp;amp;#x4F8B;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-4-redis&amp;#x5B89;&amp;#x88C5;">3.3.4&nbsp;&nbsp;3.2.4 redis&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-5-SSDB&amp;#x5B89;&amp;#x88C5;">3.3.5&nbsp;&nbsp;3.2.5 SSDB&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-2-5-&amp;#x8FC1;&amp;#x79FB;&amp;#x5DE5;&amp;#x5177;&amp;#x5B89;&amp;#x88C5;">3.3.6&nbsp;&nbsp;3.2.5&amp;amp;#x3000;&amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x5DE5;&amp;amp;#x5177;&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#3-&amp;#x8FC1;&amp;#x79FB;&amp;#x51C6;&amp;#x5907;">4&nbsp;&nbsp;<b>3.&amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x51C6;&amp;amp;#x5907;</b></a>
+                    <a class="navbar-item" href="#4-&amp;#x8FC1;&amp;#x79FB;&amp;#x6D4B;&amp;#x8BD5;">4&nbsp;&nbsp;<b>4. &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x6D4B;&amp;amp;#x8BD5;</b></a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-1-&amp;#x8FC1;&amp;#x79FB;&amp;#x5DE5;&amp;#x5177;">4.1&nbsp;&nbsp;3.1 &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x5DE5;&amp;amp;#x5177;</a>
+                    <a class="navbar-item" href="#4-1-SSDB&amp;#x6570;&amp;#x636E;&amp;#x6A21;&amp;#x62DF;">4.1&nbsp;&nbsp;4.1 SSDB&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x6A21;&amp;amp;#x62DF;</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-2-Redis&amp;#x5DE5;&amp;#x5177;">4.2&nbsp;&nbsp;3.2 Redis&amp;amp;#x5DE5;&amp;amp;#x5177;</a>
+                    <a class="navbar-item" href="#4-2-&amp;#x542F;&amp;#x52A8;&amp;#x8FC1;&amp;#x79FB;&amp;#x5DE5;&amp;#x5177;">4.2&nbsp;&nbsp;4.2 &amp;amp;#x542F;&amp;amp;#x52A8;&amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x5DE5;&amp;amp;#x5177;</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-2-&amp;#x73AF;&amp;#x5883;&amp;#x51C6;&amp;#x5907;">4.3&nbsp;&nbsp;3.2 &amp;amp;#x73AF;&amp;amp;#x5883;&amp;amp;#x51C6;&amp;amp;#x5907;</a>
+                    <a class="navbar-item" href="#4-3-Tendis&amp;#x6570;&amp;#x636E;&amp;#x67E5;&amp;#x770B;">4.3&nbsp;&nbsp;4.3 Tendis&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x67E5;&amp;amp;#x770B;</a>
                     
                     
                     
-                    <a class="navbar-item" href="#3-2-1-&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;&amp;#x8D26;&amp;#x53F7;">4.3.1&nbsp;&nbsp;3.2.1 &amp;amp;#x817E;&amp;amp;#x8BAF;&amp;amp;#x4E91;&amp;amp;#x8D26;&amp;amp;#x53F7;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-2-2-&amp;#x817E;&amp;#x8BAF;&amp;#x4E91;CVM&amp;#x73AF;&amp;#x5883;&amp;#x7533;&amp;#x8BF7;">4.3.2&nbsp;&nbsp;3.2.2 &amp;amp;#x817E;&amp;amp;#x8BAF;&amp;amp;#x4E91;CVM&amp;amp;#x73AF;&amp;amp;#x5883;&amp;amp;#x7533;&amp;amp;#x8BF7;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-2-3-&amp;#x7533;&amp;#x8BF7;&amp;#x4E00;&amp;#x4E2A;tendis&amp;#x5B9E;&amp;#x4F8B;">4.3.3&nbsp;&nbsp;3.2.3 &amp;amp;#x7533;&amp;amp;#x8BF7;&amp;amp;#x4E00;&amp;amp;#x4E2A;tendis&amp;amp;#x5B9E;&amp;amp;#x4F8B;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-2-4-redis&amp;#x5B89;&amp;#x88C5;">4.3.4&nbsp;&nbsp;3.2.4 redis&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-2-5-SSDB&amp;#x5B89;&amp;#x88C5;">4.3.5&nbsp;&nbsp;3.2.5 SSDB&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#3-2-5-&amp;#x8FC1;&amp;#x79FB;&amp;#x5DE5;&amp;#x5177;&amp;#x5B89;&amp;#x88C5;">4.3.6&nbsp;&nbsp;3.2.5&amp;amp;#x3000;&amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x5DE5;&amp;amp;#x5177;&amp;amp;#x5B89;&amp;amp;#x88C5;</a>
+                    <a class="navbar-item" href="#4-4-&amp;#x589E;&amp;#x91CF;&amp;#x6570;&amp;#x636E;&amp;#x540C;&amp;#x6B65;">4.4&nbsp;&nbsp;4.4 &amp;amp;#x589E;&amp;amp;#x91CF;&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x540C;&amp;amp;#x6B65;</a>
                     
                     
                     <hr class="navbar-divider">
                     
                     
-                    <a class="navbar-item" href="#4-&amp;#x8FC1;&amp;#x79FB;&amp;#x6D4B;&amp;#x8BD5;">5&nbsp;&nbsp;<b>4. &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x6D4B;&amp;amp;#x8BD5;</b></a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#4-1-SSDB&amp;#x6570;&amp;#x636E;&amp;#x6A21;&amp;#x62DF;">5.1&nbsp;&nbsp;4.1 SSDB&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x6A21;&amp;amp;#x62DF;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#4-2-&amp;#x542F;&amp;#x52A8;&amp;#x8FC1;&amp;#x79FB;&amp;#x5DE5;&amp;#x5177;">5.2&nbsp;&nbsp;4.2 &amp;amp;#x542F;&amp;amp;#x52A8;&amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x5DE5;&amp;amp;#x5177;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#4-3-Tendis&amp;#x6570;&amp;#x636E;&amp;#x67E5;&amp;#x770B;">5.3&nbsp;&nbsp;4.3 Tendis&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x67E5;&amp;amp;#x770B;</a>
-                    
-                    
-                    
-                    <a class="navbar-item" href="#4-4-&amp;#x589E;&amp;#x91CF;&amp;#x6570;&amp;#x636E;&amp;#x540C;&amp;#x6B65;">5.4&nbsp;&nbsp;4.4 &amp;amp;#x589E;&amp;amp;#x91CF;&amp;amp;#x6570;&amp;amp;#x636E;&amp;amp;#x540C;&amp;amp;#x6B65;</a>
-                    
-                    
-                    <hr class="navbar-divider">
-                    
-                    
-                    <a class="navbar-item" href="#5-&amp;#x8FC1;&amp;#x79FB;&amp;#x603B;&amp;#x7ED3;">6&nbsp;&nbsp;<b>5. &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x603B;&amp;amp;#x7ED3;&amp;amp;#x3000;</b></a>
+                    <a class="navbar-item" href="#5-&amp;#x8FC1;&amp;#x79FB;&amp;#x603B;&amp;#x7ED3;">5&nbsp;&nbsp;<b>5. &amp;amp;#x8FC1;&amp;amp;#x79FB;&amp;amp;#x603B;&amp;amp;#x7ED3;&amp;amp;#x3000;</b></a>
                     
                 </div>
             </div>
@@ -231,11 +226,11 @@
         <div class="dropdown-menu has-text-left" role="menu" style="top:100%">
             <div class="dropdown-content">
             
-                <a href="/2020/09/28/zh-cn/redis-hybrid-store-solution/" class="dropdown-item">
+                <a href="/2020/11/18/zh-cn/redis-hybrid-store-solution/" class="dropdown-item">
                     English
                 </a>
             
-                <a href="/zh-cn/2020/09/28/zh-cn/redis-hybrid-store-solution/" class="dropdown-item">
+                <a href="/zh-cn/2020/11/18/zh-cn/redis-hybrid-store-solution/" class="dropdown-item">
                     简体中文
                 </a>
             
@@ -256,20 +251,25 @@
     <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
-            
+            SSDB迁移Tendis解决方案
         
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time class="is-text-small" datetime="2020-09-28T04:10:19.153Z" itemprop="datePublished">
-                        9月 28 2020</time>
+            <time class="is-text-small" datetime="2020-11-18T02:02:00.000Z" itemprop="datePublished">
+                        11月 18 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/zh-cn/categories/Tendis/">Tendis</a>
         </span>
         
         
         <span class="column is-narrow">
             
             
-            18 分钟 读完
+            19 分钟 读完
         </span>
         
         
@@ -279,8 +279,8 @@
     </div>
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-        <p>[TOC]</p>
-<h1 id="SSDB&#x8FC1;&#x79FB;Tendis&#x89E3;&#x51B3;&#x65B9;&#x6848;"><a href="#SSDB&#x8FC1;&#x79FB;Tendis&#x89E3;&#x51B3;&#x65B9;&#x6848;" class="headerlink" title="SSDB&#x8FC1;&#x79FB;Tendis&#x89E3;&#x51B3;&#x65B9;&#x6848;"></a>SSDB&#x8FC1;&#x79FB;Tendis&#x89E3;&#x51B3;&#x65B9;&#x6848;</h1><h1 id="1-&#x524D;&#x8A00;"><a href="#1-&#x524D;&#x8A00;" class="headerlink" title="1.&#x524D;&#x8A00;"></a>1.&#x524D;&#x8A00;</h1><p>SSDB&#x662F;&#x4E00;&#x4E2A;&#x9AD8;&#x6027;&#x80FD;&#x7684;KV&#x5B58;&#x50A8;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4E2A;&#x4EBA;&#x5F00;&#x53D1;&#x4F5C;&#x54C1;&#xFF0C;&#x5DF2;&#x5F00;&#x6E90;&#x3002;&#x51ED;&#x501F;&#x5176;&#x517C;&#x5BB9;redis&#x534F;&#x8BAE;&#x3001;&#x652F;&#x6301;&#x6570;&#x636E;&#x786C;&#x76D8;&#x5B58;&#x50A8;&#x3001;&#x7B80;&#x5355;&#x6613;&#x7528;&#x7B49;&#x7279;&#x6027;&#x5728;&#x4E1A;&#x754C;&#x6709;&#x4E00;&#x5B9A;&#x77E5;&#x540D;&#x5EA6;&#x3002;SSDB&#x4E3B;&#x8981;&#x89E3;&#x51B3;&#x573A;&#x666F;&#x662F;Redis&#x7684;&#x5B58;&#x50A8;&#x95EE;&#x9898;&#xFF0C;&#x5E95;&#x5C42;&#x57FA;&#x4E8E;LevelDB&#x4F5C;&#x5B58;&#x50A8;&#xFF0C;&#x53EF;&#x4EE5;&#x5927;&#x5E45;&#x964D;&#x4F4E;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x6210;&#x672C;&#xFF0C;&#x5177;&#x4F53;&#x4EA7;&#x54C1;&#x4ECB;&#x7ECD;&#x53EF;&#x67E5;&#x770B;&#x5176;&#x5B98;&#x7F51;&#x4ECB;&#x7ECD;&#x3002;</p>
+        <p>Tendis&#x662F;&#x817E;&#x8BAF;&#x4E91;&#x63A8;&#x51FA;&#x4E00;&#x6B3E;&#x517C;&#x5BB9;Redis&#x534F;&#x8BAE;&#x7684;&#x6DF7;&#x5408;&#x5B58;&#x50A8;&#x578B;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5E95;&#x5C42;&#x57FA;&#x4E8E;RocksDB&#x8FDB;&#x884C;&#x6D77;&#x91CF;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x3002;SSDB&#x662F;&#x5F00;&#x6E90;&#x7684;&#x4E00;&#x6B3E;&#x517C;&#x5BB9;Redis&#x534F;&#x8BAE;&#x7684;&#x5B58;&#x50A8;&#x578B;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x548C;Tendis&#x7C7B;&#x4F3C;&#x5E95;&#x5C42;&#x57FA;&#x4E8E;LevelDB&#x6253;&#x9020;&#x3002;SSDB&#x56E0;&#x5176;&#x7B80;&#x5355;&#x6613;&#x7528;&#xFF0C;&#x5728;&#x4E1A;&#x754C;&#x4F7F;&#x7528;&#x6BD4;&#x8F83;&#x591A;&#x3002;&#x5728;&#x5E94;&#x5BF9;&#x5927;&#x5BB9;&#x91CF;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x65B9;&#x9762;&#xFF0C;SSDB&#x4F1A;&#x968F;&#x7740;&#x6570;&#x636E;&#x91CF;&#x7684;&#x589E;&#x591A;&#xFF0C;&#x5176;&#x6027;&#x80FD;&#x4E0B;&#x964D;&#x6BD4;&#x8F83;&#x660E;&#x663E;&#x3002;&#x6700;&#x8FD1;&#x6B63;&#x597D;&#x6709;&#x5BA2;&#x6237;&#x9047;&#x5230;SSDB&#x6027;&#x80FD;&#x95EE;&#x9898;&#x4E3B;&#x52A8;&#x8003;&#x8651;&#x8FC1;&#x79FB;&#x5230;Tendis, &#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4ECB;&#x7ECD;SSDB&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x5230;Tendis&#x3002;<br><a id="more"></a></p>
+<h1 id="1-&#x524D;&#x8A00;"><a href="#1-&#x524D;&#x8A00;" class="headerlink" title="1.&#x524D;&#x8A00;"></a>1.&#x524D;&#x8A00;</h1><p>SSDB&#x662F;&#x4E00;&#x4E2A;&#x9AD8;&#x6027;&#x80FD;&#x7684;KV&#x5B58;&#x50A8;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4E2A;&#x4EBA;&#x5F00;&#x53D1;&#x4F5C;&#x54C1;&#xFF0C;&#x5DF2;&#x5F00;&#x6E90;&#x3002;&#x51ED;&#x501F;&#x5176;&#x517C;&#x5BB9;redis&#x534F;&#x8BAE;&#x3001;&#x652F;&#x6301;&#x6570;&#x636E;&#x786C;&#x76D8;&#x5B58;&#x50A8;&#x3001;&#x7B80;&#x5355;&#x6613;&#x7528;&#x7B49;&#x7279;&#x6027;&#x5728;&#x4E1A;&#x754C;&#x6709;&#x4E00;&#x5B9A;&#x77E5;&#x540D;&#x5EA6;&#x3002;SSDB&#x4E3B;&#x8981;&#x89E3;&#x51B3;&#x573A;&#x666F;&#x662F;Redis&#x7684;&#x5B58;&#x50A8;&#x95EE;&#x9898;&#xFF0C;&#x5E95;&#x5C42;&#x57FA;&#x4E8E;LevelDB&#x4F5C;&#x5B58;&#x50A8;&#xFF0C;&#x53EF;&#x4EE5;&#x5927;&#x5E45;&#x964D;&#x4F4E;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x6210;&#x672C;&#xFF0C;&#x5177;&#x4F53;&#x4EA7;&#x54C1;&#x4ECB;&#x7ECD;&#x53EF;&#x67E5;&#x770B;&#x5176;&#x5B98;&#x7F51;&#x4ECB;&#x7ECD;&#x3002;</p>
 <p>Tendis&#x662F;&#x817E;&#x8BAF;&#x4E91;&#x63A8;&#x51FA;&#x4E00;&#x6B3E;Redis&#x6DF7;&#x5408;&#x5B58;&#x50A8;&#x7248;&#x4EA7;&#x54C1;&#xFF0C;100&#xFF05;&#x517C;&#x5BB9;&#x539F;&#x751F;&#x7684;redis cluster&#x534F;&#x8BAE;&#xFF0C;&#x6EE1;&#x8DB3;&#x6D77;&#x91CF;&#x6570;&#x636E;&#x4F4E;&#x6210;&#x672C;&#x5B58;&#x50A8;&#x540C;&#x65F6;&#x517C;&#x987E;Redis&#x4F7F;&#x7528;&#x4E60;&#x60EF;&#x3002;&#x5BF9;&#x4E8E;&#x5927;&#x90E8;&#x5206;&#x4E2D;&#x5C0F;&#x5BA2;&#x6237;&#x6765;&#x8BF4;&#xFF0C;redis&#x4F7F;&#x7528;&#x5F88;&#x9891;&#x7E41;&#xFF0C;&#x540C;&#x65F6;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x91CF;&#x4E5F;&#x4E0E;&#x65E5;&#x4FF1;&#x589E;&#xFF0C;&#x9762;&#x4E34;&#x7684;&#x6570;&#x636E;&#x6210;&#x672C;&#x4E5F;&#x5728;&#x4E0D;&#x65AD;&#x589E;&#x52A0;&#x3002;Tendis&#x7684;&#x63A8;&#x51FA;&#x6B63;&#x662F;&#x4E3A;&#x89E3;&#x51B3;&#x6B64;&#x7C7B;&#x5BA2;&#x6237;&#x75DB;&#x70B9;&#x7684;&#x4EA7;&#x54C1;&#x3002;&#x5177;&#x4F53;&#x4EA7;&#x54C1;&#x4ECB;&#x7ECD;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://cloud.tencent.com/document/product/239/44392" target="_blank" rel="external">&#x5B98;&#x7F51;&#x6587;&#x6863;</a>&#x3002;</p>
 <p>SSDB&#x4E0E;Tendis&#x7684;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5982;&#x4E0B;&#xFF1A;<br>|&#x5BF9;&#x6BD4;&#x9879;|Tendis|SSDB|<br>|&#x2014;|&#x2014;|&#x2014;|<br>|&#x4EA7;&#x54C1;&#x7C7B;&#x578B;|&#x4E91;&#x670D;&#x52A1;|&#x5F00;&#x6E90;|<br>|&#x4EA7;&#x54C1;&#x56E2;&#x961F;|&#x817E;&#x8BAF;&#x4E91;&#x6570;&#x636E;&#x5E93;&#x4EA7;&#x54C1;&#x4E13;&#x5BB6;&#x56E2;&#x961F;|&#x4E2A;&#x4EBA;|<br>|&#x4EA7;&#x54C1;&#x8FED;&#x4EE3;|&#x4E1A;&#x52A1;&#x65B9;&#x65E0;&#x9700;&#x5173;&#x6CE8;|&#x4E2A;&#x4EBA;&#x7CBE;&#x529B;&#x6709;&#x9650;&#xFF0C;&#x95EE;&#x9898;&#x65E0;&#x6CD5;&#x53CA;&#x65F6;&#x89E3;&#x51B3;&#xFF0C;&#x9700;&#x8981;&#x4E1A;&#x52A1;&#x65B9;&#x719F;&#x6089;&#x6E90;&#x7801;|<br>|redis&#x517C;&#x5BB9;|redis-cluster&#x534F;&#x8BAE;&#x517C;&#x5BB9;|redis&#x534F;&#x8BAE;&#x517C;&#x5BB9;|<br>|&#x5B58;&#x50A8;&#x7C7B;&#x578B;| &#x57FA;&#x4E8E;RocksDB&#x6253;&#x9020;|&#x57FA;&#x4E8E;LevelDB&#x6253;&#x9020;|<br>|&#x5927;&#x6570;&#x636E;&#x91CF;&#x5B58;&#x50A8;|PB&#x7EA7;&#x522B;,&#x6027;&#x80FD;&#x7A33;&#x5B9A;|GB&#x7EA7;&#x522B;&#xFF0C;&#x5F53;&#x4E3B;&#x4ECE;&#x5355;&#x5B9E;&#x4F8B;&#x6570;&#x636E;&#x89C4;&#x683C;&#x8FBE;&#x5230;100+GB&#x65F6;&#x6027;&#x80FD;&#x4E0B;&#x964D;&#x4E25;&#x91CD;|<br>|&#x5B58;&#x50A8;&#x5C42;&#x5BF9;&#x6027;&#x80FD;&#x635F;&#x8017;|&#x5C0F;&#xFF0C;&#x67B6;&#x6784;&#x51B3;&#x5B9A;&#xFF0C;&#x7F13;&#x5B58;&#x5C42;(redis)&#x548C;&#x5B58;&#x50A8;&#x5C42;(rocksdb)&#x5206;&#x79BB;&#xFF0C;&#x4E1A;&#x52A1;&#x76F4;&#x63A5;&#x4E0E;&#x7F13;&#x5B58;&#x5C42;&#x4EA4;&#x4E92;|&#x5927;&#xFF0C;&#x4E1A;&#x52A1;&#x76F4;&#x63A5;&#x4E0E;LevelDB&#x4EA4;&#x4E92;&#xFF0C;&#x5B58;&#x50A8;&#x5C42;&#x7684;&#x4E00;&#x4E9B;&#x673A;&#x5236;&#x5982;Compaction&#x7B49;&#x5BF9;&#x8D44;&#x6E90;&#x6D88;&#x8017;&#x6BD4;&#x8F83;&#x4E25;&#x91CD;&#xFF0C;&#x4F1A;&#x963B;&#x585E;&#x4E1A;&#x52A1;&#x8BFB;&#x5199;&#xFF0C;&#x5176;&#x5B83;&#x50CF;&#x6570;&#x636E;&#x540C;&#x6B65;&#x53CA;&#x5907;&#x4EFD;&#x7B49;&#x4E5F;&#x5BF9;&#x7ED3;&#x70B9;&#x5F71;&#x54CD;&#x6BD4;&#x8F83;&#x5927;|</p>
 <p>&#x4E0A;&#x9762;&#x53EA;&#x5217;&#x4E3E;&#x4E86;&#x90E8;&#x5206;&#x5BF9;&#x6BD4;&#x9879;&#xFF0C;&#x5B9E;&#x9645;&#x5728;&#x6D4B;&#x8BD5;ssdb&#x8FC7;&#x7A0B;&#x4E2D;&#x53D1;&#x73B0;&#x6700;&#x5927;&#x7684;&#x95EE;&#x9898;&#x662F;&#x6709;&#x5F88;&#x591A;&#x5730;&#x65B9;&#x5B9E;&#x73B0;&#x4E0D;&#x592A;&#x4E25;&#x8C28;&#xFF0C;&#x4E00;&#x65E6;&#x6570;&#x636E;&#x91CF;&#x6BD4;&#x8F83;&#x5927;&#x540E;&#xFF0C;&#x5BF9;&#x4E1A;&#x52A1;&#x5F71;&#x54CD;&#x6BD4;&#x8F83;&#x5927;&#xFF0C;&#x5982;LevelDB&#x5C42;&#x7684;Compaction&#x3001;&#x5185;&#x5B58;OOM&#x95EE;&#x9898;&#x7B49;&#x662F;&#x793E;&#x533A;&#x5E38;&#x89C1;&#x7684;&#x95EE;&#x9898; &#x3002;&#x9700;&#x8981;&#x4E1A;&#x52A1;&#x65B9;&#x5BF9;SSDB&#x6E90;&#x7801;&#x5F88;&#x719F;&#x6089;&#x5E76;&#x4F5C;&#x76F8;&#x5E94;&#x7684;&#x6539;&#x9020;&#x624D;&#x80FD;&#x6EE1;&#x8DB3;&#x4E00;&#x5B9A;&#x7684;&#x4E1A;&#x52A1;&#x9700;&#x6C42;&#xFF0C;&#x8FD9;&#x5C31;&#x5BF9;&#x4E1A;&#x52A1;&#x65B9;&#x63D0;&#x51FA;&#x66F4;&#x9AD8;&#x8981;&#x6C42;&#xFF0C;&#x65E0;&#x6CD5;&#x66F4;&#x597D;&#x805A;&#x7126;&#x4E1A;&#x52A1;&#x672C;&#x8EAB;&#x3002;&#x8FD9;&#x4E5F;&#x662F;&#x4E3A;&#x4F55;&#x8981;&#x8BBE;&#x8BA1;SSDB&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x65B9;&#x6848;&#x7684;&#x539F;&#x56E0;&#x3002;</p>
@@ -372,7 +372,7 @@ ok
 (0.000 sec)
 </code></pre><h2 id="4-2-&#x542F;&#x52A8;&#x8FC1;&#x79FB;&#x5DE5;&#x5177;"><a href="#4-2-&#x542F;&#x52A8;&#x8FC1;&#x79FB;&#x5DE5;&#x5177;" class="headerlink" title="4.2 &#x542F;&#x52A8;&#x8FC1;&#x79FB;&#x5DE5;&#x5177;"></a>4.2 &#x542F;&#x52A8;&#x8FC1;&#x79FB;&#x5DE5;&#x5177;</h2><p>&#x65B0;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7EC8;&#x7AEF;&#x767B;&#x5F55;CVM, &#x5E76;&#x6267;&#x884C;&#x5982;&#x4E0B;&#x547D;&#x4EE4;&#x542F;&#x52A8;&#x8FC1;&#x79FB;&#x5DE5;&#x5177;&#x3002;</p>
 <pre><code>./siphon_v2  sync  -p 1 -f 127.0.0.1:8888 -t 172.16.16.47:6379 -T tendis@pwd
-</code></pre><p>&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E00;&#x4E9B;&#x63A7;&#x5236;&#x53F0;&#x8F93;&#x51FA;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/09/28/zh-cn/redis-hybrid-store-solution/siphon_start.png" alt="siphon_start"></p>
+</code></pre><p>&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E00;&#x4E9B;&#x63A7;&#x5236;&#x53F0;&#x8F93;&#x51FA;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;:<br><img src="/2020/11/18/zh-cn/redis-hybrid-store-solution/siphon_start.png" alt="siphon_start"></p>
 <p>&#x56FE;&#x4E2D;&#x7EA2;&#x6846;&#x90E8;&#x5206;&#x6807;&#x8BC6;&#x7684;&#x662F;&#x5168;&#x91CF;&#x6570;&#x636E;&#x540C;&#x6B65;&#x8FC7;&#x7A0B;&#xFF1A;</p>
 <ul>
 <li><strong>Copy Start</strong>: &#x8868;&#x793A;&#x5F00;&#x59CB;&#x542F;&#x52A8;&#x5168;&#x91CF;&#x6570;&#x636E;&#x540C;&#x6B65;</li>
@@ -402,6 +402,12 @@ Warning: Using a password with &apos;-a&apos; option on the command line interfa
     
     </div>
     
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/zh-cn/tags/SSDB-Tendis/">#SSDB,Tendis</a></span>
+    
+    </div>
+    
     
     <div class="columns is-mobile is-multiline article-nav">
         <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
@@ -409,7 +415,7 @@ Warning: Using a password with &apos;-a&apos; option on the command line interfa
         </span>
         <span class="column is-12-mobile is-half-desktop  article-nav-next">
             
-            <a href="/2020/08/03/zh-cn/mysql-migrate-tcaplusdb/"></a>
+            <a href="/2020/11/18/zh-cn/mysql-migrate-tcaplusdb/">MySQL数据实时迁移TcaplusDB方案</a>
             
         </span>
     </div>
